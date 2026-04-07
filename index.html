@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MOI Demo Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #060e1a;
+      color: #e8f4f8;
+      min-height: 100vh;
+      padding: 40px 24px 60px;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: radial-gradient(rgba(0,180,216,.07) 1px, transparent 1px);
+      background-size: 28px 28px;
+      pointer-events: none;
+    }
+    .hub {
+      max-width: 900px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+    .hub-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .hub-logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .hub-logo-icon {
+      width: 44px; height: 44px;
+      background: linear-gradient(135deg, #00b4d8, #0077a8);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 24px rgba(0,180,216,.3);
+    }
+    .hub-title { font-size: 32px; font-weight: 900; letter-spacing: -.6px; }
+    .hub-title span { color: #00b4d8; }
+    .hub-subtitle { font-size: 15px; color: #6a8a99; max-width: 540px; margin: 8px auto 0; line-height: 1.6; }
+
+    .section-label {
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: #00b4d8;
+      margin-bottom: 14px;
+      margin-top: 36px;
+    }
+    .section-label:first-of-type { margin-top: 0; }
+
+    .flow-card {
+      background: #131f2e;
+      border: 1px solid rgba(255,255,255,.06);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 14px;
+    }
+    .flow-card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .flow-number {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: rgba(0,180,216,.15);
+      border: 1px solid rgba(0,180,216,.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 800;
+      color: #00b4d8;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .flow-info { flex: 1; }
+    .flow-title { font-size: 16px; font-weight: 800; color: #e8f4f8; margin-bottom: 4px; }
+    .flow-desc  { font-size: 13px; color: #6a8a99; line-height: 1.55; }
+    .flow-steps {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-top: 4px;
+    }
+    .flow-step {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      background: #1b2d3e;
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: 8px;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: #a8c4d0;
+      text-decoration: none;
+      transition: all .15s ease;
+    }
+    .flow-step:hover { background: #243447; border-color: rgba(0,180,216,.3); color: #00b4d8; }
+    .flow-step.primary {
+      background: rgba(0,180,216,.12);
+      border-color: rgba(0,180,216,.25);
+      color: #00b4d8;
+    }
+    .flow-step.tnt {
+      background: rgba(170,25,69,.1);
+      border-color: rgba(170,25,69,.2);
+      color: #d4607a;
+    }
+    .flow-arrow { color: rgba(255,255,255,.2); font-size: 12px; }
+    .flow-start-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 18px;
+      background: #00b4d8;
+      color: #060e1a;
+      border-radius: 9px;
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+      flex-shrink: 0;
+      transition: all .15s ease;
+      white-space: nowrap;
+    }
+    .flow-start-btn:hover { background: #00caee; transform: translateY(-1px); }
+    .flow-start-btn.red {
+      background: #aa1945;
+      color: #fff;
+    }
+    .flow-start-btn.red:hover { background: #c01f50; }
+    .flow-start-btn.dark {
+      background: #1b2d3e;
+      color: #e8f4f8;
+      border: 1px solid rgba(255,255,255,.1);
+    }
+    .flow-start-btn.dark:hover { background: #243447; }
+
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 10px;
+      margin-top: 4px;
+    }
+    .quick-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      background: #131f2e;
+      border: 1px solid rgba(255,255,255,.06);
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #a8c4d0;
+      text-decoration: none;
+      transition: all .15s ease;
+    }
+    .quick-link:hover { background: #1b2d3e; border-color: rgba(0,180,216,.2); color: #e8f4f8; }
+    .quick-link-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .stack-info {
+      margin-top: 36px;
+      padding: 20px 24px;
+      background: rgba(0,180,216,.04);
+      border: 1px solid rgba(0,180,216,.1);
+      border-radius: 12px;
+      font-size: 12.5px;
+      color: #6a8a99;
+      line-height: 1.6;
+    }
+    .stack-info strong { color: #a8c4d0; }
+  </style>
+</head>
+<body>
+  <div class="hub">
+
+    <div class="hub-header">
+      <div class="hub-logo">
+        <div class="hub-logo-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+        </div>
+      </div>
+      <h1 class="hub-title">MOI · <span>Demo Hub</span></h1>
+      <p class="hub-subtitle">Interactive prototype of the My Own Information system and its integration with Trusted & True. Click any flow to begin, or jump directly to any screen.</p>
+    </div>
+
+    <!-- ── DEMO FLOWS ── -->
+    <div class="section-label">Demo Flows</div>
+
+    <!-- Flow 1 -->
+    <div class="flow-card">
+      <div class="flow-card-header">
+        <div class="flow-number">1</div>
+        <div class="flow-info">
+          <div class="flow-title">TNT Signup via MOI</div>
+          <div class="flow-desc">The core flow. User signs into Trusted & True using their Osmio ID. TNT detects their certificate, requests permission from MOI, user approves, and TNT receives verified data.</div>
+          <div class="flow-steps" style="margin-top:10px">
+            <a href="tnt.html#login" class="flow-step tnt">TNT Login</a>
+            <span class="flow-arrow">→</span>
+            <a href="tnt.html#cert-check" class="flow-step tnt">Cert Check</a>
+            <span class="flow-arrow">→</span>
+            <a href="moi.html#consent" class="flow-step primary">MOI Consent</a>
+            <span class="flow-arrow">→</span>
+            <a href="tnt.html#redirecting" class="flow-step tnt">Returning</a>
+            <span class="flow-arrow">→</span>
+            <a href="tnt.html#dashboard" class="flow-step tnt">TNT Dashboard</a>
+          </div>
+        </div>
+        <a href="tnt.html#login" class="flow-start-btn red">Start →</a>
+      </div>
+    </div>
+
+    <!-- Flow 2 -->
+    <div class="flow-card">
+      <div class="flow-card-header">
+        <div class="flow-number">2</div>
+        <div class="flow-info">
+          <div class="flow-title">Direct MOI Access</div>
+          <div class="flow-desc">User logs directly into MOI vault, views their stored information, manages data, and requests identity verification to raise their IDQA score.</div>
+          <div class="flow-steps" style="margin-top:10px">
+            <a href="moi.html#login" class="flow-step primary">MOI Login</a>
+            <span class="flow-arrow">→</span>
+            <a href="moi.html#dashboard" class="flow-step primary">Dashboard</a>
+            <span class="flow-arrow">→</span>
+            <a href="moi.html#manage" class="flow-step primary">Manage Data</a>
+            <span class="flow-arrow">→</span>
+            <a href="moi.html#verify-request" class="flow-step primary">Request Verification</a>
+          </div>
+        </div>
+        <a href="moi.html#login" class="flow-start-btn">Start →</a>
+      </div>
+    </div>
+
+    <!-- Flow 3 -->
+    <div class="flow-card">
+      <div class="flow-card-header">
+        <div class="flow-number">3</div>
+        <div class="flow-info">
+          <div class="flow-title">Access Denied — No Certificate</div>
+          <div class="flow-desc">User attempts to access TNT but has no Osmio ID Pair installed. They see the access denied screen with instructions to enroll.</div>
+          <div class="flow-steps" style="margin-top:10px">
+            <a href="tnt.html#login" class="flow-step tnt">TNT Login</a>
+            <span class="flow-arrow">→</span>
+            <a href="tnt.html#access-denied" class="flow-step" style="background:rgba(239,71,111,.08);border-color:rgba(239,71,111,.2);color:#ef476f">No Certificate</a>
+          </div>
+        </div>
+        <a href="tnt.html#access-denied" class="flow-start-btn dark">View →</a>
+      </div>
+    </div>
+
+    <!-- Flow 4 -->
+    <div class="flow-card">
+      <div class="flow-card-header">
+        <div class="flow-number">4</div>
+        <div class="flow-info">
+          <div class="flow-title">Admin — Review Verifications</div>
+          <div class="flow-desc">Admin officer signs in, reviews the verification queue, compares submitted data against enrollment records, and approves or rejects requests.</div>
+          <div class="flow-steps" style="margin-top:10px">
+            <a href="admin.html#login" class="flow-step" style="background:rgba(170,25,69,.1);border-color:rgba(170,25,69,.2);color:#c06080">Admin Login</a>
+            <span class="flow-arrow">→</span>
+            <a href="admin.html#dashboard" class="flow-step" style="background:rgba(170,25,69,.1);border-color:rgba(170,25,69,.2);color:#c06080">Dashboard</a>
+            <span class="flow-arrow">→</span>
+            <a href="admin.html#review" class="flow-step" style="background:rgba(170,25,69,.1);border-color:rgba(170,25,69,.2);color:#c06080">Review &amp; Decide</a>
+          </div>
+        </div>
+        <a href="admin.html#login" class="flow-start-btn dark">Start →</a>
+      </div>
+    </div>
+
+    <!-- ── QUICK JUMP ── -->
+    <div class="section-label">Quick Jump to Any Screen</div>
+    <div class="quick-grid">
+      <a href="tnt.html#login"         class="quick-link"><span class="quick-link-dot" style="background:#aa1945"></span>TNT Login</a>
+      <a href="tnt.html#cert-check"    class="quick-link"><span class="quick-link-dot" style="background:#aa1945"></span>TNT Cert Check</a>
+      <a href="tnt.html#access-denied" class="quick-link"><span class="quick-link-dot" style="background:#ef476f"></span>TNT No Cert</a>
+      <a href="tnt.html#redirecting"   class="quick-link"><span class="quick-link-dot" style="background:#aa1945"></span>TNT Returning</a>
+      <a href="tnt.html#dashboard"     class="quick-link"><span class="quick-link-dot" style="background:#aa1945"></span>TNT Dashboard</a>
+      <a href="moi.html#login"         class="quick-link"><span class="quick-link-dot" style="background:#00b4d8"></span>MOI Login</a>
+      <a href="moi.html#consent"       class="quick-link"><span class="quick-link-dot" style="background:#00b4d8"></span>MOI Consent</a>
+      <a href="moi.html#dashboard"     class="quick-link"><span class="quick-link-dot" style="background:#00b4d8"></span>MOI Dashboard</a>
+      <a href="moi.html#manage"        class="quick-link"><span class="quick-link-dot" style="background:#00b4d8"></span>MOI Manage</a>
+      <a href="moi.html#verify-request"class="quick-link"><span class="quick-link-dot" style="background:#00b4d8"></span>MOI Verify</a>
+      <a href="admin.html#login"       class="quick-link"><span class="quick-link-dot" style="background:#9ca3af"></span>Admin Login</a>
+      <a href="admin.html#dashboard"   class="quick-link"><span class="quick-link-dot" style="background:#9ca3af"></span>Admin Dashboard</a>
+      <a href="admin.html#review"      class="quick-link"><span class="quick-link-dot" style="background:#9ca3af"></span>Admin Review</a>
+      <a href="admin.html#users"       class="quick-link"><span class="quick-link-dot" style="background:#9ca3af"></span>Admin Users</a>
+    </div>
+
+    <div class="stack-info">
+      <strong>Stack:</strong> Vanilla JS · No framework · No build step · Hash-based routing · sessionStorage for cross-app state ·
+      <strong>Files:</strong> index.html · tnt.html · moi.html · admin.html · css/shared+tnt+moi+admin · js/mock-data+router+tnt+moi+admin
+    </div>
+  </div>
+</body>
+</html>
