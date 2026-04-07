@@ -39,7 +39,7 @@ const MOCK = {
     moi: {
       firstName:   { value: 'Alex',                                   verified: true,  verifiedDate: '2024-11-16' },
       lastName:    { value: 'Johnson',                                 verified: true,  verifiedDate: '2024-11-16' },
-      dob:         { value: '1992-03-24',                              verified: false, verifiedDate: null },
+      dob:         { value: '1992-03-24',                              verified: true,  verifiedDate: '2024-11-15' },
       gender:      { value: 'Male',                                    verified: false, verifiedDate: null },
       photo:       { value: null,                                      verified: false, verifiedDate: null },
       email:       { value: 'alex.johnson@example.com',                verified: true,  verifiedDate: '2024-11-15' },
