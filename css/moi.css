@@ -232,7 +232,7 @@ body.moi-app::before {
   font-weight: 600;
 }
 
-/* ── Consent / OAuth Screen ─────────────────────────────────── */
+/* ── Licence Request Screen ─────────────────────────────────── */
 .moi-consent-screen {
   flex: 1;
   display: flex;
@@ -525,6 +525,37 @@ body.moi-app::before {
   border-bottom: 1px solid var(--moi-border-2);
 }
 .moi-log-row:last-child { border-bottom: none; }
+
+/* ── Licence rows (active licences with revoke) ─────────────── */
+.moi-consent-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 14px;
+  background: var(--moi-surface-2);
+  border: 1px solid var(--moi-border-2);
+  border-radius: 10px;
+  margin-bottom: 8px;
+  transition: background .15s ease;
+}
+.moi-consent-row:hover { background: var(--moi-surface-3); }
+.moi-consent-row:last-child { margin-bottom: 0; }
+.moi-revoke-btn {
+  flex-shrink: 0;
+  padding: 5px 12px;
+  background: rgba(239,71,111,.1);
+  border: 1px solid rgba(239,71,111,.25);
+  border-radius: 7px;
+  color: var(--moi-danger);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: all .15s ease;
+  white-space: nowrap;
+  margin-top: 2px;
+}
+.moi-revoke-btn:hover { background: rgba(239,71,111,.2); border-color: rgba(239,71,111,.4); }
 .moi-log-dot {
   width: 8px; height: 8px;
   border-radius: 50%;

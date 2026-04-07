@@ -41,10 +41,10 @@ function renderLogin() {
         <div class="tnt-login-card">
           ${tntLogoSVG(48)}
           <h1 class="tnt-login-tagline" style="margin-top:12px">Find your person.</h1>
-          <p class="tnt-login-sub">Genuine connections, powered by verified identity.</p>
+          <p class="tnt-login-sub">Genuine connections, powered by attested identity.</p>
 
           <div class="tnt-trust-bar">
-            <span>ID-verified members only</span>
+            <span>ID-attested members only</span>
             <span class="tnt-trust-bar-dot"></span>
             <span>End-to-end encrypted</span>
             <span class="tnt-trust-bar-dot"></span>
@@ -74,8 +74,8 @@ function startAuth() {
     appId: 'tnt',
     requestId: 'req_' + Date.now(),
     certUsed: MOCK.currentUser.certs.foundation.id,
-    requiredFields: ['firstName', 'lastName'],
-    optionalFields: ['photo', 'dob', 'country'],
+    requiredFields: ['firstName', 'lastName', 'above18'],
+    optionalFields: ['photo', 'country'],
     returnTo: 'tnt.html#redirecting'
   }));
   router.go('cert-check');
@@ -106,8 +106,8 @@ function renderCertCheck() {
     { icon: 'spin', type: 'loading', text: 'Validating with OSMIO Certificate Authority...', sub: null, delay: 1300 },
     { icon: 'check', type: 'success', text: 'Signature valid · Certificate trusted', sub: `Issuer: ${MOCK.currentUser.certs.foundation.issuer}`, delay: 2400 },
     { icon: 'check', type: 'success', text: 'Certificate expires: Nov 15, 2026', sub: `Serial: ${MOCK.currentUser.certs.foundation.serial}`, delay: 2800 },
-    { icon: 'idqa', type: 'info', text: 'IDQA Score resolved', sub: 'Scale: 0–24 · ID Verified at 12', idqa: MOCK.currentUser.idqa, delay: 3300 },
-    { icon: 'spin', type: 'loading', text: 'Preparing MOI permission request...', sub: null, delay: 3800 },
+    { icon: 'idqa', type: 'info', text: 'IDQA Score resolved', sub: 'Scale: 0–24 · ID Attested at 12', idqa: MOCK.currentUser.idqa, delay: 3300 },
+    { icon: 'spin', type: 'loading', text: 'Preparing MOI licence request...', sub: null, delay: 3800 },
   ];
 
   steps.forEach((step, i) => {
@@ -133,7 +133,7 @@ function renderCertCheck() {
         <div class="cert-step-text">
           <strong>${step.text}</strong>
           ${step.sub ? `<span>${step.sub}</span>` : ''}
-          ${step.idqa ? `<div class="cert-step-idqa">✓ IDQA ${step.idqa}/24 · ID Verified</div>` : ''}
+          ${step.idqa ? `<div class="cert-step-idqa">✓ IDQA ${step.idqa}/24 · ID Attested</div>` : ''}
         </div>`;
       container.appendChild(div);
 
@@ -219,7 +219,7 @@ function renderDashboard() {
   const sharedFirstName = shared.firstName || moi.firstName;
   const sharedLastName  = shared.lastName  || moi.lastName;
   const sharedPhoto     = shared.photo     || null;
-  const sharedDob       = shared.dob       || null;
+  const sharedAbove18   = shared.above18   || { value: true, verified: moi.dob.verified }; // derived, not raw DOB
   const sharedCountry   = shared.country   || null;
 
   function field(label, fieldObj, notShared = false) {
@@ -292,7 +292,7 @@ function renderDashboard() {
             <div class="tnt-field-grid">
               ${field('First Name',  sharedFirstName)}
               ${field('Last Name',   sharedLastName)}
-              ${field('Date of Birth', sharedDob, !sharedDob)}
+              ${field('Age Verification', sharedAbove18 ? { value: sharedAbove18.value ? '18+ Confirmed' : 'Under 18', verified: sharedAbove18.verified } : null)}
               ${field('Country', sharedCountry, !sharedCountry)}
             </div>
 
@@ -302,8 +302,8 @@ function renderDashboard() {
               </div>
               <div style="display:flex;flex-wrap:wrap;gap:6px">
                 ${sharedPhoto ? '' : '<span class="tnt-tag" style="opacity:.5;font-size:12px">Photo</span>'}
-                ${sharedDob   ? '' : '<span class="tnt-tag" style="opacity:.5;font-size:12px">Date of Birth</span>'}
                 ${sharedCountry ? '' : '<span class="tnt-tag" style="opacity:.5;font-size:12px">Country</span>'}
+                <span style="font-size:11px;color:var(--tnt-text-muted);font-style:italic;margin-left:2px">Date of birth is never shared — only the derived age check.</span>
               </div>
             </div>
           </div>

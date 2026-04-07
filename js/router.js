@@ -87,16 +87,16 @@ function avatar(initials, color, size = 44) {
 }
 
 function idqaBadge(score) {
-  // Max achievable now is 12 (ID verified); scale goes to 24 (attestation, future)
+  // Max achievable now is 12 (ID attested); scale goes to 24 (future)
   const cls = score >= 12 ? 'idqa-high' : score >= 8 ? 'idqa-mid' : 'idqa-low';
-  const label = score >= 12 ? 'ID Verified' : score >= 8 ? 'Email Verified' : 'Unverified';
+  const label = score >= 12 ? 'ID Attested' : score >= 8 ? 'Email Attested' : 'Unattested';
   return `<span class="idqa-badge ${cls}">IDQA ${score}/24 · ${label}</span>`;
 }
 
 function verifiedBadge(verified) {
   return verified
-    ? `<span class="badge badge-verified">Verified</span>`
-    : `<span class="badge badge-unverified">Unverified</span>`;
+    ? `<span class="badge badge-verified">Attested</span>`
+    : `<span class="badge badge-unverified">Unattested</span>`;
 }
 
 function statusBadge(status) {

@@ -279,7 +279,7 @@ const MOCK = {
     username: 'admin@osmio.id',
     password: 'osmio2026',
     name: 'Admin Portal',
-    role: 'Verification Officer'
+    role: 'Attestation Officer'
   },
 
   // ── SVG Assets — generated illustrations ──────────────────

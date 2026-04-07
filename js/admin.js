@@ -1,5 +1,5 @@
 // =============================================================
-// ADMIN — OSMIO Verification Portal screens
+// ADMIN — OSMIO Attestation Portal screens
 // =============================================================
 
 const router = new Router();
@@ -18,7 +18,7 @@ function adminSidebar(activePage) {
         </div>
         <div>
           <div class="admin-sidebar-logo-text">OSMIO Admin</div>
-          <div class="admin-sidebar-logo-sub">Verification Portal</div>
+          <div class="admin-sidebar-logo-sub">Attestation Portal</div>
         </div>
       </div>
 
@@ -69,7 +69,7 @@ function renderLogin() {
           </div>
           <span class="admin-login-logo-text">OSMIO <span>Admin Portal</span></span>
         </div>
-        <h1>Verification Officer</h1>
+        <h1>Attestation Officer</h1>
         <p>Sign in to manage identity verification requests.</p>
 
         <div id="login-error" style="display:none;padding:10px 14px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);border-radius:8px;font-size:13px;color:#ef4444;margin-bottom:14px">
@@ -161,8 +161,8 @@ function renderDashboard() {
       <main class="admin-main">
         <div class="admin-page-header">
           <div>
-            <div class="admin-page-title">Verification Dashboard</div>
-            <div class="admin-page-sub">Review and manage identity verification requests</div>
+            <div class="admin-page-title">Attestation Dashboard</div>
+            <div class="admin-page-sub">Review and manage identity attestation requests</div>
           </div>
           <div style="font-size:12px;color:#9ca3af;font-weight:500">
             ${new Date().toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'})}
@@ -172,19 +172,19 @@ function renderDashboard() {
         <!-- Stats -->
         <div class="admin-stats-row">
           <div class="admin-stat-card pending">
-            <div class="admin-stat-label">Pending Review</div>
+            <div class="admin-stat-label">Pending Attestation</div>
             <div class="admin-stat-val">${pending}</div>
             <div class="admin-stat-sub">Awaiting action</div>
           </div>
           <div class="admin-stat-card approved">
             <div class="admin-stat-label">Approved</div>
             <div class="admin-stat-val">${approved}</div>
-            <div class="admin-stat-sub">IDQA raised to 12</div>
+            <div class="admin-stat-sub">Attested</div>
           </div>
           <div class="admin-stat-card rejected">
             <div class="admin-stat-label">Rejected</div>
             <div class="admin-stat-val">${rejected}</div>
-            <div class="admin-stat-sub">Resubmission needed</div>
+            <div class="admin-stat-sub">Attestation rejected</div>
           </div>
           <div class="admin-stat-card total">
             <div class="admin-stat-label">Total Users</div>
@@ -196,7 +196,7 @@ function renderDashboard() {
         <!-- Table -->
         <div class="admin-card">
           <div class="admin-card-header">
-            <div class="admin-card-title">Verification Queue</div>
+            <div class="admin-card-title">Attestation Queue</div>
             <div class="admin-filter-tabs">
               ${['all','pending','approved','rejected'].map(f => `
                 <button class="admin-filter-tab ${activeFilter===f?'active':''}" onclick="setFilter('${f}')">${f.charAt(0).toUpperCase()+f.slice(1)}${f==='pending'&&pending>0?` (${pending})`:''}</button>
