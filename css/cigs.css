@@ -1,0 +1,178 @@
+/* =============================================================
+   ALCOSHOP — Alcohol & Tobacco portal styles
+   ============================================================= */
+
+:root {
+  --ac-bg:         #1a0f04;
+  --ac-surface:    #241508;
+  --ac-surface-2:  #2e1c0a;
+  --ac-border:     rgba(255,255,255,.08);
+  --ac-text:       #f5e8d0;
+  --ac-text-muted: #8a7060;
+  --ac-amber:      #d97706;
+  --ac-amber-lt:   #fbbf24;
+  --ac-red:        #b91c1c;
+  --ac-red-lt:     #ef4444;
+  --ac-gold:       #ca8a04;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--ac-bg);
+  color: var(--ac-text);
+  min-height: 100vh;
+}
+
+.ac-screen { min-height: 100vh; display: flex; flex-direction: column; }
+
+/* ── Top Bar ── */
+.ac-topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 20px; background: var(--ac-surface);
+  border-bottom: 1px solid var(--ac-border);
+  position: sticky; top: 0; z-index: 10;
+}
+.ac-logo-mark { display: flex; align-items: center; gap: 10px; }
+.ac-logo-text { font-size: 18px; font-weight: 900; letter-spacing: -.3px; }
+.ac-logo-text .ac-alco { color: var(--ac-amber-lt); }
+.ac-logo-text .ac-shop { color: var(--ac-text); }
+.ac-topbar-actions a { font-size: 12px; color: var(--ac-text-muted); font-weight: 600; text-decoration: none; }
+.ac-topbar-actions a:hover { color: var(--ac-text); }
+
+/* ── Hero / Login ── */
+.ac-hero {
+  flex: 1; display: flex; align-items: center; justify-content: center;
+  padding: 40px 20px;
+}
+.ac-login-card {
+  background: var(--ac-surface); border: 1px solid var(--ac-border);
+  border-radius: 20px; padding: 36px 32px; max-width: 400px; width: 100%;
+  text-align: center;
+}
+.ac-login-tagline { font-size: 22px; font-weight: 900; letter-spacing: -.4px; margin-top: 12px; }
+.ac-login-sub { font-size: 13.5px; color: var(--ac-text-muted); margin-top: 6px; line-height: 1.5; }
+
+.ac-trust-bar {
+  display: flex; align-items: center; justify-content: center;
+  gap: 8px; flex-wrap: wrap; margin: 16px 0;
+  font-size: 11.5px; font-weight: 600; color: var(--ac-text-muted);
+}
+.ac-trust-bar-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--ac-text-muted); }
+
+/* Country selector */
+.ac-country-selector { margin: 12px 0 16px; text-align: left; }
+.ac-country-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; color: var(--ac-text-muted); margin-bottom: 6px; display: block; }
+.ac-country-select {
+  width: 100%; padding: 10px 14px; background: var(--ac-surface-2);
+  border: 1px solid var(--ac-border); border-radius: 10px;
+  color: var(--ac-text); font-size: 14px; font-family: inherit; font-weight: 600;
+  cursor: pointer; appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238a7060' stroke-width='2.5' stroke-linecap='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 12px center;
+  padding-right: 34px;
+}
+.ac-country-select:focus { outline: none; border-color: var(--ac-amber); }
+.ac-country-select option { background: #1a0f04; }
+
+/* Age requirements toggle */
+.ac-age-rules-toggle {
+  display: flex; align-items: center; gap: 6px; margin: 8px 0 4px;
+  background: transparent; border: none; color: var(--ac-amber);
+  font-size: 12.5px; font-weight: 600; font-family: inherit; cursor: pointer;
+  opacity: .85; padding: 0; transition: opacity .15s;
+}
+.ac-age-rules-toggle:hover { opacity: 1; }
+
+.btn-osmio-ac {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  width: 100%; padding: 14px 20px; margin: 4px 0;
+  background: linear-gradient(135deg, var(--ac-amber), #b45309);
+  color: #fff; border: none; border-radius: 12px;
+  font-size: 14px; font-weight: 700; font-family: inherit;
+  cursor: pointer; transition: all .15s ease;
+}
+.btn-osmio-ac:hover { filter: brightness(1.1); transform: translateY(-1px); }
+
+.ac-demo-links { margin-top: 16px; text-align: left; }
+.ac-demo-link-label { display: block; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--ac-text-muted); margin-bottom: 8px; }
+.ac-demo-link {
+  display: block; padding: 7px 10px; margin-bottom: 5px;
+  background: var(--ac-surface-2); border: 1px solid var(--ac-border);
+  border-radius: 8px; font-size: 12px; color: var(--ac-text-muted);
+  cursor: pointer; transition: all .15s ease;
+}
+.ac-demo-link:hover { background: #362010; border-color: rgba(217,119,6,.3); color: var(--ac-text); }
+
+/* ── Osmio ID Pair / Cert check screen ── */
+.ac-cert-screen { flex: 1; display: flex; align-items: center; justify-content: center; padding: 40px 20px; }
+.ac-cert-card {
+  background: var(--ac-surface); border: 1px solid var(--ac-border);
+  border-radius: 20px; padding: 32px; max-width: 420px; width: 100%;
+}
+.ac-cert-header { text-align: center; margin-bottom: 24px; }
+.ac-cert-icon-wrap {
+  width: 56px; height: 56px; background: linear-gradient(135deg, var(--ac-amber), #b45309);
+  border-radius: 16px; display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 16px; box-shadow: 0 0 24px rgba(217,119,6,.3);
+}
+.ac-cert-header h2 { font-size: 18px; font-weight: 800; margin-bottom: 4px; }
+.ac-cert-header p { font-size: 13px; color: var(--ac-text-muted); }
+
+/* ── Redirect ── */
+.ac-redirect-screen { flex: 1; display: flex; align-items: center; justify-content: center; padding: 40px 20px; }
+.ac-redirect-card { text-align: center; max-width: 320px; }
+.ac-redirect-card h2 { font-size: 18px; font-weight: 800; margin: 16px 0 8px; }
+.ac-redirect-card p { font-size: 13.5px; color: var(--ac-text-muted); }
+.ac-redirect-progress { height: 3px; background: var(--ac-surface-2); border-radius: 99px; overflow: hidden; margin-top: 20px; }
+.ac-redirect-bar { height: 100%; background: var(--ac-amber); border-radius: 99px; width: 0%; transition: width 2.2s ease; }
+
+/* ── Denied ── */
+.ac-denied-screen { flex: 1; display: flex; align-items: center; justify-content: center; padding: 40px 20px; }
+.ac-denied-card {
+  background: var(--ac-surface); border: 1px solid var(--ac-border);
+  border-radius: 20px; padding: 32px; max-width: 400px; width: 100%; text-align: center;
+}
+.ac-denied-icon {
+  width: 64px; height: 64px; border-radius: 50%; margin: 0 auto 16px;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(239,68,68,.1);
+}
+.ac-denied-card h2 { font-size: 20px; font-weight: 900; margin-bottom: 10px; }
+.ac-denied-card p { font-size: 13.5px; color: var(--ac-text-muted); line-height: 1.6; margin-bottom: 20px; }
+
+/* ── Dashboard ── */
+.ac-dashboard { max-width: 680px; margin: 0 auto; padding: 28px 20px 60px; }
+.ac-dash-welcome { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--ac-text-muted); }
+.ac-dash-name { font-size: 26px; font-weight: 900; letter-spacing: -.5px; margin-top: 4px; }
+.ac-moi-notice {
+  display: flex; align-items: center; gap: 8px; margin: 14px 0 24px;
+  padding: 10px 14px; background: rgba(217,119,6,.06);
+  border: 1px solid rgba(217,119,6,.15); border-radius: 10px;
+  font-size: 12px; font-weight: 600; color: var(--ac-amber);
+}
+.ac-section-label { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .8px; color: var(--ac-text-muted); margin: 20px 0 12px; }
+.ac-product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; margin-bottom: 24px; }
+.ac-product-card {
+  background: var(--ac-surface); border: 1px solid var(--ac-border);
+  border-radius: 14px; padding: 16px 14px; text-align: center;
+}
+.ac-product-emoji { font-size: 32px; margin-bottom: 8px; }
+.ac-product-name { font-size: 13px; font-weight: 700; margin-bottom: 2px; }
+.ac-product-type { font-size: 11px; color: var(--ac-text-muted); margin-bottom: 8px; }
+.ac-product-price { font-size: 15px; font-weight: 800; color: var(--ac-amber-lt); }
+
+.ac-age-badge {
+  display: inline-block; padding: 3px 8px; margin-bottom: 10px;
+  background: rgba(217,119,6,.12); border: 1px solid rgba(217,119,6,.25);
+  border-radius: 6px; font-size: 11px; font-weight: 700; color: var(--ac-amber-lt);
+}
+
+.btn-outline-ac {
+  padding: 10px 20px; background: transparent;
+  border: 1.5px solid var(--ac-border); border-radius: 10px;
+  font-size: 13px; font-weight: 600; color: var(--ac-text-muted);
+  cursor: pointer; transition: all .15s ease; font-family: inherit;
+}
+.btn-outline-ac:hover { border-color: var(--ac-amber); color: var(--ac-amber); }

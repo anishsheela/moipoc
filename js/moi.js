@@ -53,7 +53,7 @@ function renderLogin() {
             ${moiLogoSVG(40)}
           </div>
           <h1>${moiBrandText()}</h1>
-          <p>Your personal data, stored securely and encrypted with your Osmio ID. You control who sees what.</p>
+          <p>Your personal data, stored securely and encrypted with your Osmio ID Pair. You control who sees what.</p>
 
           <div class="moi-cert-detect">
             <div style="color:#06d6a0">
@@ -61,7 +61,7 @@ function renderLogin() {
             </div>
             <div class="moi-cert-detect-info">
               <strong>Osmio ID Pair detected</strong>
-              <span>${u.certs.foundation.id} · Foundation Certificate</span>
+              <span>${u.certs.foundation.id} · Foundation Osmio ID Pair</span>
             </div>
           </div>
 
@@ -70,17 +70,9 @@ function renderLogin() {
             Access My Vault
           </button>
 
-          <div class="moi-login-divider">or</div>
-
-          <div style="display:flex;flex-direction:column;gap:8px">
-            <button class="btn-moi-outline" style="width:100%;font-size:13px" onclick="router.go('consent')">
-              View incoming licence request (from TNT demo)
-            </button>
-          </div>
-
           <div style="margin-top:20px;padding:12px;background:rgba(0,180,216,.04);border:1px solid rgba(0,180,216,.1);border-radius:9px;font-size:12px;color:var(--moi-text-muted);text-align:left;line-height:1.55">
             <strong style="color:var(--moi-accent);display:block;margin-bottom:3px">End-to-end encrypted</strong>
-            Your data is encrypted using the public key from your Osmio ID certificate. Only you can decrypt it with your private key.
+            Your data is encrypted using the public key from your Osmio ID Pair. Only you can decrypt it with your private key.
           </div>
         </div>
       </div>
@@ -104,31 +96,59 @@ function renderConsent() {
     returnTo: 'tnt.html#redirecting'
   };
 
-  // Derive above18 from stored DOB — only the conclusion is ever shared, not the raw date
-  const dobDate = moi.dob.value ? new Date(moi.dob.value) : null;
-  const isAbove18 = dobDate
-    ? (new Date().getFullYear() - dobDate.getFullYear() > 18 ||
-       (new Date().getFullYear() - dobDate.getFullYear() === 18 &&
-        new Date() >= new Date(new Date().getFullYear(), dobDate.getMonth(), dobDate.getDate())))
-    : null;
+  // Derive age from DOB — only the pass/fail conclusion is ever shared, not the raw date
+  // Demo: 'moi_demo_dob' overrides DOB; 'moi_demo_country' overrides country of residence
+  const demoDob = sessionStorage.getItem('moi_demo_dob');
+  const demoCountry = sessionStorage.getItem('moi_demo_country');
+  const effectiveDob = demoDob || moi.dob.value;
+  const effectiveCountry = demoCountry || moi.country.value;
+  const dobDate = effectiveDob ? new Date(effectiveDob) : null;
+
+  function computeAge(dob) {
+    if (!dob) return null;
+    const today = new Date();
+    let age = today.getFullYear() - dob.getFullYear();
+    if (today.getMonth() < dob.getMonth() ||
+        (today.getMonth() === dob.getMonth() && today.getDate() < dob.getDate())) age--;
+    return age;
+  }
+  const userAge = computeAge(dobDate);
+
+  function makeAgeField(minAge) {
+    const passes = userAge !== null ? userAge >= minAge : null;
+    return {
+      label: `Age Verification (${minAge}+)`,
+      emoji: '🔞',
+      value: passes === null ? 'DOB not set' : passes ? `${minAge}+ Confirmed` : `Under ${minAge}`,
+      verified: moi.dob.verified,
+      note: 'Derived from your date of birth. The actual date is never shared.',
+      ageFails: passes === false
+    };
+  }
 
   const fieldMeta = {
-    firstName: { label: 'First Name',        emoji: '👤', value: moi.firstName.value,                              verified: moi.firstName.verified },
-    lastName:  { label: 'Last Name',         emoji: '👤', value: moi.lastName.value,                               verified: moi.lastName.verified  },
-    above18:   { label: 'Age Verification',  emoji: '🔞', value: isAbove18 === null ? 'DOB not set' : isAbove18 ? 'Above 18 — Confirmed' : 'Under 18', verified: moi.dob.verified,
-                 note: 'Derived from your date of birth. The actual date is never shared.' },
-    photo:     { label: 'Profile Photo',     emoji: '🖼', value: 'Photo on file',                                  verified: moi.photo ? moi.photo.verified : false },
-    country:   { label: 'Country',           emoji: '🌍', value: moi.country.value,                                verified: moi.country.verified   },
+    firstName: { label: 'First Name',    emoji: '👤', value: moi.firstName.value, verified: moi.firstName.verified },
+    lastName:  { label: 'Last Name',     emoji: '👤', value: moi.lastName.value,  verified: moi.lastName.verified  },
+    above13:   makeAgeField(13),
+    above18:   makeAgeField(18),
+    above21:   makeAgeField(21),
+    above25:   makeAgeField(25),
+    photo:     { label: 'Profile Photo', emoji: '🖼', value: 'Photo on file', verified: moi.photo ? moi.photo.verified : false },
+    email:     { label: 'Email',         emoji: '✉️', value: moi.email.value,  verified: moi.email.verified  },
+    country:   { label: 'Country of Residence', emoji: '🌍', value: effectiveCountry, verified: moi.country.verified },
   };
 
   const requiredRows = request.requiredFields.map(f => {
     const meta = fieldMeta[f] || { label: f, emoji: '📄', value: '—', verified: false };
-    return `<div class="moi-consent-field required">
+    const failBorder = meta.ageFails ? 'border-color:rgba(239,71,111,.35);background:rgba(239,71,111,.04)' : '';
+    const valueColor = meta.ageFails ? 'color:#ef476f;font-weight:600' : '';
+    return `<div class="moi-consent-field required" style="${failBorder}">
       <div class="moi-field-icon" style="background:rgba(0,180,216,.1);font-size:16px">${meta.emoji}</div>
       <div class="moi-field-info">
         <strong>${meta.label}</strong>
-        <span>${meta.value}</span>
+        <span style="${valueColor}">${meta.value}</span>
         ${meta.note ? `<span style="font-size:10.5px;color:var(--moi-accent);opacity:.8;font-style:italic">${meta.note}</span>` : ''}
+        ${meta.ageFails ? `<span style="font-size:11px;color:#ef476f;font-style:italic">⚠ This app may reject you based on this result.</span>` : ''}
       </div>
       ${verifiedBadge(meta.verified)}
       <span class="moi-field-required-tag">Required</span>
@@ -159,7 +179,13 @@ function renderConsent() {
 
           <div class="moi-consent-header">
             <div class="moi-consent-apps">
-              <div class="moi-consent-app-icon tnt-icon" style="font-family:'Red Hat Display',sans-serif">T&T</div>
+              ${(()=>{
+                const colors = { tnt:'#aa1945', nextcloud:'#0082c9', betmax:'#16a34a', cigs:'#92400e' };
+                const labels = { tnt:'T&T', nextcloud:'NC', betmax:'BM', cigs:'🍷' };
+                const col = colors[request.appId] || '#334155';
+                const lbl = labels[request.appId] || request.appName.substring(0,2).toUpperCase();
+                return `<div class="moi-consent-app-icon" style="background:${col};color:#fff;font-family:inherit">${lbl}</div>`;
+              })()}
               <div class="moi-consent-arrow">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
               </div>
@@ -173,14 +199,15 @@ function renderConsent() {
             <div class="moi-consent-section-label">Always shared — required by ${request.appName}</div>
             ${requiredRows}
 
+            ${optionalRows ? `
             <div class="moi-consent-section-label" style="margin-top:16px">Optional — your choice</div>
-            ${optionalRows}
+            ${optionalRows}` : ''}
           </div>
 
           <div class="moi-consent-footer">
             <div class="moi-consent-security">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-              Secured by Osmio ID · Certificate: ${u.certs.foundation.id}
+              Secured by Osmio ID Pair: ${u.certs.foundation.id}
             </div>
             <div class="moi-consent-btns">
               <button class="btn-moi-danger" onclick="denyConsent()">
@@ -208,12 +235,44 @@ function approveConsent() {
   };
   const moi = MOCK.currentUser.moi;
 
-  // Collect what was toggled on
+  // Re-derive age and country using same overrides as renderConsent
+  const demoDob = sessionStorage.getItem('moi_demo_dob');
+  const demoCountry = sessionStorage.getItem('moi_demo_country');
+  const effectiveDob = demoDob || moi.dob.value;
+  const effectiveCountry = demoCountry || moi.country.value;
+  const dobDate = effectiveDob ? new Date(effectiveDob) : null;
+  function computeAge(dob) {
+    if (!dob) return null;
+    const today = new Date();
+    let age = today.getFullYear() - dob.getFullYear();
+    if (today.getMonth() < dob.getMonth() ||
+        (today.getMonth() === dob.getMonth() && today.getDate() < dob.getDate())) age--;
+    return age;
+  }
+  const userAge = computeAge(dobDate);
+
+  // Always share the name fields (always required)
   const shared = {
     firstName: { value: moi.firstName.value, verified: moi.firstName.verified },
     lastName:  { value: moi.lastName.value,  verified: moi.lastName.verified  },
   };
 
+  // Include all required fields: age checks computed from DOB; other fields from moi or demo override
+  (request.requiredFields || []).forEach(f => {
+    if (f === 'firstName' || f === 'lastName') return; // already included
+    const ageMatch = f.match(/^above(\d+)$/);
+    if (ageMatch) {
+      const minAge = parseInt(ageMatch[1]);
+      const passes = userAge !== null ? userAge >= minAge : null;
+      shared[f] = { value: passes, verified: moi.dob.verified };
+    } else if (f === 'country') {
+      shared[f] = { value: effectiveCountry, verified: moi.country.verified };
+    } else if (moi[f]) {
+      shared[f] = { value: moi[f].value, verified: moi[f].verified };
+    }
+  });
+
+  // Collect optional fields that were toggled on
   document.querySelectorAll('.field-toggle').forEach(cb => {
     if (cb.checked) {
       const f = cb.dataset.field;
@@ -221,7 +280,7 @@ function approveConsent() {
     }
   });
 
-  // Save response for TNT to read
+  // Save response for the requesting app to read
   sessionStorage.setItem('moi_oauth_response', JSON.stringify({
     requestId: request.requestId,
     approved: true,
@@ -290,22 +349,31 @@ function renderDashboard() {
     <div class="moi-log-row" id="log-row-${i}">
       <div class="moi-log-dot ${l.granted ? 'granted' : 'denied'}"></div>
       <div class="moi-log-info">
-        <div class="moi-log-app">${l.app} <span style="font-size:11px;font-weight:500;color:var(--moi-text-muted)">via ${l.certType} cert</span></div>
+        <div class="moi-log-app">${l.app} <span style="font-size:11px;font-weight:500;color:var(--moi-text-muted)">· Osmio ID Pair ${l.certType === 'foundation' ? MOCK.currentUser.certs.foundation.id : MOCK.currentUser.certs.numberplate.id}</span></div>
         <div class="moi-log-fields">${l.fields ? l.fields.join(', ') : 'Direct vault access'} · ${l.granted ? 'Granted' : 'Denied'}</div>
       </div>
       <div class="moi-log-time">${timeAgo(l.date)}</div>
     </div>`).join('');
 
-  const consentRows = activeConsents.map((l, i) => `
+  const appMeta = {
+    'Trusted & True': { color: '#aa1945', icon: '❤' },
+    'Nextcloud':      { color: '#0082c9', icon: '☁' },
+    'BetMax':         { color: '#16a34a', icon: '⭐' },
+    'Alkoshop':       { color: '#92400e', icon: '🍷' },
+  };
+  const consentRows = activeConsents.map((l, i) => {
+    const meta = appMeta[l.app] || { color: '#334155', icon: '○' };
+    return `
     <div class="moi-consent-row" id="consent-${i}">
-      <div class="moi-log-dot granted" style="margin-top:4px;flex-shrink:0"></div>
+      <div style="width:32px;height:32px;border-radius:9px;background:${meta.color};display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0">${meta.icon}</div>
       <div class="moi-log-info" style="flex:1">
-        <div class="moi-log-app">${l.app} <span style="font-size:11px;font-weight:500;color:var(--moi-text-muted)">via ${l.certType} cert</span></div>
-        <div class="moi-log-fields" style="margin-top:2px">${l.fields.join(', ')}</div>
-        <div style="font-size:11px;color:var(--moi-text-muted);margin-top:2px">Last accessed ${timeAgo(l.date)}</div>
+        <div class="moi-log-app" style="font-weight:700">${l.app}</div>
+        <div class="moi-log-fields" style="margin-top:1px">${l.fields.join(', ')}</div>
+        <div style="font-size:11px;color:var(--moi-text-muted);margin-top:2px">Osmio ID Pair ${l.certType === 'foundation' ? MOCK.currentUser.certs.foundation.id : MOCK.currentUser.certs.numberplate.id} · Last accessed ${timeAgo(l.date)}</div>
       </div>
       <button class="moi-revoke-btn" onclick="revokeConsent(${i}, '${l.app}')">Revoke</button>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 
   // IDQA max is 24; current max achievable is 12 (attestation not yet implemented)
   const idqaPct = Math.round((u.idqa / 24) * 100);
@@ -353,17 +421,17 @@ function renderDashboard() {
                   <div class="moi-idqa-bar" style="width:${idqaPct}%"></div>
                 </div>
                 <div class="moi-idqa-labels"><span>0</span><span>8</span><span>12</span><span>24</span></div>
-                <div style="font-size:10px;color:var(--moi-text-muted);margin-top:4px;opacity:.7">12–24 reserved for attestation (coming soon)</div>
+                <div style="font-size:10px;color:var(--moi-text-muted);margin-top:4px;opacity:.7">Scores above 12 require additional attestation — further documents or a live video call with an Attestation Officer. This level is not yet rolled out.</div>
               </div>
 
               <div class="moi-cert-mini">
-                <div class="moi-cert-mini-label">Foundation Certificate</div>
+                <div class="moi-cert-mini-label">Foundation Osmio ID Pair</div>
                 <div class="moi-cert-mini-id">${u.certs.foundation.id}</div>
                 <div style="font-size:11px;color:var(--moi-text-muted);margin-top:2px">Expires ${formatDate(u.certs.foundation.validTo)}</div>
               </div>
 
               <div class="moi-cert-mini" style="margin-top:8px">
-                <div class="moi-cert-mini-label">Numberplate Certificate</div>
+                <div class="moi-cert-mini-label">Numberplate Osmio ID Pair</div>
                 <div class="moi-cert-mini-id">${u.certs.numberplate.id}</div>
                 <div style="font-size:11px;color:var(--moi-text-muted);margin-top:2px">Expires ${formatDate(u.certs.numberplate.validTo)}</div>
               </div>
@@ -445,7 +513,7 @@ function renderManage() {
           <div class="moi-form-section-title">Identity</div>
           <div style="display:flex;align-items:flex-start;gap:10px;padding:11px 14px;background:rgba(255,209,102,.07);border:1px solid rgba(255,209,102,.2);border-radius:9px;margin-bottom:14px;font-size:12.5px;color:var(--moi-warning);line-height:1.5">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="flex-shrink:0;margin-top:1px"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-            <span>Attested fields can be edited, but editing will mark them as <strong>unattested</strong> and require re-attestation.</span>
+            <span>Attested fields are locked by default. If you change an attested value, it will be marked <strong>unattested</strong> until an Attestation Officer re-confirms it.</span>
           </div>
           <div class="moi-form-grid">
             <div class="moi-form-group">
@@ -480,15 +548,27 @@ function renderManage() {
         </div>
 
         <div class="moi-form-section">
-          <div class="moi-form-section-title">Contact (Attested at enrollment)</div>
+          <div class="moi-form-section-title">Contact</div>
           <div class="moi-form-grid">
             <div class="moi-form-group">
-              <label class="moi-form-label">Email ${verifiedBadge(moi.email.verified)}</label>
-              <input class="moi-form-input" type="email" value="${moi.email.value}" disabled>
+              <label class="moi-form-label">
+                Email
+                ${verifiedBadge(moi.email.verified)}
+              </label>
+              <div style="position:relative">
+                <input class="moi-form-input" id="inp-email" type="email" value="${moi.email.value}" ${moi.email.verified ? 'data-verified="true" readonly' : ''} style="width:100%;padding-right:${moi.email.verified ? '80px' : '14px'}">
+                ${moi.email.verified ? `<button onclick="unlockVerifiedField('inp-email','email')" class="moi-unlock-btn">Edit</button>` : ''}
+              </div>
             </div>
             <div class="moi-form-group">
-              <label class="moi-form-label">Phone ${verifiedBadge(moi.phone.verified)}</label>
-              <input class="moi-form-input" type="tel" value="${moi.phone.value}" disabled>
+              <label class="moi-form-label">
+                Phone
+                ${verifiedBadge(moi.phone.verified)}
+              </label>
+              <div style="position:relative">
+                <input class="moi-form-input" id="inp-phone" type="tel" value="${moi.phone.value}" ${moi.phone.verified ? 'data-verified="true" readonly' : ''} style="width:100%;padding-right:${moi.phone.verified ? '80px' : '14px'}">
+                ${moi.phone.verified ? `<button onclick="unlockVerifiedField('inp-phone','phone')" class="moi-unlock-btn">Edit</button>` : ''}
+              </div>
             </div>
           </div>
         </div>
@@ -545,7 +625,7 @@ function renderManage() {
 }
 
 function revokeConsent(index, appName) {
-  if (!confirm(`Revoke data licence for "${appName}"?\n\n${appName} will no longer hold a licence to access your MOI data. They will need to request a new licence next time you sign in.`)) return;
+  if (!confirm(`Withdraw data licence for "${appName}"?\n\nThis revokes ${appName}'s active licence to request your MOI data going forward. Any data they have already received may be retained by them under their own privacy policy. You can request data deletion separately from ${appName} directly.`)) return;
   const row = document.getElementById(`consent-${index}`);
   if (!row) return;
   row.style.transition = 'opacity .4s ease, transform .4s ease';
@@ -582,7 +662,7 @@ function revokeConsent(index, appName) {
 }
 
 function unlockVerifiedField(inputId, fieldKey) {
-  if (!confirm('⚠ This field is attested.\n\nEditing it will mark it as unattested and you will need to go through attestation again.\n\nDo you want to continue?')) return;
+  if (!confirm('⚠ This field is attested.\n\nIf you change this value, it will be marked as unattested. An Attestation Officer will need to re-confirm it before it can be used in licences again.\n\nContinue?')) return;
   const input = document.getElementById(inputId);
   if (!input) return;
   input.removeAttribute('readonly');
@@ -592,7 +672,7 @@ function unlockVerifiedField(inputId, fieldKey) {
   input.focus();
   // Hide the unlock button
   const btn = input.parentElement.querySelector('.moi-unlock-btn');
-  if (btn) { btn.textContent = 'Will unattested'; btn.style.color = 'var(--moi-warning)'; btn.disabled = true; }
+  if (btn) { btn.textContent = 'Unlocked'; btn.style.color = 'var(--moi-warning)'; btn.disabled = true; }
   // Mark in mock data
   if (MOCK.currentUser.moi[fieldKey]) MOCK.currentUser.moi[fieldKey].verified = false;
 }
@@ -622,7 +702,7 @@ function renderVerifyRequest() {
             <button class="btn-moi-outline" onclick="router.go('dashboard')" style="font-size:13px;padding:7px 14px">← Back</button>
             <h2 style="margin-bottom:0">Request Identity Attestation</h2>
           </div>
-          <p>Submit your stored information for admin review. An OSMIO officer will cross-check against your enrollment records and TrustSwiftly ID verification data.</p>
+          <p>Submit your stored information for attestation review. An Attestation Officer will cross-check against your enrollment records and liveliness check results.</p>
 
           <div style="margin-bottom:14px">
             <div style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--moi-text-muted);margin-bottom:10px">Select data to submit for attestation</div>
@@ -649,7 +729,7 @@ function renderVerifyRequest() {
               <input type="checkbox" checked>
               <div class="moi-verify-item-text">
                 <strong>Date of Birth — <span style="color:var(--moi-text-muted);font-weight:400">${moi.dob.value}</span></strong>
-                <span>Cross-checked against TrustSwiftly ID scan</span>
+                <span>Cross-checked against liveliness check</span>
               </div>
               ${verifiedBadge(moi.dob.verified)}
             </label>
@@ -658,7 +738,97 @@ function renderVerifyRequest() {
               <input type="checkbox" checked>
               <div class="moi-verify-item-text">
                 <strong>Profile Photo</strong>
-                <span>Compared against TrustSwiftly liveness check</span>
+                <span>Compared against liveliness check</span>
+              </div>
+              ${verifiedBadge(false)}
+            </label>
+
+            <label class="moi-verify-item">
+              <input type="checkbox">
+              <div class="moi-verify-item-text">
+                <strong>Gender — <span style="color:var(--moi-text-muted);font-weight:400">${moi.gender.value}</span></strong>
+                <span>Optional — included if relevant to your use case</span>
+              </div>
+              ${verifiedBadge(moi.gender.verified)}
+            </label>
+
+            <label class="moi-verify-item">
+              <input type="checkbox">
+              <div class="moi-verify-item-text">
+                <strong>Email — <span style="color:var(--moi-text-muted);font-weight:400">${moi.email.value}</span></strong>
+                <span>Verified at enrollment</span>
+              </div>
+              ${verifiedBadge(moi.email.verified)}
+            </label>
+
+            <label class="moi-verify-item">
+              <input type="checkbox">
+              <div class="moi-verify-item-text">
+                <strong>Phone — <span style="color:var(--moi-text-muted);font-weight:400">${moi.phone.value}</span></strong>
+                <span>Verified at enrollment</span>
+              </div>
+              ${verifiedBadge(moi.phone.verified)}
+            </label>
+
+            <label class="moi-verify-item">
+              <input type="checkbox">
+              <div class="moi-verify-item-text">
+                <strong>Address — <span style="color:var(--moi-text-muted);font-weight:400">${moi.address.value}</span></strong>
+                <span>Cross-checked against proof of address document</span>
+              </div>
+              ${verifiedBadge(moi.address.verified)}
+            </label>
+
+            <label class="moi-verify-item">
+              <input type="checkbox">
+              <div class="moi-verify-item-text">
+                <strong>City — <span style="color:var(--moi-text-muted);font-weight:400">${moi.city.value}</span></strong>
+                <span>Cross-checked against proof of address document</span>
+              </div>
+              ${verifiedBadge(moi.city.verified)}
+            </label>
+
+            <label class="moi-verify-item">
+              <input type="checkbox">
+              <div class="moi-verify-item-text">
+                <strong>State / Province — <span style="color:var(--moi-text-muted);font-weight:400">${moi.state.value}</span></strong>
+                <span>Cross-checked against proof of address document</span>
+              </div>
+              ${verifiedBadge(moi.state.verified)}
+            </label>
+
+            <label class="moi-verify-item">
+              <input type="checkbox">
+              <div class="moi-verify-item-text">
+                <strong>Country — <span style="color:var(--moi-text-muted);font-weight:400">${moi.country.value}</span></strong>
+                <span>Cross-checked against proof of address document</span>
+              </div>
+              ${verifiedBadge(moi.country.verified)}
+            </label>
+
+            <label class="moi-verify-item">
+              <input type="checkbox">
+              <div class="moi-verify-item-text">
+                <strong>Postal Code — <span style="color:var(--moi-text-muted);font-weight:400">${moi.postalCode.value}</span></strong>
+                <span>Cross-checked against proof of address document</span>
+              </div>
+              ${verifiedBadge(moi.postalCode.verified)}
+            </label>
+
+            <label class="moi-verify-item">
+              <input type="checkbox">
+              <div class="moi-verify-item-text">
+                <strong>Occupation — <span style="color:var(--moi-text-muted);font-weight:400">${moi.occupation.value}</span></strong>
+                <span>Optional — included if relevant to your use case</span>
+              </div>
+              ${verifiedBadge(moi.occupation.verified)}
+            </label>
+
+            <label class="moi-verify-item">
+              <input type="checkbox">
+              <div class="moi-verify-item-text">
+                <strong>Bio</strong>
+                <span>Optional — self-authored description</span>
               </div>
               ${verifiedBadge(false)}
             </label>
@@ -703,7 +873,7 @@ function renderVerifyRequest() {
 
           <div class="moi-privacy-note">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="flex-shrink:0;margin-top:1px"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-            <span>Your data and documents are sent securely to the OSMIO admin portal. They are used only for attestation and are not shared with third parties.</span>
+            <span>Your data and documents are sent securely to the OSMIO Attestation Officer's portal. They are used only for attestation purposes and are not shared with third parties.</span>
           </div>
 
           <div style="display:flex;gap:10px">

@@ -121,3 +121,11 @@ input, textarea, select { font-family: inherit; }
 #demo-nav a:hover { background: rgba(255,255,255,.1); color: #fff; border-color: rgba(255,255,255,.3); }
 #demo-nav a.active { background: rgba(255,255,255,.15); color: #fff; border-color: rgba(255,255,255,.35); }
 #demo-nav .nav-sep { color: rgba(255,255,255,.15); font-size: 13px; }
+#demo-nav a.hub-link {
+  background: rgba(0,180,216,.15);
+  border-color: rgba(0,180,216,.4);
+  color: #00b4d8;
+  font-weight: 700;
+  margin-right: 6px;
+}
+#demo-nav a.hub-link:hover { background: rgba(0,180,216,.25); color: #00caee; }

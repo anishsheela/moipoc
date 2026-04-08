@@ -1,0 +1,359 @@
+/* =============================================================
+   BETMAX — Sports Betting app styles
+   Palette: #16a34a (green) · #ca8a04 (gold) · #0f1a13 (dark)
+   Font:    Inter
+   ============================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+:root {
+  --bm-primary:    #16a34a;
+  --bm-dark:       #166534;
+  --bm-gold:       #ca8a04;
+  --bm-gold-light: #fef3c7;
+  --bm-bg:         #0f1a13;
+  --bm-surface:    #162019;
+  --bm-surface-2:  #1e2e22;
+  --bm-text:       #e8f5ec;
+  --bm-text-muted: #6a9470;
+  --bm-border:     rgba(22,163,74,.18);
+  --bm-shadow:     0 4px 24px rgba(0,0,0,.4);
+  --bm-shadow-lg:  0 12px 48px rgba(0,0,0,.5);
+}
+
+body.bm-app {
+  font-family: 'Inter', sans-serif;
+  background: var(--bm-bg);
+  color: var(--bm-text);
+}
+
+/* ── Layout ─────────────────────────────────────────────────── */
+.bm-screen {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 56px;
+}
+
+/* ── Top Bar ────────────────────────────────────────────────── */
+.bm-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 28px;
+  background: var(--bm-surface);
+  border-bottom: 1px solid var(--bm-border);
+}
+.bm-logo-mark {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.bm-logo-text {
+  font-size: 20px;
+  font-weight: 900;
+  letter-spacing: -.4px;
+}
+.bm-logo-text .bm-bet  { color: #fff; }
+.bm-logo-text .bm-max  { color: var(--bm-gold); }
+.bm-topbar-actions { display: flex; align-items: center; gap: 12px; }
+
+/* ── Hero / Login ───────────────────────────────────────────── */
+.bm-hero {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  background: radial-gradient(ellipse at 50% 0%, rgba(22,163,74,.15) 0%, transparent 70%), var(--bm-bg);
+}
+
+.bm-login-card {
+  width: 100%;
+  max-width: 380px;
+  background: var(--bm-surface);
+  border-radius: 20px;
+  padding: 36px 32px 30px;
+  box-shadow: var(--bm-shadow-lg);
+  text-align: center;
+  border: 1px solid var(--bm-border);
+}
+.bm-login-tagline {
+  font-size: 24px;
+  font-weight: 900;
+  color: #fff;
+  margin-top: 12px;
+  letter-spacing: -.4px;
+}
+.bm-login-sub {
+  font-size: 14px;
+  color: var(--bm-text-muted);
+  margin-top: 6px;
+  line-height: 1.5;
+}
+.bm-trust-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 18px 0;
+  font-size: 11.5px;
+  color: var(--bm-text-muted);
+  font-weight: 600;
+}
+.bm-trust-bar-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--bm-border); }
+
+/* ── Buttons ────────────────────────────────────────────────── */
+.btn-osmio-bm {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 13px 24px;
+  background: linear-gradient(135deg, #0f2132, #1a3a54);
+  color: #fff;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  width: 100%;
+  transition: all .15s ease;
+  margin-top: 4px;
+  border: 1px solid rgba(0,180,216,.2);
+}
+.btn-osmio-bm:hover { background: linear-gradient(135deg, #1a3a54, #0f2132); border-color: rgba(0,180,216,.4); }
+
+.btn-bm-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: var(--bm-primary);
+  color: #fff;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  width: 100%;
+  transition: background .15s ease;
+  margin-top: 8px;
+}
+.btn-bm-primary:hover { background: var(--bm-dark); }
+
+.btn-outline-bm {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: transparent;
+  color: var(--bm-text-muted);
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  border: 1px solid var(--bm-border);
+  transition: all .15s ease;
+}
+.btn-outline-bm:hover { background: rgba(22,163,74,.08); color: var(--bm-primary); }
+
+/* ── Demo links ─────────────────────────────────────────────── */
+.bm-demo-links {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--bm-border);
+  text-align: left;
+}
+.bm-demo-link-label {
+  display: block;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .8px;
+  color: var(--bm-text-muted);
+  margin-bottom: 8px;
+}
+.bm-demo-link {
+  display: block;
+  font-size: 12.5px;
+  color: var(--bm-text-muted);
+  padding: 7px 10px;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: background .12s;
+  margin-bottom: 4px;
+}
+.bm-demo-link:hover { background: rgba(22,163,74,.08); color: var(--bm-primary); }
+
+/* ── Cert check screen ──────────────────────────────────────── */
+.bm-cert-screen {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  background: var(--bm-bg);
+}
+.bm-cert-card {
+  width: 100%;
+  max-width: 400px;
+  background: var(--bm-surface);
+  border-radius: 18px;
+  padding: 32px;
+  border: 1px solid var(--bm-border);
+  box-shadow: 0 0 40px rgba(22,163,74,.1);
+}
+.bm-cert-header { text-align: center; margin-bottom: 24px; }
+.bm-cert-header h2 { font-size: 18px; font-weight: 800; color: var(--bm-text); margin-top: 12px; }
+.bm-cert-header p  { font-size: 13px; color: var(--bm-text-muted); margin-top: 4px; }
+.bm-cert-icon-wrap {
+  width: 52px; height: 52px;
+  background: linear-gradient(135deg, #16a34a, #166534);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  box-shadow: 0 0 20px rgba(22,163,74,.4);
+}
+/* Reuse shared cert-step styles from nextcloud.css via shared patterns */
+.cert-steps { display: flex; flex-direction: column; gap: 10px; }
+.cert-step  { display: flex; align-items: flex-start; gap: 12px; animation: slideInLeft .3s ease both; }
+.cert-step-icon {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.cert-step-icon.loading { background: rgba(22,163,74,.15); color: #16a34a; }
+.cert-step-icon.success { background: rgba(6,214,160,.15); color: #06d6a0; }
+.cert-step-icon.info    { background: rgba(22,163,74,.15); color: #16a34a; }
+.cert-step-text strong  { display: block; font-size: 13px; font-weight: 600; color: var(--bm-text); }
+.cert-step-text span    { display: block; font-size: 11.5px; color: var(--bm-text-muted); margin-top: 2px; font-family: monospace; }
+.cert-step-idqa         { margin-top: 4px; font-size: 11.5px; color: #06d6a0; font-weight: 600; }
+
+/* ── Redirect ───────────────────────────────────────────────── */
+.bm-redirect-screen {
+  flex: 1; display: flex; align-items: center; justify-content: center; padding: 40px 20px;
+  background: var(--bm-bg);
+}
+.bm-redirect-card {
+  text-align: center; max-width: 340px; width: 100%;
+  background: var(--bm-surface);
+  border-radius: 18px; padding: 40px 32px;
+  box-shadow: var(--bm-shadow);
+  border: 1px solid var(--bm-border);
+}
+.bm-redirect-spinner { margin-bottom: 20px; color: var(--bm-primary); }
+.bm-redirect-card h2 { font-size: 18px; font-weight: 800; color: var(--bm-text); }
+.bm-redirect-card p  { font-size: 13px; color: var(--bm-text-muted); margin-top: 6px; }
+.bm-redirect-progress {
+  margin-top: 20px; height: 3px; background: var(--bm-surface-2); border-radius: 999px; overflow: hidden;
+}
+.bm-redirect-bar {
+  height: 100%; background: var(--bm-primary); border-radius: 999px; width: 0%;
+  transition: width 2s ease;
+}
+
+/* ── Dashboard ──────────────────────────────────────────────── */
+.bm-dashboard {
+  flex: 1;
+  padding: 28px 28px 40px;
+  max-width: 860px;
+  margin: 0 auto;
+  width: 100%;
+}
+.bm-dash-welcome { font-size: 13px; color: var(--bm-text-muted); font-weight: 600; }
+.bm-dash-name    { font-size: 26px; font-weight: 900; color: #fff; letter-spacing: -.4px; margin-top: 2px; }
+
+.bm-moi-notice {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 16px 0 24px;
+  padding: 10px 14px;
+  background: rgba(22,163,74,.08);
+  border: 1px solid var(--bm-border);
+  border-radius: 9px;
+  font-size: 12px;
+  color: var(--bm-primary);
+  font-weight: 500;
+}
+
+/* Odds grid */
+.bm-section-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .8px;
+  color: var(--bm-text-muted);
+  margin-bottom: 10px;
+}
+.bm-odds-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 10px;
+  margin-bottom: 24px;
+}
+.bm-match-card {
+  background: var(--bm-surface);
+  border: 1px solid var(--bm-border);
+  border-radius: 12px;
+  padding: 16px;
+  cursor: pointer;
+  transition: all .15s ease;
+}
+.bm-match-card:hover { border-color: var(--bm-primary); transform: translateY(-1px); box-shadow: var(--bm-shadow); }
+.bm-match-teams {
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 8px;
+}
+.bm-match-league {
+  font-size: 11px;
+  color: var(--bm-text-muted);
+  margin-bottom: 10px;
+}
+.bm-match-odds {
+  display: flex;
+  gap: 6px;
+}
+.bm-odd {
+  flex: 1;
+  text-align: center;
+  padding: 6px 4px;
+  background: var(--bm-surface-2);
+  border-radius: 7px;
+  cursor: pointer;
+  transition: background .12s;
+}
+.bm-odd:hover { background: var(--bm-primary); }
+.bm-odd-label { font-size: 10px; color: var(--bm-text-muted); }
+.bm-odd-val   { font-size: 13px; font-weight: 800; color: var(--bm-gold); }
+
+/* ── Age Denied ─────────────────────────────────────────────── */
+.bm-denied-screen {
+  flex: 1; display: flex; align-items: center; justify-content: center; padding: 40px 20px;
+  background: var(--bm-bg);
+}
+.bm-denied-card {
+  width: 100%; max-width: 380px;
+  background: var(--bm-surface);
+  border-radius: 20px;
+  padding: 36px 32px 30px;
+  box-shadow: var(--bm-shadow-lg);
+  text-align: center;
+  border: 1px solid rgba(239,71,111,.2);
+}
+.bm-denied-icon {
+  width: 64px; height: 64px;
+  background: rgba(239,71,111,.12);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 16px;
+}
+.bm-denied-card h2 { font-size: 22px; font-weight: 800; color: #fff; margin-bottom: 8px; }
+.bm-denied-card p  { font-size: 14px; color: var(--bm-text-muted); line-height: 1.55; margin-bottom: 20px; }

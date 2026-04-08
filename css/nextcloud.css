@@ -1,0 +1,357 @@
+/* =============================================================
+   NEXTCLOUD — Brand-aligned styles
+   Palette: #0082c9 · #00679e · #e8f4fb · #f4f9fd
+   Font:    Inter
+   ============================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+:root {
+  --nc-primary:     #0082c9;
+  --nc-dark:        #00679e;
+  --nc-deeper:      #004a78;
+  --nc-bg:          #f4f9fd;
+  --nc-white:       #ffffff;
+  --nc-text:        #0d1b29;
+  --nc-text-mid:    #2c4a60;
+  --nc-text-muted:  #7a9ab0;
+  --nc-border:      rgba(0,130,201,.15);
+  --nc-shadow:      0 4px 24px rgba(0,103,158,.12);
+  --nc-shadow-lg:   0 12px 48px rgba(0,103,158,.18);
+}
+
+body.nc-app {
+  font-family: 'Inter', sans-serif;
+  background: var(--nc-bg);
+  color: var(--nc-text);
+}
+
+/* ── Layout ─────────────────────────────────────────────────── */
+.nc-screen {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 56px;
+}
+
+/* ── Top Bar ────────────────────────────────────────────────── */
+.nc-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 28px;
+  background: var(--nc-white);
+  border-bottom: 1px solid var(--nc-border);
+  box-shadow: 0 1px 8px rgba(0,103,158,.06);
+}
+.nc-logo-mark {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.nc-logo-text {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--nc-primary);
+  letter-spacing: -.3px;
+}
+.nc-topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* ── Hero / Login ───────────────────────────────────────────── */
+.nc-hero {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  background: linear-gradient(155deg, #f4f9fd 0%, #eaf4fb 50%, #e0eff8 100%);
+}
+
+.nc-login-card {
+  width: 100%;
+  max-width: 380px;
+  background: var(--nc-white);
+  border-radius: 20px;
+  padding: 36px 32px 30px;
+  box-shadow: var(--nc-shadow-lg);
+  text-align: center;
+  border: 1px solid var(--nc-border);
+}
+.nc-login-tagline {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--nc-text);
+  margin-top: 12px;
+  letter-spacing: -.4px;
+}
+.nc-login-sub {
+  font-size: 14px;
+  color: var(--nc-text-muted);
+  margin-top: 6px;
+  line-height: 1.5;
+}
+.nc-trust-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 18px 0;
+  font-size: 11.5px;
+  color: var(--nc-text-muted);
+  font-weight: 600;
+}
+.nc-trust-bar-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--nc-border); }
+
+/* ── Buttons ────────────────────────────────────────────────── */
+.btn-nc-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: var(--nc-primary);
+  color: #fff;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  width: 100%;
+  transition: background .15s ease;
+  margin-top: 8px;
+}
+.btn-nc-primary:hover { background: var(--nc-dark); }
+
+.btn-osmio-nc {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 13px 24px;
+  background: linear-gradient(135deg, #0f2132, #1a3a54);
+  color: #fff;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  width: 100%;
+  transition: all .15s ease;
+  margin-top: 4px;
+  border: 1px solid rgba(0,180,216,.2);
+}
+.btn-osmio-nc:hover { background: linear-gradient(135deg, #1a3a54, #0f2132); border-color: rgba(0,180,216,.4); }
+
+.btn-outline-nc {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: transparent;
+  color: var(--nc-primary);
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  width: 100%;
+  border: 1px solid var(--nc-border);
+  transition: all .15s ease;
+}
+.btn-outline-nc:hover { background: rgba(0,130,201,.06); }
+
+/* ── Demo links ─────────────────────────────────────────────── */
+.nc-demo-links {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--nc-border);
+  text-align: left;
+}
+.nc-demo-link-label {
+  display: block;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .8px;
+  color: var(--nc-text-muted);
+  margin-bottom: 8px;
+}
+.nc-demo-link {
+  display: block;
+  font-size: 12.5px;
+  color: var(--nc-text-mid);
+  padding: 7px 10px;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: background .12s;
+  margin-bottom: 4px;
+}
+.nc-demo-link:hover { background: rgba(0,130,201,.07); color: var(--nc-primary); }
+
+/* ── Cert check screen ──────────────────────────────────────── */
+.nc-cert-screen {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  background: #0d1b29;
+}
+.nc-cert-card {
+  width: 100%;
+  max-width: 400px;
+  background: #131f2e;
+  border-radius: 18px;
+  padding: 32px;
+  border: 1px solid rgba(0,130,201,.2);
+  box-shadow: 0 0 40px rgba(0,130,201,.15);
+}
+.nc-cert-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+.nc-cert-header h2 { font-size: 18px; font-weight: 800; color: #e8f4f8; margin-top: 12px; }
+.nc-cert-header p  { font-size: 13px; color: #5a8aaa; margin-top: 4px; }
+.nc-cert-icon-wrap {
+  width: 52px; height: 52px;
+  background: linear-gradient(135deg, #0082c9, #00679e);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  box-shadow: 0 0 20px rgba(0,130,201,.4);
+}
+.cert-steps { display: flex; flex-direction: column; gap: 10px; }
+.cert-step  { display: flex; align-items: flex-start; gap: 12px; animation: slideInLeft .3s ease both; }
+.cert-step-icon {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.cert-step-icon.loading { background: rgba(0,130,201,.15); color: #0082c9; }
+.cert-step-icon.success { background: rgba(6,214,160,.15); color: #06d6a0; }
+.cert-step-icon.info    { background: rgba(0,130,201,.15); color: #0082c9; }
+.cert-step-text strong  { display: block; font-size: 13px; font-weight: 600; color: #e8f4f8; }
+.cert-step-text span    { display: block; font-size: 11.5px; color: #5a8aaa; margin-top: 2px; font-family: monospace; }
+.cert-step-idqa         { margin-top: 4px; font-size: 11.5px; color: #06d6a0; font-weight: 600; }
+
+/* ── Redirect / loading screen ──────────────────────────────── */
+.nc-redirect-screen {
+  flex: 1; display: flex; align-items: center; justify-content: center; padding: 40px 20px;
+  background: #f4f9fd;
+}
+.nc-redirect-card {
+  text-align: center; max-width: 340px; width: 100%;
+  background: var(--nc-white); border-radius: 18px; padding: 40px 32px;
+  box-shadow: var(--nc-shadow);
+}
+.nc-redirect-spinner { margin-bottom: 20px; color: var(--nc-primary); }
+.nc-redirect-card h2  { font-size: 18px; font-weight: 800; color: var(--nc-text); }
+.nc-redirect-card p   { font-size: 13px; color: var(--nc-text-muted); margin-top: 6px; }
+.nc-redirect-progress {
+  margin-top: 20px; height: 3px; background: #e0eff8; border-radius: 999px; overflow: hidden;
+}
+.nc-redirect-bar {
+  height: 100%; background: var(--nc-primary); border-radius: 999px; width: 0%;
+  transition: width 2s ease;
+}
+
+/* ── Dashboard ──────────────────────────────────────────────── */
+.nc-dashboard {
+  flex: 1;
+  padding: 28px 28px 40px;
+  max-width: 860px;
+  margin: 0 auto;
+  width: 100%;
+}
+.nc-dash-welcome { font-size: 13px; color: var(--nc-text-muted); font-weight: 600; }
+.nc-dash-name    { font-size: 26px; font-weight: 900; color: var(--nc-text); letter-spacing: -.4px; margin-top: 2px; }
+
+.nc-moi-notice {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 16px 0 24px;
+  padding: 10px 14px;
+  background: rgba(0,130,201,.06);
+  border: 1px solid rgba(0,130,201,.15);
+  border-radius: 9px;
+  font-size: 12px;
+  color: var(--nc-text-muted);
+  font-weight: 500;
+  color: var(--nc-dark);
+}
+
+/* File browser */
+.nc-file-section-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .8px;
+  color: var(--nc-text-muted);
+  margin-bottom: 10px;
+}
+.nc-files-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 10px;
+  margin-bottom: 24px;
+}
+.nc-file-card {
+  background: var(--nc-white);
+  border: 1px solid var(--nc-border);
+  border-radius: 12px;
+  padding: 16px 12px 12px;
+  text-align: center;
+  cursor: pointer;
+  transition: all .15s ease;
+}
+.nc-file-card:hover { border-color: var(--nc-primary); transform: translateY(-1px); box-shadow: var(--nc-shadow); }
+.nc-file-icon { font-size: 32px; margin-bottom: 8px; }
+.nc-file-name { font-size: 12px; font-weight: 600; color: var(--nc-text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.nc-file-size { font-size: 11px; color: var(--nc-text-muted); margin-top: 2px; }
+
+.nc-list-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: var(--nc-white);
+  border: 1px solid var(--nc-border);
+  border-radius: 10px;
+  margin-bottom: 6px;
+  cursor: pointer;
+  transition: all .12s ease;
+}
+.nc-list-row:hover { border-color: var(--nc-primary); background: rgba(0,130,201,.02); }
+.nc-list-icon { font-size: 20px; flex-shrink: 0; }
+.nc-list-name { font-size: 13px; font-weight: 600; color: var(--nc-text); flex: 1; }
+.nc-list-meta { font-size: 11.5px; color: var(--nc-text-muted); }
+
+/* ── Age Denied ─────────────────────────────────────────────── */
+.nc-denied-screen {
+  flex: 1; display: flex; align-items: center; justify-content: center; padding: 40px 20px;
+  background: linear-gradient(155deg, #f4f9fd 0%, #fdf0f0 100%);
+}
+.nc-denied-card {
+  width: 100%; max-width: 380px;
+  background: var(--nc-white);
+  border-radius: 20px;
+  padding: 36px 32px 30px;
+  box-shadow: var(--nc-shadow-lg);
+  text-align: center;
+}
+.nc-denied-icon {
+  width: 64px; height: 64px;
+  background: rgba(239,71,111,.1);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 16px;
+}
+.nc-denied-card h2 { font-size: 22px; font-weight: 800; color: var(--nc-text); margin-bottom: 8px; }
+.nc-denied-card p  { font-size: 14px; color: var(--nc-text-muted); line-height: 1.55; margin-bottom: 20px; }

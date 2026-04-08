@@ -17,8 +17,8 @@ function adminSidebar(activePage) {
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
         </div>
         <div>
-          <div class="admin-sidebar-logo-text">OSMIO Admin</div>
-          <div class="admin-sidebar-logo-sub">Attestation Portal</div>
+          <div class="admin-sidebar-logo-text">OSMIO</div>
+          <div class="admin-sidebar-logo-sub">Attestation Officer Portal</div>
         </div>
       </div>
 
@@ -67,47 +67,58 @@ function renderLogin() {
           <div class="admin-login-logo-icon">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
           </div>
-          <span class="admin-login-logo-text">OSMIO <span>Admin Portal</span></span>
+          <span class="admin-login-logo-text">OSMIO <span>Attestation Officer Portal</span></span>
         </div>
         <h1>Attestation Officer</h1>
-        <p>Sign in to manage identity verification requests.</p>
+        <p>Sign in using your Osmio ID Pair to access the attestation portal.</p>
 
-        <div id="login-error" style="display:none;padding:10px 14px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);border-radius:8px;font-size:13px;color:#ef4444;margin-bottom:14px">
-          Invalid credentials. Please try again.
+        <div class="admin-osmio-detect">
+          <div class="admin-osmio-detect-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+          </div>
+          <div class="admin-osmio-detect-info">
+            <strong>Osmio ID Pair detected</strong>
+            <span>${MOCK.admin.certId} · Admin Osmio ID Pair</span>
+          </div>
         </div>
 
-        <div class="admin-form-group">
-          <label class="admin-form-label">Username</label>
-          <input class="admin-form-input" type="email" id="admin-user" placeholder="admin@osmio.id" value="">
-        </div>
-        <div class="admin-form-group">
-          <label class="admin-form-label">Password</label>
-          <input class="admin-form-input" type="password" id="admin-pass" placeholder="••••••••" value=""
-            onkeydown="if(event.key==='Enter')attemptLogin()">
-        </div>
+        <button class="btn-admin-primary" style="width:100%;margin-bottom:16px" onclick="attemptLogin()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Sign in with Osmio ID Pair
+        </button>
 
-        <button class="btn-admin-primary" onclick="attemptLogin()">Sign In</button>
-
-        <div class="admin-hint">
-          Demo credentials: <code>admin@osmio.id</code> / <code>osmio2026</code>
+        <div class="admin-2fa-section">
+          <div class="admin-2fa-label">Second factor (choose one)</div>
+          <div class="admin-2fa-options">
+            <button class="admin-2fa-btn active" id="2fa-passkey" onclick="select2FA('passkey')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M12 12v2m0 4h.01"/><rect x="6" y="14" width="12" height="7" rx="2"/></svg>
+              Passkey
+            </button>
+            <button class="admin-2fa-btn" id="2fa-otp" onclick="select2FA('otp')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/><line x1="8" y1="7" x2="16" y2="7"/><line x1="8" y1="11" x2="16" y2="11"/></svg>
+              OTP
+            </button>
+            <button class="admin-2fa-btn" id="2fa-fingerprint" onclick="select2FA('fingerprint')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2C9.24 2 7 4.24 7 7v5"/><path d="M17 7c0-2.76-2.24-5-5-5"/><path d="M7 12c0 2.76 2.24 5 5 5"/><path d="M12 17v5"/><path d="M10 19h4"/></svg>
+              Fingerprint
+            </button>
+          </div>
         </div>
       </div>
     </div>`;
 }
 
-function attemptLogin() {
-  const user = document.getElementById('admin-user').value.trim();
-  const pass = document.getElementById('admin-pass').value.trim();
-  const errEl = document.getElementById('login-error');
+let selected2FA = 'passkey';
+function select2FA(method) {
+  selected2FA = method;
+  document.querySelectorAll('.admin-2fa-btn').forEach(b => b.classList.remove('active'));
+  const el = document.getElementById('2fa-' + method);
+  if (el) el.classList.add('active');
+}
 
-  if (user === MOCK.admin.username && pass === MOCK.admin.password) {
-    adminAuthed = true;
-    router.go('dashboard');
-  } else {
-    errEl.style.display = 'block';
-    const input = document.getElementById('admin-pass');
-    if (input) { input.value = ''; input.focus(); }
-  }
+function attemptLogin() {
+  adminAuthed = true;
+  router.go('dashboard');
 }
 
 // ── Screen: Dashboard ──────────────────────────────────────────
@@ -208,7 +219,7 @@ function renderDashboard() {
               <thead>
                 <tr>
                   <th>User</th>
-                  <th>Certificate ID</th>
+                  <th>Osmio ID Pair</th>
                   <th>Submitted</th>
                   <th>IDQA</th>
                   <th>Status</th>
@@ -231,7 +242,7 @@ function renderDashboard() {
           <div style="overflow-x:auto">
             <table class="admin-table">
               <thead>
-                <tr><th>User</th><th>Certificate</th><th>Enrolled</th><th>IDQA</th><th>Verification</th></tr>
+                <tr><th>User</th><th>Osmio ID Pair</th><th>Enrolled</th><th>IDQA</th><th>Verification</th></tr>
               </thead>
               <tbody>
                 ${MOCK.users.slice(0,8).map(u => `
@@ -309,7 +320,7 @@ function renderReview() {
                 <div style="font-size:12.5px;color:#6b7280">${v.email}</div>
               </div>
             </div>
-            <div class="admin-review-label">Certificate ID</div>
+            <div class="admin-review-label">Osmio ID Pair</div>
             <div style="font-family:monospace;font-size:12.5px;color:#374151;margin-top:3px">${v.certId}</div>
           </div>
           <div class="admin-card" style="padding:20px">
@@ -323,7 +334,7 @@ function renderReview() {
                 <div class="admin-review-val" style="color:#10b981">${v.idqaIfApproved || 12}</div>
               </div>
               <div>
-                <div class="admin-review-label">TrustSwiftly Ref</div>
+                <div class="admin-review-label">Liveliness Check Ref</div>
                 <div style="font-family:monospace;font-size:13px;color:#374151;margin-top:3px">${v.trustSwiftlyRef}</div>
               </div>
               <div>
@@ -473,7 +484,7 @@ function renderUsers() {
             <table class="admin-table">
               <thead>
                 <tr>
-                  <th>User</th><th>Certificate</th><th>Enrolled</th><th>IDQA</th><th>Verification</th>
+                  <th>User</th><th>Osmio ID Pair</th><th>Enrolled</th><th>IDQA</th><th>Verification</th>
                 </tr>
               </thead>
               <tbody>

@@ -47,7 +47,7 @@ const MOCK = {
       address:     { value: '42 Maple Street, Austin, TX 78701',       verified: false, verifiedDate: null },
       city:        { value: 'Austin',                                  verified: false, verifiedDate: null },
       state:       { value: 'Texas',                                   verified: false, verifiedDate: null },
-      country:     { value: 'United States',                           verified: false, verifiedDate: null },
+      country:     { value: 'United States',                           verified: true,  verifiedDate: '2024-11-15' },
       postalCode:  { value: '78701',                                   verified: false, verifiedDate: null },
       occupation:  { value: 'Software Engineer',                       verified: false, verifiedDate: null },
       bio:         { value: 'Coffee enthusiast, amateur photographer, and hiking lover.', verified: false, verifiedDate: null }
@@ -56,12 +56,15 @@ const MOCK = {
     verificationStatus: 'none', // none | pending | approved
 
     accessLog: [
-      { app: 'Trusted & True',  date: '2026-04-07T10:23:00', fields: ['First Name', 'Last Name'],                  certType: 'foundation',   granted: true  },
-      { app: 'MOI Dashboard',   date: '2026-04-06T15:45:00', fields: null,                                          certType: 'foundation',   granted: true  },
-      { app: 'Trusted & True',  date: '2026-04-03T11:12:00', fields: ['First Name', 'Last Name', 'Photo'],          certType: 'foundation',   granted: true  },
-      { app: 'MOI Dashboard',   date: '2026-03-28T09:30:00', fields: null,                                          certType: 'foundation',   granted: true  },
-      { app: 'Trusted & True',  date: '2026-03-15T14:22:00', fields: ['First Name', 'Last Name'],                   certType: 'numberplate',  granted: true  },
-      { app: 'Trusted & True',  date: '2026-02-20T08:05:00', fields: ['First Name', 'Last Name', 'Date of Birth'],  certType: 'foundation',   granted: false },
+      { app: 'Trusted & True',  date: '2026-04-07T10:23:00', fields: ['First Name', 'Last Name', 'Age 18+'],                      certType: 'numberplate',  granted: true  },
+      { app: 'BetMax',          date: '2026-04-06T18:40:00', fields: ['First Name', 'Last Name', 'Age 18+', 'Country'],            certType: 'numberplate',  granted: true  },
+      { app: 'Nextcloud',       date: '2026-04-05T09:15:00', fields: ['First Name', 'Last Name', 'Age 13+', 'Email'],              certType: 'numberplate',  granted: true  },
+      { app: 'Alkoshop',        date: '2026-04-04T14:30:00', fields: ['First Name', 'Last Name', 'Age 21+', 'Country'],            certType: 'numberplate',  granted: true  },
+      { app: 'MOI Dashboard',   date: '2026-04-06T15:45:00', fields: null,                                                         certType: 'foundation',   granted: true  },
+      { app: 'Trusted & True',  date: '2026-04-03T11:12:00', fields: ['First Name', 'Last Name', 'Age 18+', 'Photo'],              certType: 'numberplate',  granted: true  },
+      { app: 'MOI Dashboard',   date: '2026-03-28T09:30:00', fields: null,                                                         certType: 'foundation',   granted: true  },
+      { app: 'Trusted & True',  date: '2026-03-15T14:22:00', fields: ['First Name', 'Last Name', 'Age 18+'],                       certType: 'numberplate',  granted: true  },
+      { app: 'Trusted & True',  date: '2026-02-20T08:05:00', fields: ['First Name', 'Last Name', 'Date of Birth'],                 certType: 'numberplate',  granted: false },
     ]
   },
 
@@ -230,7 +233,7 @@ const MOCK = {
       resolvedDate: '2026-04-02T11:30:00',
       status: 'approved',
       idqaCurrent: 12,
-      adminNote: 'Identity confirmed. TrustSwiftly liveness and document clear.',
+      adminNote: 'Identity confirmed. Liveliness check and document clear.',
       trustSwiftlyRef: 'TS-2026-00755',
       submittedFields: {
         firstName:  { submitted: 'Yuki',            enrolled: 'Yuki',           match: true  },
@@ -279,7 +282,8 @@ const MOCK = {
     username: 'admin@osmio.id',
     password: 'osmio2026',
     name: 'Admin Portal',
-    role: 'Attestation Officer'
+    role: 'Attestation Officer',
+    certId: 'OSMIO-ADM-2024-00012'
   },
 
   // ── SVG Assets — generated illustrations ──────────────────
@@ -399,7 +403,7 @@ const MOCK = {
       <rect x="22" y="436" width="316" height="54" rx="10" fill="#0ea5e9"/>
       <text x="180" y="460" text-anchor="middle" fill="white" font-family="Arial" font-size="14" font-weight="bold">Verification Complete</text>
       <text x="180" y="478" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-family="Arial" font-size="10">Ref: TS-2026-00912</text>
-      <text x="180" y="530" text-anchor="middle" fill="#94a3b8" font-family="Arial" font-size="10">Powered by TrustSwiftly · Apr 5, 2026</text>
+      <text x="180" y="530" text-anchor="middle" fill="#94a3b8" font-family="Arial" font-size="10">Liveliness check · Apr 5, 2026</text>
     </svg>`,
 
     // Proof of address document
@@ -448,8 +452,8 @@ const MOCK = {
     {
       id: 'doc_002',
       type: 'selfie',
-      label: 'TrustSwiftly Liveness Check',
-      description: 'Automated liveness & ID verification via TrustSwiftly',
+      label: 'Liveliness Check',
+      description: 'Automated liveliness check',
       uploadedDate: '2026-04-05T09:12:00',
       svgKey: 'trustSwiftly',
       status: 'submitted',

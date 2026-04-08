@@ -59,7 +59,10 @@ function renderLogin() {
           <div class="tnt-demo-links">
             <span class="tnt-demo-link-label">Demo scenarios</span>
             <span class="tnt-demo-link" onclick="router.go('access-denied')">
-              ⚠ Simulate: No certificate installed → Access denied
+              ⚠ Simulate: No Osmio ID Pair installed → Access denied
+            </span>
+            <span class="tnt-demo-link" onclick="startAuthYoung()">
+              ⚠ Simulate: Under-18 user → Age restriction
             </span>
           </div>
         </div>
@@ -67,18 +70,27 @@ function renderLogin() {
     </div>`;
 }
 
-function startAuth() {
+function startAuth(demoDob = null) {
+  // Set the demo DOB override used by MOI to compute age (if explicitly passed)
+  // Don't clear it here — the hub may have pre-set it; cleanup happens in renderAgeDenied/renderDashboard
+  if (demoDob) {
+    sessionStorage.setItem('moi_demo_dob', demoDob);
+  }
   // Store the OAuth-style request for MOI to read
   sessionStorage.setItem('moi_oauth_request', JSON.stringify({
     appName: 'Trusted & True',
     appId: 'tnt',
     requestId: 'req_' + Date.now(),
-    certUsed: MOCK.currentUser.certs.foundation.id,
+    certUsed: MOCK.currentUser.certs.numberplate.id,
     requiredFields: ['firstName', 'lastName', 'above18'],
     optionalFields: ['photo', 'country'],
     returnTo: 'tnt.html#redirecting'
   }));
   router.go('cert-check');
+}
+
+function startAuthYoung() {
+  startAuth('2010-05-15'); // age ~15 in 2026 → under 18
 }
 
 // ── Screen: Certificate Check (animated) ──────────────────────
@@ -93,7 +105,7 @@ function renderCertCheck() {
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
             </div>
             <h2>Verifying your Osmio ID</h2>
-            <p>Authenticating with your client certificate</p>
+            <p>Authenticating with your Osmio ID Pair</p>
           </div>
           <div class="cert-steps" id="cert-steps"></div>
         </div>
@@ -102,10 +114,10 @@ function renderCertCheck() {
 
   const steps = [
     { icon: 'spin', type: 'loading', text: 'Scanning for Osmio ID Pair...', sub: null, delay: 0 },
-    { icon: 'check', type: 'success', text: 'Certificate detected', sub: MOCK.currentUser.certs.foundation.id, delay: 900 },
+    { icon: 'check', type: 'success', text: 'Osmio ID Pair detected', sub: MOCK.currentUser.certs.numberplate.id, delay: 900 },
     { icon: 'spin', type: 'loading', text: 'Validating with OSMIO Certificate Authority...', sub: null, delay: 1300 },
-    { icon: 'check', type: 'success', text: 'Signature valid · Certificate trusted', sub: `Issuer: ${MOCK.currentUser.certs.foundation.issuer}`, delay: 2400 },
-    { icon: 'check', type: 'success', text: 'Certificate expires: Nov 15, 2026', sub: `Serial: ${MOCK.currentUser.certs.foundation.serial}`, delay: 2800 },
+    { icon: 'check', type: 'success', text: 'Signature valid · Osmio ID Pair trusted', sub: `Issuer: ${MOCK.currentUser.certs.numberplate.issuer}`, delay: 2400 },
+    { icon: 'check', type: 'success', text: 'Osmio ID Pair expires: Nov 15, 2026', sub: `Serial: ${MOCK.currentUser.certs.numberplate.serial}`, delay: 2800 },
     { icon: 'idqa', type: 'info', text: 'IDQA Score resolved', sub: 'Scale: 0–24 · ID Attested at 12', idqa: MOCK.currentUser.idqa, delay: 3300 },
     { icon: 'spin', type: 'loading', text: 'Preparing MOI licence request...', sub: null, delay: 3800 },
   ];
@@ -159,16 +171,16 @@ function renderAccessDenied() {
           </div>
           <h2>No Osmio ID Pair Found</h2>
           <p>Trusted & True requires a valid Osmio ID Pair to sign in.<br>
-          No certificate was detected on this device.</p>
+          No Osmio ID Pair was detected on this device.</p>
 
           <div style="margin-bottom:20px;padding:14px;background:rgba(239,71,111,.05);border:1px solid rgba(239,71,111,.15);border-radius:10px;font-size:12.5px;color:#9a7480;text-align:left">
             <strong style="color:#5a3040;display:block;margin-bottom:4px">What is an Osmio ID Pair?</strong>
-            An Osmio ID Pair is a client SSL certificate that authenticates you without a username or password.
+            An Osmio ID Pair is a client key pair that authenticates you without a username or password.
             It's issued after identity enrollment and lives securely on your device.
           </div>
 
-          <button class="btn-tnt-primary" style="width:100%;margin-bottom:12px" onclick="window.open('https://osmio.id','_blank')">
-            Enroll at osmio.id →
+          <button class="btn-tnt-primary" style="width:100%;margin-bottom:12px" onclick="window.open('https://osmio.ch','_blank')">
+            Enroll at osmio.ch →
           </button>
           <button class="btn-outline-tnt" style="width:100%" onclick="router.go('login')">
             ← Back to login
@@ -207,6 +219,34 @@ function renderRedirecting() {
   setTimeout(() => router.go('dashboard'), 2400);
 }
 
+// ── Screen: Age Denied ─────────────────────────────────────────
+function renderAgeDenied(minAge) {
+  sessionStorage.removeItem('moi_demo_dob');
+  document.getElementById('app').innerHTML = `
+    <div class="tnt-screen">
+      ${tntTopBar()}
+      <div class="tnt-denied-screen">
+        <div class="tnt-denied-card">
+          <div class="tnt-denied-icon" style="background:rgba(239,71,111,.1)">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#ef476f" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          </div>
+          <h2>Age Restriction</h2>
+          <p>You must be ${minAge} or older to use Trusted &amp; True.<br>
+          Your MOI age attestation confirmed you do not meet this requirement.</p>
+
+          <div style="margin-bottom:20px;padding:14px;background:rgba(239,71,111,.05);border:1px solid rgba(239,71,111,.15);border-radius:10px;font-size:12.5px;color:#9a7480;text-align:left">
+            <strong style="color:#5a3040;display:block;margin-bottom:4px">How this works</strong>
+            Your date of birth was never shared. MOI computed the age check result and sent only the pass/fail verdict, attested by your Osmio ID Pair.
+          </div>
+
+          <button class="btn-outline-tnt" style="width:100%" onclick="router.go('login')">
+            ← Back to login
+          </button>
+        </div>
+      </div>
+    </div>`;
+}
+
 // ── Screen: Dashboard ──────────────────────────────────────────
 function renderDashboard() {
   const response = JSON.parse(sessionStorage.getItem('moi_oauth_response') || 'null');
@@ -219,8 +259,14 @@ function renderDashboard() {
   const sharedFirstName = shared.firstName || moi.firstName;
   const sharedLastName  = shared.lastName  || moi.lastName;
   const sharedPhoto     = shared.photo     || null;
-  const sharedAbove18   = shared.above18   || { value: true, verified: moi.dob.verified }; // derived, not raw DOB
+  const sharedAbove18   = shared.above18   !== undefined ? shared.above18 : { value: true, verified: moi.dob.verified };
   const sharedCountry   = shared.country   || null;
+
+  // Age gate: if MOI confirmed the user is under 18, reject them
+  if (sharedAbove18 && sharedAbove18.value === false) {
+    renderAgeDenied(18);
+    return;
+  }
 
   function field(label, fieldObj, notShared = false) {
     if (notShared || !fieldObj) {
@@ -247,7 +293,7 @@ function renderDashboard() {
 
         <div class="tnt-moi-notice">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          Profile data received from MOI · End-to-end encrypted transfer · Cert: ${u.certs.foundation.id}
+          Profile data received from MOI · End-to-end encrypted transfer · Osmio ID Pair: ${u.certs.numberplate.id}
         </div>
 
         <div class="tnt-profile-grid">
@@ -274,9 +320,9 @@ function renderDashboard() {
               </div>
             </div>
             <div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--tnt-border)">
-              <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--tnt-text-muted);margin-bottom:8px">Certificate used</div>
-              <div style="font-size:11.5px;font-weight:700;color:var(--tnt-primary);font-family:monospace;word-break:break-all">${u.certs.foundation.id}</div>
-              <div style="font-size:11px;color:var(--tnt-text-muted);margin-top:3px">Foundation Certificate</div>
+              <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--tnt-text-muted);margin-bottom:8px">Osmio ID Pair used</div>
+              <div style="font-size:11.5px;font-weight:700;color:var(--tnt-primary);font-family:monospace;word-break:break-all">${u.certs.numberplate.id}</div>
+              <div style="font-size:11px;color:var(--tnt-text-muted);margin-top:3px">Numberplate Osmio ID Pair</div>
             </div>
           </div>
 
@@ -292,7 +338,7 @@ function renderDashboard() {
             <div class="tnt-field-grid">
               ${field('First Name',  sharedFirstName)}
               ${field('Last Name',   sharedLastName)}
-              ${field('Age Verification', sharedAbove18 ? { value: sharedAbove18.value ? '18+ Confirmed' : 'Under 18', verified: sharedAbove18.verified } : null)}
+              ${field('Age Requirement', sharedAbove18 ? { value: sharedAbove18.value ? '18+ Confirmed' : 'Under 18', verified: sharedAbove18.verified } : null)}
               ${field('Country', sharedCountry, !sharedCountry)}
             </div>
 
@@ -339,6 +385,7 @@ router
   .on('access-denied',renderAccessDenied)
   .on('redirecting',  renderRedirecting)
   .on('dashboard',    renderDashboard)
+  .on('age-denied',   () => renderAgeDenied(18))
   .init('login');
 
 // Highlight active demo nav link

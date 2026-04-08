@@ -87,6 +87,21 @@ body.admin-app {
 .admin-hint { font-size: 12px; color: var(--adm-text-muted); margin-top: 16px; padding: 10px 12px; background: #f8f9fc; border-radius: 8px; border: 1px solid var(--adm-border); }
 .admin-hint code { font-family: 'Courier New', monospace; color: var(--adm-accent); font-size: 12px; }
 
+/* Osmio ID Pair detection strip */
+.admin-osmio-detect { display: flex; align-items: center; gap: 10px; padding: 12px 14px; margin-bottom: 16px; background: rgba(170,25,69,.04); border: 1px solid rgba(170,25,69,.15); border-radius: 10px; }
+.admin-osmio-detect-icon { width: 32px; height: 32px; flex-shrink: 0; background: rgba(170,25,69,.12); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--adm-accent); }
+.admin-osmio-detect-info strong { display: block; font-size: 13px; color: var(--adm-text); }
+.admin-osmio-detect-info span { font-size: 11px; color: var(--adm-text-muted); font-family: 'Courier New', monospace; }
+
+/* 2FA section */
+.admin-2fa-section { margin-bottom: 16px; }
+.admin-2fa-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; color: var(--adm-text-muted); margin-bottom: 8px; }
+.admin-2fa-options { display: flex; gap: 8px; }
+.admin-2fa-btn { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 5px; padding: 10px 8px; background: #fff; border: 1.5px solid var(--adm-border); border-radius: 10px; font-size: 12px; font-weight: 600; color: var(--adm-text-muted); cursor: pointer; transition: all .15s ease; }
+.admin-2fa-btn:hover { border-color: var(--adm-accent); color: var(--adm-accent); background: rgba(170,25,69,.03); }
+.admin-2fa-btn.active { border-color: var(--adm-accent); color: var(--adm-accent); background: rgba(170,25,69,.06); }
+.btn-admin-primary { display: flex; align-items: center; justify-content: center; gap: 8px; }
+
 .btn-admin-primary {
   width: 100%;
   padding: 12px;

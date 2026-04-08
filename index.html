@@ -13,191 +13,148 @@
       background: #060e1a;
       color: #e8f4f8;
       min-height: 100vh;
-      padding: 40px 24px 60px;
+      padding: 40px 24px 80px;
     }
     body::before {
       content: '';
-      position: fixed;
-      inset: 0;
+      position: fixed; inset: 0;
       background-image: radial-gradient(rgba(0,180,216,.07) 1px, transparent 1px);
       background-size: 28px 28px;
       pointer-events: none;
     }
-    .hub {
-      max-width: 900px;
-      margin: 0 auto;
-      position: relative;
-      z-index: 1;
-    }
-    .hub-header {
-      text-align: center;
-      margin-bottom: 48px;
-    }
-    .hub-logo {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 20px;
-    }
+    .hub { max-width: 960px; margin: 0 auto; position: relative; z-index: 1; }
+
+    /* ── Header ── */
+    .hub-header { text-align: center; margin-bottom: 48px; }
+    .hub-logo { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 20px; }
     .hub-logo-icon {
       width: 44px; height: 44px;
       background: linear-gradient(135deg, #00b4d8, #0077a8);
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      border-radius: 12px; display: flex; align-items: center; justify-content: center;
       box-shadow: 0 0 24px rgba(0,180,216,.3);
     }
     .hub-title { font-size: 32px; font-weight: 900; letter-spacing: -.6px; }
     .hub-title span { color: #00b4d8; }
-    .hub-subtitle { font-size: 15px; color: #6a8a99; max-width: 540px; margin: 8px auto 0; line-height: 1.6; }
+    .hub-subtitle { font-size: 15px; color: #6a8a99; max-width: 560px; margin: 8px auto 0; line-height: 1.6; }
 
+    /* ── Portal showcase ── */
+    .portal-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 10px;
+      margin-bottom: 48px;
+    }
+    @media (max-width: 700px) { .portal-grid { grid-template-columns: repeat(3, 1fr); } }
+    .portal-card {
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      padding: 16px 8px 14px;
+      background: #131f2e; border: 1px solid rgba(255,255,255,.06);
+      border-radius: 16px; text-decoration: none; color: inherit;
+      transition: all .18s ease; cursor: pointer;
+    }
+    .portal-card:hover { background: #1b2d3e; border-color: rgba(0,180,216,.25); transform: translateY(-2px); }
+    .portal-card:hover .portal-name { color: #e8f4f8; }
+    .portal-icon {
+      width: 48px; height: 48px; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px;
+    }
+    .portal-name { font-size: 12px; font-weight: 700; color: #a8c4d0; text-align: center; line-height: 1.3; }
+    .portal-tag { font-size: 10px; color: #4a6a79; font-weight: 600; text-align: center; }
+
+    /* ── Section labels ── */
     .section-label {
-      font-size: 10px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 1.2px;
-      color: #00b4d8;
-      margin-bottom: 14px;
-      margin-top: 36px;
+      font-size: 10px; font-weight: 800; text-transform: uppercase;
+      letter-spacing: 1.2px; color: #00b4d8;
+      margin-bottom: 14px; margin-top: 36px;
+      display: flex; align-items: center; gap: 8px;
     }
     .section-label:first-of-type { margin-top: 0; }
+    .section-label::after { content: ''; flex: 1; height: 1px; background: rgba(0,180,216,.12); }
 
+    /* ── Flow cards ── */
     .flow-card {
-      background: #131f2e;
-      border: 1px solid rgba(255,255,255,.06);
-      border-radius: 16px;
-      padding: 24px;
-      margin-bottom: 14px;
+      background: #131f2e; border: 1px solid rgba(255,255,255,.06);
+      border-radius: 16px; padding: 20px 24px; margin-bottom: 10px;
     }
     .flow-card-header {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 14px;
+      display: flex; align-items: flex-start; justify-content: space-between;
+      gap: 12px; margin-bottom: 12px;
     }
     .flow-number {
-      width: 28px; height: 28px;
-      border-radius: 50%;
-      background: rgba(0,180,216,.15);
-      border: 1px solid rgba(0,180,216,.25);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 12px;
-      font-weight: 800;
-      color: #00b4d8;
-      flex-shrink: 0;
-      margin-top: 1px;
+      width: 26px; height: 26px; border-radius: 50%;
+      background: rgba(0,180,216,.15); border: 1px solid rgba(0,180,216,.25);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 800; color: #00b4d8; flex-shrink: 0; margin-top: 2px;
     }
     .flow-info { flex: 1; }
-    .flow-title { font-size: 16px; font-weight: 800; color: #e8f4f8; margin-bottom: 4px; }
-    .flow-desc  { font-size: 13px; color: #6a8a99; line-height: 1.55; }
+    .flow-title { font-size: 15px; font-weight: 800; color: #e8f4f8; margin-bottom: 3px; }
+    .flow-desc  { font-size: 12.5px; color: #6a8a99; line-height: 1.55; }
     .flow-steps {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      flex-wrap: wrap;
-      margin-top: 4px;
+      display: flex; align-items: center; gap: 5px; flex-wrap: wrap; margin-top: 10px;
     }
     .flow-step {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 5px 12px;
-      background: #1b2d3e;
-      border: 1px solid rgba(255,255,255,.07);
-      border-radius: 8px;
-      font-size: 12.5px;
-      font-weight: 600;
-      color: #a8c4d0;
-      text-decoration: none;
-      transition: all .15s ease;
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 4px 11px; background: #1b2d3e;
+      border: 1px solid rgba(255,255,255,.07); border-radius: 7px;
+      font-size: 12px; font-weight: 600; color: #a8c4d0;
+      text-decoration: none; transition: all .12s ease;
     }
     .flow-step:hover { background: #243447; border-color: rgba(0,180,216,.3); color: #00b4d8; }
-    .flow-step.primary {
-      background: rgba(0,180,216,.12);
-      border-color: rgba(0,180,216,.25);
-      color: #00b4d8;
-    }
-    .flow-step.tnt {
-      background: rgba(170,25,69,.1);
-      border-color: rgba(170,25,69,.2);
-      color: #d4607a;
-    }
-    .flow-arrow { color: rgba(255,255,255,.2); font-size: 12px; }
+    .flow-step.primary { background: rgba(0,180,216,.12); border-color: rgba(0,180,216,.25); color: #00b4d8; }
+    .flow-step.tnt { background: rgba(170,25,69,.1); border-color: rgba(170,25,69,.2); color: #d4607a; }
+    .flow-step.nc  { background: rgba(0,130,201,.1); border-color: rgba(0,130,201,.2); color: #0082c9; }
+    .flow-step.bm  { background: rgba(22,163,74,.1);  border-color: rgba(22,163,74,.2);  color: #16a34a; }
+    .flow-step.ac  { background: rgba(217,119,6,.1);  border-color: rgba(217,119,6,.2);  color: #d97706; }
+    .flow-step.deny { background: rgba(239,71,111,.08); border-color: rgba(239,71,111,.2); color: #ef476f; }
+    .flow-step.warn { background: rgba(245,158,11,.08); border-color: rgba(245,158,11,.2); color: #f59e0b; }
+    .flow-arrow { color: rgba(255,255,255,.18); font-size: 11px; }
     .flow-start-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 8px 18px;
-      background: #00b4d8;
-      color: #060e1a;
-      border-radius: 9px;
-      font-size: 13px;
-      font-weight: 700;
-      text-decoration: none;
-      flex-shrink: 0;
-      transition: all .15s ease;
-      white-space: nowrap;
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 8px 16px; border-radius: 9px;
+      font-size: 12.5px; font-weight: 700; text-decoration: none;
+      flex-shrink: 0; transition: all .15s ease; white-space: nowrap; border: none; cursor: pointer;
     }
-    .flow-start-btn:hover { background: #00caee; transform: translateY(-1px); }
-    .flow-start-btn.red {
-      background: #aa1945;
-      color: #fff;
-    }
-    .flow-start-btn.red:hover { background: #c01f50; }
-    .flow-start-btn.dark {
-      background: #1b2d3e;
-      color: #e8f4f8;
-      border: 1px solid rgba(255,255,255,.1);
-    }
-    .flow-start-btn.dark:hover { background: #243447; }
+    .flow-start-btn.cyan  { background: #00b4d8; color: #060e1a; }
+    .flow-start-btn.cyan:hover  { background: #00caee; transform: translateY(-1px); }
+    .flow-start-btn.red   { background: #aa1945; color: #fff; }
+    .flow-start-btn.red:hover   { background: #c01f50; }
+    .flow-start-btn.blue  { background: #0082c9; color: #fff; }
+    .flow-start-btn.blue:hover  { background: #0099e6; }
+    .flow-start-btn.green { background: #16a34a; color: #fff; }
+    .flow-start-btn.green:hover { background: #15803d; }
+    .flow-start-btn.amber { background: #d97706; color: #fff; }
+    .flow-start-btn.amber:hover { background: #b45309; }
+    .flow-start-btn.dark  { background: #1b2d3e; color: #e8f4f8; border: 1px solid rgba(255,255,255,.1); }
+    .flow-start-btn.dark:hover  { background: #243447; }
 
+    /* ── Quick jump grid ── */
     .quick-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-      gap: 10px;
-      margin-top: 4px;
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+      gap: 8px; margin-top: 4px;
     }
     .quick-link {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 14px;
-      background: #131f2e;
-      border: 1px solid rgba(255,255,255,.06);
-      border-radius: 10px;
-      font-size: 13px;
-      font-weight: 600;
-      color: #a8c4d0;
-      text-decoration: none;
-      transition: all .15s ease;
+      display: flex; align-items: center; gap: 7px;
+      padding: 9px 13px; background: #131f2e;
+      border: 1px solid rgba(255,255,255,.06); border-radius: 9px;
+      font-size: 12.5px; font-weight: 600; color: #a8c4d0;
+      text-decoration: none; transition: all .12s ease;
     }
     .quick-link:hover { background: #1b2d3e; border-color: rgba(0,180,216,.2); color: #e8f4f8; }
-    .quick-link-dot {
-      width: 7px; height: 7px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
+    .quick-link-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
 
     .stack-info {
-      margin-top: 36px;
-      padding: 20px 24px;
-      background: rgba(0,180,216,.04);
-      border: 1px solid rgba(0,180,216,.1);
-      border-radius: 12px;
-      font-size: 12.5px;
-      color: #6a8a99;
-      line-height: 1.6;
+      margin-top: 36px; padding: 18px 22px;
+      background: rgba(0,180,216,.04); border: 1px solid rgba(0,180,216,.1);
+      border-radius: 12px; font-size: 12px; color: #4a6a79; line-height: 1.7;
     }
-    .stack-info strong { color: #a8c4d0; }
+    .stack-info strong { color: #6a8a99; }
   </style>
 </head>
 <body>
   <div class="hub">
 
+    <!-- ── Header ── -->
     <div class="hub-header">
       <div class="hub-logo">
         <div class="hub-logo-icon">
@@ -205,27 +162,72 @@
         </div>
       </div>
       <h1 class="hub-title">MOI · <span>Demo Hub</span></h1>
-      <p class="hub-subtitle">Interactive prototype of the My Own Information system and its integration with Trusted & True. Click any flow to begin, or jump directly to any screen.</p>
+      <p class="hub-subtitle">Interactive prototype of the My Own Information system. MOI attests age and country checks without ever sharing the raw date of birth. Click a portal to jump to its scenarios.</p>
     </div>
 
-    <!-- ── DEMO FLOWS ── -->
-    <div class="section-label">Demo Flows</div>
+    <!-- ── Portal Showcase ── -->
+    <div class="portal-grid">
+      <a href="#tnt" class="portal-card" onclick="scrollTo('#tnt')">
+        <div class="portal-icon" style="background:rgba(170,25,69,.15)">
+          <svg width="26" height="26" viewBox="0 0 40 40" fill="none"><path d="M20 34s-14-8-14-18a8 8 0 0 1 14-5.3A8 8 0 0 1 34 16c0 10-14 18-14 18z" fill="#aa1945" opacity=".85"/></svg>
+        </div>
+        <div class="portal-name">Trusted &amp; True</div>
+        <div class="portal-tag">Dating · 18+</div>
+      </a>
+      <a href="#nextcloud" class="portal-card">
+        <div class="portal-icon" style="background:rgba(0,130,201,.15)">
+          <svg width="26" height="26" viewBox="0 0 40 40" fill="none"><rect width="40" height="40" rx="10" fill="#0082c9" opacity=".2"/><ellipse cx="13" cy="22" rx="7" ry="7" fill="#0082c9"/><ellipse cx="27" cy="22" rx="7" ry="7" fill="#0082c9"/><ellipse cx="20" cy="16" rx="9" ry="9" fill="#0082c9"/><rect x="11" y="16" width="18" height="11" fill="#0082c9"/></svg>
+        </div>
+        <div class="portal-name">Nextcloud</div>
+        <div class="portal-tag">File Storage · 13+</div>
+      </a>
+      <a href="#betmax" class="portal-card">
+        <div class="portal-icon" style="background:rgba(22,163,74,.12)">
+          <svg width="26" height="26" viewBox="0 0 40 40" fill="none"><rect width="40" height="40" rx="10" fill="#16a34a" opacity=".2"/><path d="M20 6L24 18l12 1.5L27 26l2 12L20 32l-9 6 2-12-9-6.5L16 18Z" fill="#ca8a04" opacity=".9"/></svg>
+        </div>
+        <div class="portal-name">BetMax</div>
+        <div class="portal-tag">Betting · 18+ · Region</div>
+      </a>
+      <a href="#alcoshop" class="portal-card">
+        <div class="portal-icon" style="background:rgba(217,119,6,.12)">
+          <div style="font-size:24px">🍷</div>
+        </div>
+        <div class="portal-name">Alkoshop</div>
+        <div class="portal-tag">Alcohol · Country age</div>
+      </a>
+      <a href="#moi" class="portal-card">
+        <div class="portal-icon" style="background:rgba(0,180,216,.12)">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00b4d8" stroke-width="2.5" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div class="portal-name">MOI Vault</div>
+        <div class="portal-tag">Identity vault</div>
+      </a>
+      <a href="#admin" class="portal-card">
+        <div class="portal-icon" style="background:rgba(156,163,175,.08)">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><circle cx="12" cy="11" r="3"/></svg>
+        </div>
+        <div class="portal-name">OSMIO Admin</div>
+        <div class="portal-tag">Attestation portal</div>
+      </a>
+    </div>
 
-    <!-- Flow 1 -->
+    <!-- ══════════════════════════════════════ -->
+    <!-- ── Trusted & True ── -->
+    <!-- ══════════════════════════════════════ -->
+    <div id="tnt" class="section-label">Trusted &amp; True — Dating App (18+)</div>
+
     <div class="flow-card">
       <div class="flow-card-header">
         <div class="flow-number">1</div>
         <div class="flow-info">
-          <div class="flow-title">TNT Signup via MOI</div>
-          <div class="flow-desc">The core flow. User signs into Trusted & True using their Osmio ID. TNT detects their certificate, requests permission from MOI, user approves, and TNT receives verified data.</div>
-          <div class="flow-steps" style="margin-top:10px">
+          <div class="flow-title">TNT Signup via MOI — Age Passes ✓</div>
+          <div class="flow-desc">Alex (age 34, US) signs into Trusted &amp; True. MOI attests the 18+ check. User is admitted to the platform.</div>
+          <div class="flow-steps">
             <a href="tnt.html#login" class="flow-step tnt">TNT Login</a>
             <span class="flow-arrow">→</span>
-            <a href="tnt.html#cert-check" class="flow-step tnt">Cert Check</a>
+            <a href="tnt.html#cert-check" class="flow-step tnt">ID Pair Check</a>
             <span class="flow-arrow">→</span>
             <a href="moi.html#consent" class="flow-step primary">MOI Consent</a>
-            <span class="flow-arrow">→</span>
-            <a href="tnt.html#redirecting" class="flow-step tnt">Returning</a>
             <span class="flow-arrow">→</span>
             <a href="tnt.html#dashboard" class="flow-step tnt">TNT Dashboard</a>
           </div>
@@ -234,14 +236,229 @@
       </div>
     </div>
 
-    <!-- Flow 2 -->
     <div class="flow-card">
       <div class="flow-card-header">
         <div class="flow-number">2</div>
         <div class="flow-info">
+          <div class="flow-title">TNT Signup — Under 18 Rejected ✗</div>
+          <div class="flow-desc">A 15-year-old attempts to sign up. MOI attests "Under 18" and TNT rejects them. The user's date of birth is never shared.</div>
+          <div class="flow-steps">
+            <a href="tnt.html#login" class="flow-step tnt">TNT Login</a>
+            <span class="flow-arrow">→</span>
+            <a href="moi.html#consent" class="flow-step primary">MOI Consent</a>
+            <span class="flow-arrow">→</span>
+            <a href="tnt.html#age-denied" class="flow-step deny">Age Denied</a>
+          </div>
+        </div>
+        <a href="tnt.html#login" class="flow-start-btn dark" onclick="sessionStorage.setItem('moi_demo_dob','2010-05-15')">Start →</a>
+      </div>
+    </div>
+
+    <div class="flow-card">
+      <div class="flow-card-header">
+        <div class="flow-number">3</div>
+        <div class="flow-info">
+          <div class="flow-title">TNT — No Osmio ID Pair ✗</div>
+          <div class="flow-desc">User attempts to access TNT but has no Osmio ID Pair installed. They see the access denied screen with instructions to enrol.</div>
+          <div class="flow-steps">
+            <a href="tnt.html#login" class="flow-step tnt">TNT Login</a>
+            <span class="flow-arrow">→</span>
+            <a href="tnt.html#access-denied" class="flow-step deny">No Osmio ID Pair</a>
+          </div>
+        </div>
+        <a href="tnt.html#access-denied" class="flow-start-btn dark">View →</a>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════ -->
+    <!-- ── Nextcloud ── -->
+    <!-- ══════════════════════════════════════ -->
+    <div id="nextcloud" class="section-label">Nextcloud — Internal File Storage (13+)</div>
+
+    <div class="flow-card">
+      <div class="flow-card-header">
+        <div class="flow-number">4</div>
+        <div class="flow-info">
+          <div class="flow-title">Nextcloud Signup — Age Passes ✓</div>
+          <div class="flow-desc">Alex (age 34) signs into the internal Nextcloud. MOI attests the 13+ check. User sees their file storage dashboard.</div>
+          <div class="flow-steps">
+            <a href="nextcloud.html#login" class="flow-step nc">NC Login</a>
+            <span class="flow-arrow">→</span>
+            <a href="moi.html#consent" class="flow-step primary">MOI Consent</a>
+            <span class="flow-arrow">→</span>
+            <a href="nextcloud.html#dashboard" class="flow-step nc">NC Dashboard</a>
+          </div>
+        </div>
+        <a href="nextcloud.html#login" class="flow-start-btn blue">Start →</a>
+      </div>
+    </div>
+
+    <div class="flow-card">
+      <div class="flow-card-header">
+        <div class="flow-number">5</div>
+        <div class="flow-info">
+          <div class="flow-title">Nextcloud Signup — Under 13 Rejected ✗</div>
+          <div class="flow-desc">A 10-year-old attempts to access Nextcloud. MOI attests "Under 13" and Nextcloud rejects them. Date of birth is never disclosed.</div>
+          <div class="flow-steps">
+            <a href="nextcloud.html#login" class="flow-step nc">NC Login</a>
+            <span class="flow-arrow">→</span>
+            <a href="moi.html#consent" class="flow-step primary">MOI Consent</a>
+            <span class="flow-arrow">→</span>
+            <a href="nextcloud.html#age-denied" class="flow-step deny">Age Denied</a>
+          </div>
+        </div>
+        <a href="nextcloud.html#login" class="flow-start-btn dark" onclick="sessionStorage.setItem('moi_demo_dob','2016-01-15')">Start →</a>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════ -->
+    <!-- ── BetMax ── -->
+    <!-- ══════════════════════════════════════ -->
+    <div id="betmax" class="section-label">BetMax — Sports Betting (18+ · Region: US ✓ Germany ✓ India ✗)</div>
+
+    <div class="flow-card">
+      <div class="flow-card-header">
+        <div class="flow-number">6</div>
+        <div class="flow-info">
+          <div class="flow-title">BetMax Signup — Age &amp; Region Pass ✓</div>
+          <div class="flow-desc">Alex (US, age 34) signs into BetMax. MOI attests 18+ and shares country. Both checks pass — user admitted to live betting markets.</div>
+          <div class="flow-steps">
+            <a href="betmax.html#login" class="flow-step bm">BetMax Login</a>
+            <span class="flow-arrow">→</span>
+            <a href="moi.html#consent" class="flow-step primary">MOI Consent</a>
+            <span class="flow-arrow">→</span>
+            <a href="betmax.html#dashboard" class="flow-step bm">BetMax Dashboard</a>
+          </div>
+        </div>
+        <a href="betmax.html#login" class="flow-start-btn green">Start →</a>
+      </div>
+    </div>
+
+    <div class="flow-card">
+      <div class="flow-card-header">
+        <div class="flow-number">7</div>
+        <div class="flow-info">
+          <div class="flow-title">BetMax — Under 18 Rejected ✗</div>
+          <div class="flow-desc">A 15-year-old from Germany attempts to use BetMax. MOI attests "Under 18" — rejected. Date of birth never shared.</div>
+          <div class="flow-steps">
+            <a href="betmax.html#login" class="flow-step bm">BetMax Login</a>
+            <span class="flow-arrow">→</span>
+            <a href="moi.html#consent" class="flow-step primary">MOI Consent</a>
+            <span class="flow-arrow">→</span>
+            <a href="betmax.html#age-denied" class="flow-step deny">Age Denied</a>
+          </div>
+        </div>
+        <a href="betmax.html#login" class="flow-start-btn dark" onclick="sessionStorage.setItem('moi_demo_dob','2010-05-15')">Start →</a>
+      </div>
+    </div>
+
+    <div class="flow-card">
+      <div class="flow-card-header">
+        <div class="flow-number">8</div>
+        <div class="flow-info">
+          <div class="flow-title">BetMax — India Region Rejected ✗</div>
+          <div class="flow-desc">An adult (age 34) resident in India attempts to use BetMax. Age check passes but BetMax is not licensed in India — region denied.</div>
+          <div class="flow-steps">
+            <a href="betmax.html#login" class="flow-step bm">BetMax Login</a>
+            <span class="flow-arrow">→</span>
+            <a href="moi.html#consent" class="flow-step primary">MOI Consent</a>
+            <span class="flow-arrow">→</span>
+            <a href="betmax.html#region-denied" class="flow-step warn">Region Denied</a>
+          </div>
+        </div>
+        <a href="betmax.html#login" class="flow-start-btn dark" onclick="sessionStorage.setItem('moi_demo_country','India')">Start →</a>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════ -->
+    <!-- ── Alkoshop ── -->
+    <!-- ══════════════════════════════════════ -->
+    <div id="alcoshop" class="section-label">Alkoshop — Alcohol &amp; Tobacco (Country-based minimum age)</div>
+
+    <div class="flow-card">
+      <div class="flow-card-header">
+        <div class="flow-number">9</div>
+        <div class="flow-info">
+          <div class="flow-title">Alkoshop — US Resident, Age 34 — Passes 21+ ✓</div>
+          <div class="flow-desc">Alex (United States, age 34) signs into Alkoshop. US rule is 21+. MOI attests 21+ and shares country. User admitted.</div>
+          <div class="flow-steps">
+            <a href="cigs.html#login" class="flow-step ac">Alkoshop Login</a>
+            <span class="flow-arrow">→</span>
+            <a href="moi.html#consent" class="flow-step primary">MOI Consent</a>
+            <span class="flow-arrow">→</span>
+            <a href="cigs.html#dashboard" class="flow-step ac">Dashboard</a>
+          </div>
+        </div>
+        <a href="cigs.html#login" class="flow-start-btn amber">Start →</a>
+      </div>
+    </div>
+
+    <div class="flow-card">
+      <div class="flow-card-header">
+        <div class="flow-number">10</div>
+        <div class="flow-info">
+          <div class="flow-title">Alkoshop — US Resident, Age 18 — Fails 21+ ✗</div>
+          <div class="flow-desc">An 18-year-old US resident signs in. US law requires 21+. MOI attests they are under 21 — rejected. Date of birth never shared.</div>
+          <div class="flow-steps">
+            <a href="cigs.html#login" class="flow-step ac">Alkoshop Login</a>
+            <span class="flow-arrow">→</span>
+            <a href="moi.html#consent" class="flow-step primary">MOI Consent</a>
+            <span class="flow-arrow">→</span>
+            <a href="cigs.html#age-denied" class="flow-step deny">Age Denied</a>
+          </div>
+        </div>
+        <a href="cigs.html#login" class="flow-start-btn dark" onclick="sessionStorage.setItem('moi_demo_dob','2007-06-01')">Start →</a>
+      </div>
+    </div>
+
+    <div class="flow-card">
+      <div class="flow-card-header">
+        <div class="flow-number">11</div>
+        <div class="flow-info">
+          <div class="flow-title">Alkoshop — Germany Resident, Age 18 — Passes 18+ ✓</div>
+          <div class="flow-desc">An 18-year-old in Germany signs in. German law allows 18+. MOI attests 18+ and shares country — user admitted, same person denied in US.</div>
+          <div class="flow-steps">
+            <a href="cigs.html#login" class="flow-step ac">Alkoshop Login</a>
+            <span class="flow-arrow">→</span>
+            <a href="moi.html#consent" class="flow-step primary">MOI Consent</a>
+            <span class="flow-arrow">→</span>
+            <a href="cigs.html#dashboard" class="flow-step ac">Dashboard</a>
+          </div>
+        </div>
+        <a href="cigs.html#login" class="flow-start-btn dark" onclick="sessionStorage.setItem('moi_demo_dob','2008-04-01');sessionStorage.setItem('moi_demo_country','Germany')">Start →</a>
+      </div>
+    </div>
+
+    <div class="flow-card">
+      <div class="flow-card-header">
+        <div class="flow-number">12</div>
+        <div class="flow-info">
+          <div class="flow-title">Alkoshop — India Resident, Age 23 — Fails 25+ ✗</div>
+          <div class="flow-desc">A 23-year-old in India signs in. India law requires 25+. MOI attests they are under 25 — rejected. Date of birth never shared.</div>
+          <div class="flow-steps">
+            <a href="cigs.html#login" class="flow-step ac">Alkoshop Login</a>
+            <span class="flow-arrow">→</span>
+            <a href="moi.html#consent" class="flow-step primary">MOI Consent</a>
+            <span class="flow-arrow">→</span>
+            <a href="cigs.html#age-denied" class="flow-step deny">Age Denied</a>
+          </div>
+        </div>
+        <a href="cigs.html#login" class="flow-start-btn dark" onclick="sessionStorage.setItem('moi_demo_dob','2003-01-01');sessionStorage.setItem('moi_demo_country','India')">Start →</a>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════ -->
+    <!-- ── MOI & Admin ── -->
+    <!-- ══════════════════════════════════════ -->
+    <div id="moi" class="section-label">MOI Vault — Direct Access</div>
+
+    <div class="flow-card">
+      <div class="flow-card-header">
+        <div class="flow-number">13</div>
+        <div class="flow-info">
           <div class="flow-title">Direct MOI Access</div>
-          <div class="flow-desc">User logs directly into MOI vault, views their stored information, manages data, and requests identity verification to raise their IDQA score.</div>
-          <div class="flow-steps" style="margin-top:10px">
+          <div class="flow-desc">User logs directly into the MOI vault, views stored information, manages data, and requests identity verification to raise their IDQA score.</div>
+          <div class="flow-steps">
             <a href="moi.html#login" class="flow-step primary">MOI Login</a>
             <span class="flow-arrow">→</span>
             <a href="moi.html#dashboard" class="flow-step primary">Dashboard</a>
@@ -251,35 +468,19 @@
             <a href="moi.html#verify-request" class="flow-step primary">Request Verification</a>
           </div>
         </div>
-        <a href="moi.html#login" class="flow-start-btn">Start →</a>
+        <a href="moi.html#login" class="flow-start-btn cyan">Start →</a>
       </div>
     </div>
 
-    <!-- Flow 3 -->
-    <div class="flow-card">
-      <div class="flow-card-header">
-        <div class="flow-number">3</div>
-        <div class="flow-info">
-          <div class="flow-title">Access Denied — No Certificate</div>
-          <div class="flow-desc">User attempts to access TNT but has no Osmio ID Pair installed. They see the access denied screen with instructions to enroll.</div>
-          <div class="flow-steps" style="margin-top:10px">
-            <a href="tnt.html#login" class="flow-step tnt">TNT Login</a>
-            <span class="flow-arrow">→</span>
-            <a href="tnt.html#access-denied" class="flow-step" style="background:rgba(239,71,111,.08);border-color:rgba(239,71,111,.2);color:#ef476f">No Certificate</a>
-          </div>
-        </div>
-        <a href="tnt.html#access-denied" class="flow-start-btn dark">View →</a>
-      </div>
-    </div>
+    <div id="admin" class="section-label">OSMIO Admin — Attestation Portal</div>
 
-    <!-- Flow 4 -->
     <div class="flow-card">
       <div class="flow-card-header">
-        <div class="flow-number">4</div>
+        <div class="flow-number">14</div>
         <div class="flow-info">
           <div class="flow-title">Admin — Review Verifications</div>
-          <div class="flow-desc">Admin officer signs in, reviews the verification queue, compares submitted data against enrollment records, and approves or rejects requests.</div>
-          <div class="flow-steps" style="margin-top:10px">
+          <div class="flow-desc">Admin officer signs in with Osmio ID Pair + 2FA, reviews the verification queue, and approves or rejects identity requests.</div>
+          <div class="flow-steps">
             <a href="admin.html#login" class="flow-step" style="background:rgba(170,25,69,.1);border-color:rgba(170,25,69,.2);color:#c06080">Admin Login</a>
             <span class="flow-arrow">→</span>
             <a href="admin.html#dashboard" class="flow-step" style="background:rgba(170,25,69,.1);border-color:rgba(170,25,69,.2);color:#c06080">Dashboard</a>
@@ -291,29 +492,51 @@
       </div>
     </div>
 
-    <!-- ── QUICK JUMP ── -->
+    <!-- ── Quick Jump ── -->
     <div class="section-label">Quick Jump to Any Screen</div>
     <div class="quick-grid">
-      <a href="tnt.html#login"         class="quick-link"><span class="quick-link-dot" style="background:#aa1945"></span>TNT Login</a>
-      <a href="tnt.html#cert-check"    class="quick-link"><span class="quick-link-dot" style="background:#aa1945"></span>TNT Cert Check</a>
-      <a href="tnt.html#access-denied" class="quick-link"><span class="quick-link-dot" style="background:#ef476f"></span>TNT No Cert</a>
-      <a href="tnt.html#redirecting"   class="quick-link"><span class="quick-link-dot" style="background:#aa1945"></span>TNT Returning</a>
-      <a href="tnt.html#dashboard"     class="quick-link"><span class="quick-link-dot" style="background:#aa1945"></span>TNT Dashboard</a>
-      <a href="moi.html#login"         class="quick-link"><span class="quick-link-dot" style="background:#00b4d8"></span>MOI Login</a>
-      <a href="moi.html#consent"       class="quick-link"><span class="quick-link-dot" style="background:#00b4d8"></span>MOI Consent</a>
-      <a href="moi.html#dashboard"     class="quick-link"><span class="quick-link-dot" style="background:#00b4d8"></span>MOI Dashboard</a>
-      <a href="moi.html#manage"        class="quick-link"><span class="quick-link-dot" style="background:#00b4d8"></span>MOI Manage</a>
-      <a href="moi.html#verify-request"class="quick-link"><span class="quick-link-dot" style="background:#00b4d8"></span>MOI Verify</a>
-      <a href="admin.html#login"       class="quick-link"><span class="quick-link-dot" style="background:#9ca3af"></span>Admin Login</a>
-      <a href="admin.html#dashboard"   class="quick-link"><span class="quick-link-dot" style="background:#9ca3af"></span>Admin Dashboard</a>
-      <a href="admin.html#review"      class="quick-link"><span class="quick-link-dot" style="background:#9ca3af"></span>Admin Review</a>
-      <a href="admin.html#users"       class="quick-link"><span class="quick-link-dot" style="background:#9ca3af"></span>Admin Users</a>
+      <a href="tnt.html#login"           class="quick-link"><span class="quick-link-dot" style="background:#aa1945"></span>TNT Login</a>
+      <a href="tnt.html#cert-check"      class="quick-link"><span class="quick-link-dot" style="background:#aa1945"></span>TNT ID Check</a>
+      <a href="tnt.html#access-denied"   class="quick-link"><span class="quick-link-dot" style="background:#ef476f"></span>TNT No ID Pair</a>
+      <a href="tnt.html#dashboard"       class="quick-link"><span class="quick-link-dot" style="background:#aa1945"></span>TNT Dashboard</a>
+      <a href="tnt.html#age-denied"      class="quick-link"><span class="quick-link-dot" style="background:#ef476f"></span>TNT Age Denied</a>
+      <a href="nextcloud.html#login"     class="quick-link"><span class="quick-link-dot" style="background:#0082c9"></span>NC Login</a>
+      <a href="nextcloud.html#dashboard" class="quick-link"><span class="quick-link-dot" style="background:#0082c9"></span>NC Dashboard</a>
+      <a href="nextcloud.html#age-denied"class="quick-link"><span class="quick-link-dot" style="background:#ef476f"></span>NC Age Denied</a>
+      <a href="betmax.html#login"        class="quick-link"><span class="quick-link-dot" style="background:#16a34a"></span>BetMax Login</a>
+      <a href="betmax.html#dashboard"    class="quick-link"><span class="quick-link-dot" style="background:#16a34a"></span>BetMax Dashboard</a>
+      <a href="betmax.html#age-denied"   class="quick-link"><span class="quick-link-dot" style="background:#ef476f"></span>BetMax Age Denied</a>
+      <a href="betmax.html#region-denied"class="quick-link"><span class="quick-link-dot" style="background:#f59e0b"></span>BetMax Region Denied</a>
+      <a href="cigs.html#login"          class="quick-link"><span class="quick-link-dot" style="background:#d97706"></span>Alkoshop Login</a>
+      <a href="cigs.html#dashboard"      class="quick-link"><span class="quick-link-dot" style="background:#d97706"></span>Alkoshop Dashboard</a>
+      <a href="cigs.html#age-denied"     class="quick-link"><span class="quick-link-dot" style="background:#ef476f"></span>Alkoshop Age Denied</a>
+      <a href="moi.html#login"           class="quick-link"><span class="quick-link-dot" style="background:#00b4d8"></span>MOI Login</a>
+      <a href="moi.html#consent"         class="quick-link"><span class="quick-link-dot" style="background:#00b4d8"></span>MOI Consent</a>
+      <a href="moi.html#dashboard"       class="quick-link"><span class="quick-link-dot" style="background:#00b4d8"></span>MOI Dashboard</a>
+      <a href="moi.html#manage"          class="quick-link"><span class="quick-link-dot" style="background:#00b4d8"></span>MOI Manage</a>
+      <a href="moi.html#verify-request"  class="quick-link"><span class="quick-link-dot" style="background:#00b4d8"></span>MOI Verify</a>
+      <a href="admin.html#login"         class="quick-link"><span class="quick-link-dot" style="background:#9ca3af"></span>Admin Login</a>
+      <a href="admin.html#dashboard"     class="quick-link"><span class="quick-link-dot" style="background:#9ca3af"></span>Admin Dashboard</a>
+      <a href="admin.html#review"        class="quick-link"><span class="quick-link-dot" style="background:#9ca3af"></span>Admin Review</a>
+      <a href="admin.html#users"         class="quick-link"><span class="quick-link-dot" style="background:#9ca3af"></span>Admin Users</a>
     </div>
 
     <div class="stack-info">
       <strong>Stack:</strong> Vanilla JS · No framework · No build step · Hash-based routing · sessionStorage for cross-app state ·
-      <strong>Files:</strong> index.html · tnt.html · moi.html · admin.html · css/shared+tnt+moi+admin · js/mock-data+router+tnt+moi+admin
+      <strong>Portals:</strong> tnt · nextcloud · betmax · alcoshop (cigs) · moi · admin ·
+      <strong>Age check:</strong> MOI derives 13+/18+/21+/25+ from DOB — the raw date is never shared · Country of residence attested separately
     </div>
   </div>
+
+  <script>
+    // Smooth scroll for portal card clicks
+    document.querySelectorAll('.portal-card[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+  </script>
 </body>
 </html>
