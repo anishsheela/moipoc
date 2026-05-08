@@ -141,13 +141,31 @@
     .card--casino .card-icon { background: linear-gradient(135deg,#8b1a1a,#c9a227); }
     .card--casino .card-tag  { background: rgba(201,162,39,.12); color: #c9a227; }
 
-    /* YPO */
+    /* Young CEOs Association */
     .card--ypo .card-icon { background: linear-gradient(135deg,#001f5b,#c9a227); }
     .card--ypo .card-tag  { background: rgba(0,31,91,.35); color: #8fb3ff; }
 
     /* Medical */
     .card--medical .card-icon { background: linear-gradient(135deg,#0d47a1,#42a5f5); }
     .card--medical .card-tag  { background: rgba(13,71,161,.25); color: #90caf9; }
+
+    /* ── About link ── */
+    .about-bar {
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      margin-bottom: 44px; padding: 14px 20px;
+      background: rgba(0,200,240,.05); border: 1px solid rgba(0,200,240,.15);
+      border-radius: 14px; max-width: 960px; width: 100%;
+    }
+    .about-bar p { font-size: 13.5px; color: var(--muted); line-height: 1.5; }
+    .about-bar strong { color: var(--text); }
+    .about-link {
+      display: inline-flex; align-items: center; gap: 6px; white-space: nowrap;
+      padding: 7px 16px; border-radius: 8px; flex-shrink: 0;
+      background: rgba(0,200,240,.1); border: 1px solid rgba(0,200,240,.25);
+      font-size: 12.5px; font-weight: 700; color: var(--accent);
+      text-decoration: none; transition: all .15s;
+    }
+    .about-link:hover { background: rgba(0,200,240,.16); }
 
     /* ── Footer ── */
     .footer {
@@ -180,6 +198,14 @@
     <p>Explore the MOI identity vault and see how it integrates with third-party services using the No-Yes Protocol for privacy-preserving age verification.</p>
   </header>
 
+  <div class="about-bar">
+    <p><strong>New here?</strong> Learn about The Authenticity Alliance, the MOI™ vault architecture, the No-Yes Protocol, and how to get the most from this demo.</p>
+    <a href="about.html" class="about-link">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      About this Demo →
+    </a>
+  </div>
+
   <div class="grid">
 
     <!-- MOI Vault -->
@@ -210,14 +236,14 @@
       <div class="card-tag">Play demo →</div>
     </a>
 
-    <!-- YPO -->
+    <!-- Young CEOs Association -->
     <a class="card card--ypo" href="ypo.html">
-      <div class="card-icon" style="font-size:20px;font-weight:900;color:#c9a227;letter-spacing:-1px">YPO</div>
+      <div class="card-icon" style="font-size:17px;font-weight:900;color:#c9a227;letter-spacing:-0.5px">YCA</div>
       <div>
-        <div class="card-title">Young Presidents' Org</div>
+        <div class="card-title">Young CEOs Association</div>
         <div class="card-subtitle">Membership gate · Under 30</div>
       </div>
-      <div class="card-desc">Demonstrates an upper age limit. YPO asks your vault whether you are under 30 — only a boolean answer is returned, never your actual age or birthdate.</div>
+      <div class="card-desc">Demonstrates an upper age limit. The association asks your vault whether you are under 30 — only a boolean answer is returned, never your actual age or birthdate.</div>
       <div class="card-tag">Apply demo →</div>
     </a>
 

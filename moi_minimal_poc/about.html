@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About This Demo — The Authenticity Alliance</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #0d1117;
+      --surface:  #161b22;
+      --surface2: #1e2530;
+      --border:   rgba(255,255,255,.08);
+      --border2:  rgba(255,255,255,.13);
+      --text:     #e6edf3;
+      --muted:    rgba(230,237,243,.5);
+      --accent:   #00c8f0;
+      --accent2:  #005f88;
+      --success:  #06d6a0;
+      --warn:     #f59e0b;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+    body::before {
+      content: ''; position: fixed; inset: 0;
+      background-image: radial-gradient(rgba(0,200,240,.04) 1px, transparent 1px);
+      background-size: 32px 32px; pointer-events: none; z-index: 0;
+    }
+
+    /* ── Topbar ── */
+    .topbar {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 32px;
+      background: rgba(13,17,23,.94); backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    .topbar-left { display: flex; align-items: center; gap: 10px; }
+    .topbar-brand { font-size: 14px; font-weight: 700; color: var(--muted); letter-spacing: -.1px; }
+    .topbar-brand strong { color: var(--accent); }
+    .btn-back {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 14px; border-radius: 8px;
+      border: 1px solid var(--border2); background: rgba(255,255,255,.04);
+      font-size: 12.5px; font-weight: 600; color: var(--muted);
+      text-decoration: none; transition: all .15s;
+    }
+    .btn-back:hover { color: var(--text); border-color: rgba(255,255,255,.22); }
+
+    /* ── Page content ── */
+    .page {
+      position: relative; z-index: 1;
+      max-width: 820px; margin: 0 auto;
+      padding: 56px 28px 80px;
+    }
+
+    /* ── Hero ── */
+    .hero { text-align: center; margin-bottom: 64px; }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 5px 15px; border-radius: 99px;
+      background: rgba(0,200,240,.08); border: 1px solid rgba(0,200,240,.2);
+      font-size: 11.5px; font-weight: 700; color: var(--accent);
+      text-transform: uppercase; letter-spacing: .8px; margin-bottom: 22px;
+    }
+    .hero h1 {
+      font-size: 38px; font-weight: 900; letter-spacing: -1.2px;
+      line-height: 1.15; margin-bottom: 18px; color: var(--text);
+    }
+    .hero h1 em { font-style: normal; color: var(--accent); }
+    .hero p {
+      font-size: 15px; color: var(--muted); line-height: 1.75;
+      max-width: 560px; margin: 0 auto;
+    }
+
+    /* ── Section ── */
+    .section { margin-bottom: 60px; }
+    .section-label {
+      font-size: 10.5px; font-weight: 800; text-transform: uppercase;
+      letter-spacing: 1.4px; color: var(--muted);
+      display: flex; align-items: center; gap: 10px; margin-bottom: 20px;
+    }
+    .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    .section-title {
+      font-size: 22px; font-weight: 800; letter-spacing: -.4px;
+      margin-bottom: 12px; color: var(--text);
+    }
+    .section-body {
+      font-size: 14px; color: var(--muted); line-height: 1.78;
+    }
+    .section-body + .section-body { margin-top: 12px; }
+    .section-body strong { color: var(--text); }
+
+    /* ── Badges ── */
+    .badge-live {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 3px 10px; border-radius: 99px; font-size: 11px; font-weight: 700;
+      background: rgba(6,214,160,.1); color: var(--success);
+      border: 1px solid rgba(6,214,160,.25);
+    }
+    .badge-live::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--success); box-shadow: 0 0 5px var(--success); }
+    .badge-dev {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 3px 10px; border-radius: 99px; font-size: 11px; font-weight: 700;
+      background: rgba(245,158,11,.1); color: var(--warn);
+      border: 1px solid rgba(245,158,11,.25);
+    }
+    .badge-dev::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--warn); }
+
+    /* ── Enterprise cards ── */
+    .enterprise-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 22px;
+    }
+    .enterprise-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 18px; padding: 26px 24px;
+    }
+    .enterprise-card.is-dev { opacity: .68; border-style: dashed; }
+    .enterprise-icon {
+      width: 46px; height: 46px; border-radius: 13px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 16px;
+    }
+    .enterprise-name { font-size: 15px; font-weight: 800; color: var(--text); margin-bottom: 4px; }
+    .enterprise-tag {
+      font-size: 10.5px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: .6px; color: var(--muted); margin-bottom: 12px;
+    }
+    .enterprise-desc { font-size: 13px; color: var(--muted); line-height: 1.65; margin-top: 12px; }
+
+    /* ── Drawer cards ── */
+    .drawer-list { display: flex; flex-direction: column; gap: 12px; margin-top: 22px; }
+    .drawer-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 14px; padding: 20px 22px;
+      display: flex; align-items: flex-start; gap: 18px;
+    }
+    .drawer-card.is-dev { opacity: .62; }
+    .drawer-num {
+      width: 38px; height: 38px; border-radius: 11px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 17px; font-weight: 900; color: #fff;
+    }
+    .drawer-header { display: flex; align-items: center; gap: 10px; margin-bottom: 7px; flex-wrap: wrap; }
+    .drawer-title  { font-size: 14.5px; font-weight: 800; color: var(--text); }
+    .drawer-desc   { font-size: 13px; color: var(--muted); line-height: 1.62; }
+    .drawer-tech {
+      display: inline-flex; align-items: center; gap: 5px; margin-top: 9px;
+      font-size: 11.5px; font-weight: 600; color: var(--accent);
+      background: rgba(0,200,240,.06); border: 1px solid rgba(0,200,240,.15);
+      padding: 3px 10px; border-radius: 6px;
+    }
+
+    /* ── Callouts ── */
+    .callout {
+      background: rgba(0,200,240,.05); border: 1px solid rgba(0,200,240,.15);
+      border-left: 3px solid var(--accent); border-radius: 0 10px 10px 0;
+      padding: 16px 18px; margin: 20px 0;
+    }
+    .callout-label {
+      font-size: 10px; font-weight: 800; text-transform: uppercase;
+      letter-spacing: .8px; color: var(--accent); margin-bottom: 6px;
+    }
+    .callout p { font-size: 13.5px; color: var(--muted); line-height: 1.65; }
+    .callout strong { color: var(--text); }
+
+    .callout-warn {
+      background: rgba(245,158,11,.05); border: 1px solid rgba(245,158,11,.2);
+      border-left: 3px solid var(--warn); border-radius: 0 10px 10px 0;
+      padding: 16px 18px; margin: 20px 0;
+    }
+    .callout-warn .callout-label { color: var(--warn); }
+    .callout-warn p { font-size: 13.5px; color: var(--muted); line-height: 1.65; }
+    .callout-warn strong { color: var(--warn); }
+
+    /* ── Protocol flow ── */
+    .protocol-flow {
+      display: flex; align-items: center; gap: 8px;
+      margin: 24px 0; flex-wrap: wrap;
+    }
+    .proto-node {
+      flex: 1; min-width: 130px;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: 18px 14px; text-align: center;
+    }
+    .proto-icon  { font-size: 26px; margin-bottom: 7px; line-height: 1; }
+    .proto-label { font-size: 12px; font-weight: 800; color: var(--text); margin-bottom: 3px; }
+    .proto-sub   { font-size: 11px; color: var(--muted); line-height: 1.4; }
+    .proto-arrow { font-size: 20px; color: var(--muted); flex-shrink: 0; }
+
+    /* ── Legal grid ── */
+    .legal-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 22px;
+    }
+    .legal-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: 18px 20px;
+    }
+    .legal-icon  { font-size: 20px; margin-bottom: 10px; }
+    .legal-title { font-size: 13.5px; font-weight: 800; color: var(--text); margin-bottom: 6px; }
+    .legal-body  { font-size: 12.5px; color: var(--muted); line-height: 1.62; }
+
+    /* ── Role steps ── */
+    .roles-list { display: flex; flex-direction: column; gap: 10px; margin-top: 22px; }
+    .role-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 14px; padding: 18px 20px;
+      display: flex; align-items: center; gap: 18px;
+      text-decoration: none; color: inherit;
+      transition: border-color .15s, transform .15s, box-shadow .15s;
+    }
+    .role-card:hover {
+      border-color: rgba(0,200,240,.3);
+      transform: translateX(4px);
+      box-shadow: 0 4px 24px rgba(0,0,0,.3);
+    }
+    .role-num {
+      width: 36px; height: 36px; border-radius: 10px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 15px; font-weight: 900; color: #fff;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+    }
+    .role-body  { flex: 1; }
+    .role-title { font-size: 14px; font-weight: 800; color: var(--text); margin-bottom: 3px; }
+    .role-desc  { font-size: 12.5px; color: var(--muted); line-height: 1.5; }
+    .role-app {
+      font-size: 11px; font-weight: 600; color: var(--accent);
+      background: rgba(0,200,240,.07); border: 1px solid rgba(0,200,240,.18);
+      padding: 3px 9px; border-radius: 6px; white-space: nowrap; flex-shrink: 0;
+    }
+    .role-arrow { color: var(--muted); flex-shrink: 0; }
+
+    /* ── Dev banner ── */
+    .dev-banner {
+      display: flex; align-items: flex-start; gap: 13px;
+      padding: 16px 18px; border-radius: 12px;
+      background: rgba(245,158,11,.06); border: 1px solid rgba(245,158,11,.25);
+      margin-bottom: 24px;
+    }
+    .dev-banner svg { flex-shrink: 0; margin-top: 1px; }
+    .dev-banner p { font-size: 13px; color: rgba(245,158,11,.85); line-height: 1.55; }
+    .dev-banner strong { color: var(--warn); }
+
+    /* ── CTA ── */
+    .cta-row { display: flex; gap: 12px; margin-top: 32px; flex-wrap: wrap; align-items: center; }
+    .btn-start {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 13px 24px; border-radius: 10px; border: none;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #fff; font-size: 14px; font-weight: 700; font-family: inherit;
+      text-decoration: none;
+      box-shadow: 0 4px 20px rgba(0,200,240,.25); transition: all .15s; cursor: pointer;
+    }
+    .btn-start:hover { opacity: .9; transform: translateY(-1px); }
+    .btn-outline {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 22px; border-radius: 10px;
+      border: 1px solid var(--border2); background: rgba(255,255,255,.04);
+      color: var(--muted); font-size: 14px; font-weight: 600; text-decoration: none;
+      transition: all .15s;
+    }
+    .btn-outline:hover { color: var(--text); border-color: rgba(255,255,255,.22); }
+
+    /* ── Footer ── */
+    .footer { text-align: center; margin-top: 64px; font-size: 12px; color: rgba(230,237,243,.18); }
+
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+    .page { animation: fadeUp .25s ease; }
+
+    @media (max-width: 600px) {
+      .enterprise-grid { grid-template-columns: 1fr; }
+      .legal-grid { grid-template-columns: 1fr; }
+      .proto-arrow { transform: rotate(90deg); align-self: center; }
+      .hero h1 { font-size: 27px; }
+      .topbar { padding: 12px 18px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-left">
+      <svg width="28" height="30" viewBox="0 0 40 44" fill="none">
+        <defs>
+          <linearGradient id="tg" x1="4" y1="2" x2="36" y2="42" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#00c8f0"/><stop offset="1" stop-color="#005f88"/>
+          </linearGradient>
+        </defs>
+        <path d="M20 2L36 8.5V20C36 29.5 28 36.5 20 40C12 36.5 4 29.5 4 20V8.5L20 2Z" fill="url(#tg)"/>
+        <circle cx="20" cy="17" r="6" fill="white" opacity=".95"/>
+        <ellipse cx="20" cy="30.5" rx="9" ry="6" fill="white" opacity=".95"/>
+      </svg>
+      <span class="topbar-brand"><strong>Authenticity Alliance</strong> — About this Demo</span>
+    </div>
+    <a href="index.html" class="btn-back">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      Demo Hub
+    </a>
+  </header>
+
+  <div class="page">
+
+    <!-- ── Hero ── -->
+    <div class="hero">
+      <div class="hero-eyebrow">
+        <svg width="12" height="13" viewBox="0 0 40 44" fill="none">
+          <path d="M20 2L36 8.5V20C36 29.5 28 36.5 20 40C12 36.5 4 29.5 4 20V8.5L20 2Z" fill="#00c8f0"/>
+          <circle cx="20" cy="17" r="6" fill="white" opacity=".95"/>
+          <ellipse cx="20" cy="30.5" rx="9" ry="6" fill="white" opacity=".95"/>
+        </svg>
+        The Authenticity Alliance
+      </div>
+      <h1>Welcome to the<br><em>Demonstration Room</em></h1>
+      <p>The Authenticity Alliance comprises two enterprises — ZK Group and the Council of Attestation Officers — each presenting a complementary demonstration of digital identity technology that puts you in control of your own information.</p>
+    </div>
+
+    <!-- ── The Two Enterprises ── -->
+    <section class="section">
+      <div class="section-label">The Enterprises</div>
+
+      <div class="enterprise-grid">
+
+        <div class="enterprise-card">
+          <div class="enterprise-icon" style="background:linear-gradient(135deg,rgba(0,200,240,.15),rgba(0,95,136,.12))">
+            <svg width="26" height="28" viewBox="0 0 40 44" fill="none">
+              <defs><linearGradient id="eg1" x1="4" y1="2" x2="36" y2="42" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#00c8f0"/><stop offset="1" stop-color="#005f88"/>
+              </linearGradient></defs>
+              <path d="M20 2L36 8.5V20C36 29.5 28 36.5 20 40C12 36.5 4 29.5 4 20V8.5L20 2Z" fill="url(#eg1)"/>
+              <circle cx="20" cy="17" r="6" fill="white" opacity=".95"/>
+              <ellipse cx="20" cy="30.5" rx="9" ry="6" fill="white" opacity=".95"/>
+            </svg>
+          </div>
+          <div class="enterprise-name">ZK Group</div>
+          <div class="enterprise-tag">MOI™ Vault · No-Yes Protocol</div>
+          <span class="badge-live">Live in Demo</span>
+          <div class="enterprise-desc">ZK stands for "zero knowledge proof" — a cryptographic process where a person proves they know a secret without revealing it. ZK Group offers the MOI™ personal information vault and the No-Yes Protocol for privacy-preserving identity queries.</div>
+        </div>
+
+        <div class="enterprise-card is-dev">
+          <div class="enterprise-icon" style="background:rgba(245,158,11,.1);font-size:22px">⚖️</div>
+          <div class="enterprise-name">Council of Attestation Officers</div>
+          <div class="enterprise-tag">Osmio Enrollment · Online Notary</div>
+          <span class="badge-dev">Under Development</span>
+          <div class="enterprise-desc">An Attestation Officer is a Remote Online Notary commissioned by the US Commonwealth of Virginia to perform online notarial procedures for affiants anywhere on Earth. The CAO demonstrates enrollment to Osmio digital identity certificates with an IDQA score assessment.</div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── About MOI ── -->
+    <section class="section">
+      <div class="section-label">MOI™ — My Own Information</div>
+      <div class="section-title">Your Personal Information Vault</div>
+      <p class="section-body">
+        MOI™ is a product of ZK Group, an Authenticity Enterprise. In technical terms it is a <strong>personal information sync-and-license product</strong> — a super-secure digital file cabinet that puts you in full ownership and control of every piece of information about yourself.
+      </p>
+      <p class="section-body">
+        With file sync-and-license, access to any file or data element by anyone other than its owner requires a license issued by the owner. Think of MOI™ as a file cabinet with three drawers.
+      </p>
+
+      <div class="callout">
+        <div class="callout-label">Key Principle</div>
+        <p>MOI gives you the tools to claim your personal information as your <strong>Personal Intellectual Property</strong>, covered by both international copyright law and secrecy law. Anyone who wants to use your information must consent to a Personal NDA and obtain a license from you specifying permissible uses. Unauthorized use entitles you to compensatory and punitive damages.</p>
+      </div>
+
+      <div class="drawer-list">
+
+        <div class="drawer-card">
+          <div class="drawer-num" style="background:linear-gradient(135deg,#00c8f0,#005f88)">1</div>
+          <div style="flex:1">
+            <div class="drawer-header">
+              <span class="drawer-title">First Drawer — Structured Information</span>
+              <span class="badge-live">Live in Demo</span>
+            </div>
+            <div class="drawer-desc">Where you store structured data — name, address, phone number, date of birth, and other fields of defined length. This is part of your <strong style="color:var(--text)">Biographical Reference Work (BRW)</strong> and constitutes your Personal Intellectual Property.</div>
+            <div class="drawer-tech">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              Built on Tim Berners-Lee's W3C Solid Pod specification
+            </div>
+          </div>
+        </div>
+
+        <div class="drawer-card is-dev">
+          <div class="drawer-num" style="background:rgba(245,158,11,.18);color:var(--warn)">2</div>
+          <div style="flex:1">
+            <div class="drawer-header">
+              <span class="drawer-title">Second Drawer — Unstructured Information</span>
+              <span class="badge-dev">Under Development</span>
+            </div>
+            <div class="drawer-desc">For unstructured information — photos, videos, stories, resumes — larger blocks of information not confined to fields. Also part of your Biographical Reference Work and covered by copyright and secrecy law as Personal Intellectual Property.</div>
+          </div>
+        </div>
+
+        <div class="drawer-card is-dev">
+          <div class="drawer-num" style="background:rgba(245,158,11,.1);color:var(--warn)">3</div>
+          <div style="flex:1">
+            <div class="drawer-header">
+              <span class="drawer-title">Third Drawer — Information in Possession</span>
+              <span class="badge-dev">Under Development</span>
+            </div>
+            <div class="drawer-desc">For information you happen to have in your possession that requires protection, but which you do not necessarily own — such as files used in your work. This drawer operates under a different legal framework from the first two.</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── Legal Framework ── -->
+    <section class="section">
+      <div class="section-label">Legal Framework</div>
+      <div class="section-title">Biographical Reference Work &amp; Personal NDA</div>
+      <p class="section-body">
+        The contents of the first two drawers together form your <strong>Biographical Reference Work (BRW)</strong> — a legal construct that applies copyright law to your personal information as a "work," in the same category as films, books, and reference works.
+      </p>
+      <p class="section-body">
+        Legal algorithms are as much a part of MOI™ as computer algorithms. In addition to copyright, the BRW is protected by secrecy law. The World Intellectual Property Organization (WIPO), a United Nations agency, defines "trade secret" to include "consumer profiles" — which encompasses the MOI owner's personal information.
+      </p>
+
+      <div class="legal-grid">
+        <div class="legal-card">
+          <div class="legal-icon">©</div>
+          <div class="legal-title">Copyright Protection</div>
+          <div class="legal-body">The BRW qualifies as a copyrightable reference work, covering both field-oriented data (phone numbers, addresses) and unstructured content (images, text). Copyright applies internationally.</div>
+        </div>
+        <div class="legal-card">
+          <div class="legal-icon">🔒</div>
+          <div class="legal-title">Trade Secret / Secrecy Law</div>
+          <div class="legal-body">WIPO's definition of "trade secret" explicitly includes "consumer profiles," providing an independent legal layer of protection over and above copyright for your personal information.</div>
+        </div>
+        <div class="legal-card">
+          <div class="legal-icon">📝</div>
+          <div class="legal-title">Personal NDA</div>
+          <div class="legal-body">Before a license can be issued to any relying party, a PersonalNDA must exist. The MOI owner may require explicit signing, or allow an implicit NDA where acknowledgement of the proprietary nature of the information is accepted.</div>
+        </div>
+        <div class="legal-card">
+          <div class="legal-icon">🪪</div>
+          <div class="legal-title">License-Controlled Access</div>
+          <div class="legal-body">Each relying party must obtain a license specifying permissible uses. Any use outside the license terms constitutes theft and entitles you to compensatory and punitive damages.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── No-Yes Protocol ── -->
+    <section class="section">
+      <div class="section-label">No-Yes Protocol</div>
+      <div class="section-title">Privacy-Preserving Binary Queries</div>
+      <p class="section-body">
+        The No-Yes Protocol enables relying parties to query a data item in the MOI owner's vault to determine whether it meets the requirements of a binary question — without ever seeing the underlying data. For example, a gambling site may ask "Is this person 21 or older?" and receive only "Yes" or "No" — never the actual date of birth.
+      </p>
+
+      <div class="protocol-flow">
+        <div class="proto-node">
+          <div class="proto-icon">🏢</div>
+          <div class="proto-label">Relying Party</div>
+          <div class="proto-sub">Sends a binary<br>question</div>
+        </div>
+        <div class="proto-arrow">→</div>
+        <div class="proto-node" style="border-color:rgba(0,200,240,.2)">
+          <div class="proto-icon">
+            <svg width="26" height="28" viewBox="0 0 40 44" fill="none">
+              <defs><linearGradient id="pf" x1="4" y1="2" x2="36" y2="42" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#00c8f0"/><stop offset="1" stop-color="#005f88"/>
+              </linearGradient></defs>
+              <path d="M20 2L36 8.5V20C36 29.5 28 36.5 20 40C12 36.5 4 29.5 4 20V8.5L20 2Z" fill="url(#pf)"/>
+              <circle cx="20" cy="17" r="6" fill="white" opacity=".95"/>
+              <ellipse cx="20" cy="30.5" rx="9" ry="6" fill="white" opacity=".95"/>
+            </svg>
+          </div>
+          <div class="proto-label">MOI™ Vault</div>
+          <div class="proto-sub">Computes answer<br>locally</div>
+        </div>
+        <div class="proto-arrow">→</div>
+        <div class="proto-node">
+          <div class="proto-icon">✅</div>
+          <div class="proto-label">Binary Answer Only</div>
+          <div class="proto-sub">"Yes" or "No" —<br>raw data stays private</div>
+        </div>
+      </div>
+
+      <div class="callout">
+        <div class="callout-label">Zero Knowledge</div>
+        <p>The vault computes the answer locally from attested data. <strong>The relying party never sees the underlying record</strong> — only the derived boolean. Your date of birth, for example, is never transmitted to or stored by the querying service.</p>
+      </div>
+    </section>
+
+    <!-- ── Authentication ── -->
+    <section class="section">
+      <div class="section-label">Authentication</div>
+      <div class="section-title">Osmio ID Pair</div>
+      <p class="section-body">
+        Authentication to the MOI is exclusively by means of an <strong>Osmio VRD Credential™ Utility Certificate</strong>. The City of Osmio is a global certification authority whose initial charter was written at the Geneva headquarters of the <strong>International Telecommunication Union (ITU)</strong>, a United Nations agency, on March 7, 2005.
+      </p>
+      <p class="section-body">
+        Each MOI owner holds an <strong>Osmio ID Pair</strong>: a <strong>Foundation certificate</strong> (attesting personal identity) and a <strong>Numberplate certificate</strong> (a pseudonymous link). Together they authenticate every vault session and back the IDQA (Identity Quality Assurance) score displayed in the dashboard.
+      </p>
+    </section>
+
+    <!-- ── Demo Guide ── -->
+    <section class="section">
+      <div class="section-label">The Demo</div>
+      <div class="section-title">Your Four Roles</div>
+      <p class="section-body">
+        In this demonstration you will step into four different roles — experiencing the same identity exchange from each participant's perspective. Follow the steps in order for the full story.
+      </p>
+
+      <div class="roles-list">
+
+        <a class="role-card" href="moi.html">
+          <div class="role-num">1</div>
+          <div class="role-body">
+            <div class="role-title">You are the MOI owner</div>
+            <div class="role-desc">Access your personal identity vault. View your Osmio ID Pair, attested fields (name, date of birth, contact details), and IDQA score. In the full product, the vault holds hundreds of fields across all three drawers.</div>
+          </div>
+          <span class="role-app">MOI Vault</span>
+          <span class="role-arrow">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </span>
+        </a>
+
+        <a class="role-card" href="gambling.html">
+          <div class="role-num">2</div>
+          <div class="role-body">
+            <div class="role-title">You are the owner of a gambling website</div>
+            <div class="role-desc">You need an authoritative answer to "Is this person 21 or older?" As the site owner you have no right to the MOI owner's birthdate — you are licensed only to receive the binary answer via the No-Yes Protocol.</div>
+          </div>
+          <span class="role-app">LuckyAce Casino</span>
+          <span class="role-arrow">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </span>
+        </a>
+
+        <a class="role-card" href="ypo.html">
+          <div class="role-num">3</div>
+          <div class="role-body">
+            <div class="role-title">You are the administrator of Young CEOs Association</div>
+            <div class="role-desc">Membership is open only to chief executives who are under 30 years of age. You need to confirm eligibility — again, only a Yes/No answer is returned. Your organization never learns the applicant's actual birthdate.</div>
+          </div>
+          <span class="role-app">Young CEOs Association</span>
+          <span class="role-arrow">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </span>
+        </a>
+
+        <a class="role-card" href="medical.html">
+          <div class="role-num">4</div>
+          <div class="role-body">
+            <div class="role-title">You are a healthcare professional</div>
+            <div class="role-desc">The medical profession uses date of birth as identifying information. Unlike the previous cases, you are licensed to receive the <em>actual</em> date of birth — but only with the MOI owner's explicit consent. Without that consent, services may be withheld.</div>
+          </div>
+          <span class="role-app">HealthBridge Medical</span>
+          <span class="role-arrow">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </span>
+        </a>
+
+      </div>
+
+      <div class="cta-row">
+        <a href="moi.html" class="btn-start">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          Start the Demo
+        </a>
+        <a href="index.html" class="btn-outline">← Back to Demo Hub</a>
+      </div>
+    </section>
+
+    <!-- ── CAO Section ── -->
+    <section class="section">
+      <div class="section-label">Council of Attestation Officers</div>
+      <div class="section-title">Osmio Enrollment Procedure</div>
+
+      <div class="dev-banner">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round">
+          <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+          <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+        </svg>
+        <p><strong>Under Development</strong> — The Council of Attestation Officers demo is not yet finalized. The description below reflects the full intended demo experience.</p>
+      </div>
+
+      <p class="section-body">
+        An <strong>Attestation Officer</strong> is a Remote Online Notary commissioned by the US Commonwealth (state) of Virginia to perform online notarial procedures. The affiant — the person making the declaration — may be anywhere on Earth.
+      </p>
+      <p class="section-body" style="margin-top:12px">
+        One such procedure is the enrollment of an individual to the Osmio digital identity certificate stack. The Attestation Officer assesses the evidence of identity presented by the affiant and produces an <strong>IDQA (Identity Quality Assurance) score</strong> — a number reflecting the reliability of the identity claim. This score is embedded in the resulting Osmio certificates and is visible in the MOI vault dashboard.
+      </p>
+      <p class="section-body" style="margin-top:12px">
+        In the full demo, certain fields in the MOI — such as date of birth — will be digitally signed by the Attestation Officer, meaning they cannot be altered by the MOI owner themselves. For simplicity, this PoC allows demo users to work with pre-attested sample data.
+      </p>
+
+      <div class="callout">
+        <div class="callout-label">About the City of Osmio</div>
+        <p>Osmio is a global certification authority. Its initial charter was written at the Geneva headquarters of the <strong>International Telecommunication Union (ITU)</strong>, a United Nations agency, on <strong>March 7, 2005</strong>. The Osmio Numberplate and Foundation certificates together form the Osmio ID Pair — the sole authentication mechanism for every MOI session.</p>
+      </div>
+    </section>
+
+    <footer class="footer">The Authenticity Alliance Demonstration Room — for demonstration purposes only</footer>
+
+  </div>
+
+</body>
+</html>

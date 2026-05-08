@@ -32,6 +32,23 @@
     .nav-item:hover { background: rgba(255,255,255,.1); color: #fff; }
     .nav-item.active { background: rgba(255,255,255,.15); color: #fff; }
 
+    .btn-hub {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 7px 14px; border-radius: 6px;
+      border: 1px solid rgba(255,255,255,.2); background: rgba(255,255,255,.08);
+      font-size: 12.5px; font-weight: 600; color: rgba(255,255,255,.7);
+      text-decoration: none; transition: all .12s;
+    }
+    .btn-hub:hover { border-color: rgba(255,255,255,.4); color: #fff; }
+    .btn-signout {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 7px 14px; border-radius: 6px;
+      border: 1px solid rgba(255,255,255,.1); background: transparent;
+      font-size: 12.5px; font-weight: 600; color: rgba(255,255,255,.5);
+      font-family: inherit; cursor: pointer; transition: all .12s;
+    }
+    .btn-signout:hover { border-color: rgba(239,71,111,.4); color: #ef7b8e; background: rgba(239,71,111,.08); }
+
     /* ── Layout ── */
     .layout { display: flex; min-height: calc(100vh - 60px); }
     .sidebar {
@@ -180,6 +197,14 @@
       <span class="nav-item active">Patient Records</span>
       <span class="nav-item">Appointments</span>
       <span class="nav-item">Prescriptions</span>
+      <a href="index.html" class="btn-hub">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+        Demo Hub
+      </a>
+      <button onclick="signOut()" class="btn-signout">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        Sign out of MOI
+      </button>
     </nav>
   </header>
 
@@ -388,6 +413,11 @@
       sessionStorage.removeItem('moi_nc_patient');
       location.hash = '';
       render();
+    }
+
+    function signOut() {
+      ['moi_user_index','moi_nc_result','moi_nc_request','moi_nc_dob','moi_nc_patient'].forEach(k => sessionStorage.removeItem(k));
+      location.href = 'moi.html';
     }
 
     window.addEventListener('hashchange', render);
