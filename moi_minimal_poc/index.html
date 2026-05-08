@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MOI Demo — Navigation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:      #0d1117;
+      --surface: #161b22;
+      --border:  rgba(255,255,255,.08);
+      --text:    #e6edf3;
+      --muted:   rgba(230,237,243,.45);
+      --accent:  #00c8f0;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 48px 20px 64px;
+    }
+
+    /* ── Header ── */
+    .header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 52px;
+      text-align: center;
+    }
+    .moi-badge {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .moi-shield {
+      width: 44px; height: 44px;
+    }
+    .moi-wordmark {
+      font-size: 26px;
+      font-weight: 900;
+      letter-spacing: -.5px;
+      background: linear-gradient(135deg, #00c8f0 0%, #0d6e6e 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .header h1 {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -.5px;
+    }
+    .header p {
+      font-size: 14px;
+      color: var(--muted);
+      max-width: 460px;
+      line-height: 1.7;
+    }
+
+    /* ── Grid ── */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      width: 100%;
+      max-width: 960px;
+    }
+
+    /* ── Card ── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 28px 24px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      text-decoration: none;
+      color: inherit;
+      transition: border-color .18s, transform .18s, box-shadow .18s;
+      cursor: pointer;
+    }
+    .card:hover {
+      border-color: rgba(255,255,255,.18);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(0,0,0,.4);
+    }
+    .card-icon {
+      width: 48px; height: 48px;
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px;
+      flex-shrink: 0;
+    }
+    .card-title {
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: -.2px;
+    }
+    .card-subtitle {
+      font-size: 11.5px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .6px;
+      opacity: .45;
+      margin-top: 3px;
+    }
+    .card-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.65;
+      flex: 1;
+    }
+    .card-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11.5px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 99px;
+      align-self: flex-start;
+    }
+
+    /* ── Per-card accent colours ── */
+    /* MOI Vault */
+    .card--moi { border-color: rgba(0,200,240,.18); }
+    .card--moi .card-icon { background: linear-gradient(135deg,#00c8f0,#005f88); }
+    .card--moi .card-tag  { background: rgba(0,200,240,.12); color: #00c8f0; }
+
+    /* Gambling */
+    .card--casino .card-icon { background: linear-gradient(135deg,#8b1a1a,#c9a227); }
+    .card--casino .card-tag  { background: rgba(201,162,39,.12); color: #c9a227; }
+
+    /* YPO */
+    .card--ypo .card-icon { background: linear-gradient(135deg,#001f5b,#c9a227); }
+    .card--ypo .card-tag  { background: rgba(0,31,91,.35); color: #8fb3ff; }
+
+    /* Medical */
+    .card--medical .card-icon { background: linear-gradient(135deg,#0d47a1,#42a5f5); }
+    .card--medical .card-tag  { background: rgba(13,71,161,.25); color: #90caf9; }
+
+    /* ── Footer ── */
+    .footer {
+      margin-top: 56px;
+      font-size: 12px;
+      color: rgba(230,237,243,.2);
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <div class="moi-badge">
+      <!-- MOI shield -->
+      <svg class="moi-shield" viewBox="0 0 40 44" fill="none">
+        <defs>
+          <linearGradient id="sg" x1="4" y1="2" x2="36" y2="42" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#00c8f0"/>
+            <stop offset="1" stop-color="#005f88"/>
+          </linearGradient>
+        </defs>
+        <path d="M20 2L36 8.5V20C36 29.5 28 36.5 20 40C12 36.5 4 29.5 4 20V8.5L20 2Z" fill="url(#sg)"/>
+        <circle cx="20" cy="17" r="6" fill="white" opacity=".95"/>
+        <ellipse cx="20" cy="30.5" rx="9" ry="6" fill="white" opacity=".95"/>
+      </svg>
+      <span class="moi-wordmark">MOI™</span>
+    </div>
+    <h1>My Own Information — Demo</h1>
+    <p>Explore the MOI identity vault and see how it integrates with third-party services using the No-Yes Protocol for privacy-preserving age verification.</p>
+  </header>
+
+  <div class="grid">
+
+    <!-- MOI Vault -->
+    <a class="card card--moi" href="moi.html">
+      <div class="card-icon">
+        <svg width="26" height="26" viewBox="0 0 40 44" fill="none">
+          <path d="M20 2L36 8.5V20C36 29.5 28 36.5 20 40C12 36.5 4 29.5 4 20V8.5L20 2Z" fill="white" opacity=".9"/>
+          <circle cx="20" cy="17" r="6" fill="#005f88"/>
+          <ellipse cx="20" cy="30.5" rx="9" ry="6" fill="#005f88"/>
+        </svg>
+      </div>
+      <div>
+        <div class="card-title">MOI Vault</div>
+        <div class="card-subtitle">Identity hub</div>
+      </div>
+      <div class="card-desc">Your personal identity vault. Store verified credentials, view your Osmio ID pair, and manage consent requests from third-party services.</div>
+      <div class="card-tag">Open vault →</div>
+    </a>
+
+    <!-- LuckyAce Casino -->
+    <a class="card card--casino" href="gambling.html">
+      <div class="card-icon">🃏</div>
+      <div>
+        <div class="card-title">LuckyAce Casino</div>
+        <div class="card-subtitle">Age gate demo · 21+</div>
+      </div>
+      <div class="card-desc">Demonstrates age-gated access. The casino requests a yes/no answer from your MOI vault — are you 21 or older? Your date of birth is never shared.</div>
+      <div class="card-tag">Play demo →</div>
+    </a>
+
+    <!-- YPO -->
+    <a class="card card--ypo" href="ypo.html">
+      <div class="card-icon" style="font-size:20px;font-weight:900;color:#c9a227;letter-spacing:-1px">YPO</div>
+      <div>
+        <div class="card-title">Young Presidents' Org</div>
+        <div class="card-subtitle">Membership gate · Under 30</div>
+      </div>
+      <div class="card-desc">Demonstrates an upper age limit. YPO asks your vault whether you are under 30 — only a boolean answer is returned, never your actual age or birthdate.</div>
+      <div class="card-tag">Apply demo →</div>
+    </a>
+
+    <!-- HealthBridge Medical -->
+    <a class="card card--medical" href="medical.html">
+      <div class="card-icon">⚕️</div>
+      <div>
+        <div class="card-title">HealthBridge Medical</div>
+        <div class="card-subtitle">DOB share demo</div>
+      </div>
+      <div class="card-desc">Demonstrates explicit data sharing. Dr. Mitchell's portal requests your actual date of birth — with your consent, only the DOB is shared, nothing else.</div>
+      <div class="card-tag">Book demo →</div>
+    </a>
+
+  </div>
+
+  <footer class="footer">MOI™ Minimal PoC — for demonstration purposes only</footer>
+
+</body>
+</html>

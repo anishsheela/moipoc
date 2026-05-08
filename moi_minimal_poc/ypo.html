@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Young Presidents' Organization</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: #f0f2f5; color: #1a1a2e; min-height: 100vh; }
+
+    /* ── Header ── */
+    .header {
+      background: #001f5b; padding: 0 32px; height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+      position: sticky; top: 0; z-index: 100;
+      box-shadow: 0 2px 12px rgba(0,0,0,.3);
+    }
+    .logo { display: flex; align-items: center; gap: 14px; }
+    .logo-mark {
+      width: 40px; height: 40px; background: #c9a227; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; font-weight: 900; color: #001f5b;
+    }
+    .logo-name { font-size: 15px; font-weight: 800; color: #fff; letter-spacing: -.2px; }
+    .logo-sub  { font-size: 10.5px; color: rgba(255,255,255,.5); font-weight: 500; }
+    .header-right { display: flex; gap: 6px; }
+    .header-nav-item {
+      padding: 7px 14px; border-radius: 6px; font-size: 12.5px; font-weight: 600;
+      color: rgba(255,255,255,.65); cursor: pointer; transition: background .12s;
+    }
+    .header-nav-item:hover { background: rgba(255,255,255,.08); color: #fff; }
+    .header-nav-item.active { background: rgba(201,162,39,.15); color: #c9a227; }
+
+    /* ── Layout ── */
+    .layout { display: flex; min-height: calc(100vh - 64px); }
+    .sidebar {
+      width: 220px; background: #fff; border-right: 1px solid #e2e8f0;
+      padding: 24px 0; flex-shrink: 0;
+    }
+    .sidebar-section { padding: 0 16px; margin-bottom: 24px; }
+    .sidebar-label {
+      font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px;
+      color: #94a3b8; margin-bottom: 8px; padding: 0 4px;
+    }
+    .sidebar-item {
+      display: flex; align-items: center; gap: 10px; padding: 8px 10px;
+      border-radius: 8px; font-size: 13px; font-weight: 600; color: #4b5563;
+      cursor: pointer; transition: background .1s;
+    }
+    .sidebar-item:hover  { background: #f1f5f9; }
+    .sidebar-item.active { background: #eff6ff; color: #001f5b; font-weight: 700; }
+    .sidebar-item svg    { flex-shrink: 0; }
+
+    .main { flex: 1; padding: 36px 40px; }
+
+    /* ── Page ── */
+    .page-header { margin-bottom: 28px; }
+    .page-title { font-size: 22px; font-weight: 800; color: #001f5b; margin-bottom: 4px; }
+    .page-sub   { font-size: 13.5px; color: #6b7280; }
+
+    .card {
+      background: #fff; border-radius: 14px; padding: 28px 32px;
+      border: 1px solid #e2e8f0; box-shadow: 0 1px 8px rgba(0,0,0,.05);
+      margin-bottom: 20px;
+    }
+    .card h2 { font-size: 17px; font-weight: 800; color: #001f5b; margin-bottom: 8px; }
+    .card p  { font-size: 13.5px; color: #6b7280; line-height: 1.7; margin-bottom: 18px; }
+
+    .eligibility-rule {
+      display: flex; align-items: center; gap: 14px; padding: 16px 20px;
+      background: #f8faff; border: 1px solid #c7d7f5; border-radius: 10px; margin-bottom: 20px;
+    }
+    .rule-icon {
+      width: 40px; height: 40px; border-radius: 10px; background: #001f5b;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .rule-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; color: #6b7280; margin-bottom: 3px; }
+    .rule-value { font-size: 15px; font-weight: 800; color: #001f5b; }
+
+    .protocol-note {
+      display: flex; gap: 10px; align-items: flex-start;
+      padding: 12px 16px; background: #f0f9ff;
+      border: 1px solid #bae6fd; border-radius: 10px; margin-bottom: 22px;
+    }
+    .protocol-note p { font-size: 12.5px; color: #0c4a6e; line-height: 1.6; }
+    .protocol-note strong { color: #0077a8; }
+
+    .btn-verify {
+      display: inline-flex; align-items: center; gap: 9px;
+      padding: 12px 24px; border-radius: 9px; border: none; cursor: pointer;
+      font-size: 14px; font-weight: 700; font-family: inherit;
+      background: #001f5b; color: #fff;
+      box-shadow: 0 4px 14px rgba(0,31,91,.25); transition: all .15s;
+    }
+    .btn-verify:hover { background: #002d85; transform: translateY(-1px); }
+
+    /* ── Results ── */
+    .result-granted {
+      background: #f0fdf4; border: 1.5px solid #86efac;
+      border-radius: 12px; padding: 20px 24px; margin-bottom: 20px;
+      display: flex; align-items: center; gap: 16px;
+    }
+    .result-granted-icon {
+      width: 44px; height: 44px; border-radius: 10px; background: #dcfce7;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .result-granted h3 { font-size: 15px; font-weight: 800; color: #15803d; margin-bottom: 3px; }
+    .result-granted p  { font-size: 13px; color: #4b7a59; line-height: 1.5; }
+
+    .result-denied {
+      background: #fef2f2; border: 1.5px solid #fca5a5;
+      border-radius: 12px; padding: 20px 24px; margin-bottom: 20px;
+      display: flex; align-items: center; gap: 16px;
+    }
+    .result-denied-icon {
+      width: 44px; height: 44px; border-radius: 10px; background: #fee2e2;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .result-denied h3 { font-size: 15px; font-weight: 800; color: #dc2626; margin-bottom: 3px; }
+    .result-denied p  { font-size: 13px; color: #7f1d1d; line-height: 1.5; }
+
+    .try-again {
+      font-size: 13px; color: #001f5b; font-weight: 700; background: none;
+      border: none; cursor: pointer; font-family: inherit; text-decoration: underline; padding: 0;
+      display: inline-block; margin-top: 6px;
+    }
+
+    @keyframes fadeIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:none; } }
+    .layout { animation: fadeIn .2s ease; }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="logo">
+      <div class="logo-mark">Y</div>
+      <div>
+        <div class="logo-name">Young Presidents' Organization</div>
+        <div class="logo-sub">Global Leadership Community</div>
+      </div>
+    </div>
+    <nav class="header-right">
+      <span class="header-nav-item">About YPO</span>
+      <span class="header-nav-item">Events</span>
+      <span class="header-nav-item active">Membership</span>
+      <span class="header-nav-item">Chapters</span>
+    </nav>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-section">
+        <div class="sidebar-label">Membership</div>
+        <div class="sidebar-item active">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Apply for Membership
+        </div>
+        <div class="sidebar-item">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Chapter Events
+        </div>
+        <div class="sidebar-item">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          Eligibility Criteria
+        </div>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-label">Resources</div>
+        <div class="sidebar-item">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          YPO Annual Report
+        </div>
+        <div class="sidebar-item">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          Member Forum
+        </div>
+      </div>
+    </aside>
+
+    <main class="main" id="main">
+      <!-- rendered by JS -->
+    </main>
+  </div>
+
+  <script>
+    function moiLogoSVG(size = 16) {
+      return `<svg width="${size}" height="${size}" viewBox="0 0 40 44" fill="none">
+        <defs><linearGradient id="mg" x1="4" y1="2" x2="36" y2="42" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#00c8f0"/><stop offset="1" stop-color="#005f88"/>
+        </linearGradient></defs>
+        <path d="M20 2L36 8.5V20C36 29.5 28 36.5 20 40C12 36.5 4 29.5 4 20V8.5L20 2Z" fill="url(#mg)"/>
+        <circle cx="20" cy="17" r="6" fill="white" opacity=".95"/>
+        <ellipse cx="20" cy="30.5" rx="9" ry="6" fill="white" opacity=".95"/>
+      </svg>`;
+    }
+
+    function render() {
+      const hash   = location.hash.slice(1);
+      const result = sessionStorage.getItem('moi_nc_result');
+      const el     = document.getElementById('main');
+
+      if (hash === 'granted' && result === 'granted') {
+        el.innerHTML = `
+          <div class="page-header">
+            <div class="page-title">Membership Application</div>
+            <div class="page-sub">Young Presidents' Organization · Eligibility Verified</div>
+          </div>
+          <div class="result-granted">
+            <div class="result-granted-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/>
+              </svg>
+            </div>
+            <div>
+              <h3>Age Eligibility Confirmed via MOI™</h3>
+              <p>The applicant is confirmed to be under 30 years of age. Your date of birth was not disclosed to YPO — only a Yes answer was shared via the No-Yes Protocol.</p>
+            </div>
+          </div>
+          <div class="card">
+            <h2>Next Steps</h2>
+            <p>Your age eligibility has been verified. A YPO membership advisor will contact you to complete your application, verify your organisation's credentials, and introduce you to your local chapter.</p>
+          </div>`;
+        return;
+      }
+
+      if (hash === 'declined' || result === 'declined') {
+        el.innerHTML = `
+          <div class="page-header">
+            <div class="page-title">Membership Application</div>
+            <div class="page-sub">Young Presidents' Organization · Eligibility Check</div>
+          </div>
+          <div class="result-denied">
+            <div class="result-denied-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2.5" stroke-linecap="round">
+                <circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/>
+              </svg>
+            </div>
+            <div>
+              <h3>Eligibility Requirement Not Met</h3>
+              <p>YPO membership requires applicants to be under 30 years of age at the time of joining. The No-Yes answer indicates this requirement is not met, or consent was declined.</p>
+              <button class="try-again" onclick="reset()">Try with a different account</button>
+            </div>
+          </div>`;
+        return;
+      }
+
+      // Default: eligibility gate
+      el.innerHTML = `
+        <div class="page-header">
+          <div class="page-title">Membership Application</div>
+          <div class="page-sub">Young Presidents' Organization · Verify Age Eligibility</div>
+        </div>
+
+        <div class="card">
+          <h2>Age Eligibility Verification</h2>
+          <p>YPO welcomes chief executives and business leaders who are under 30 years of age at the time of joining, and who lead a qualifying organisation. Before proceeding with your full application, we need to confirm you meet the age requirement.</p>
+
+          <div class="eligibility-rule">
+            <div class="rule-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c9a227" stroke-width="2.5" stroke-linecap="round">
+                <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+              </svg>
+            </div>
+            <div>
+              <div class="rule-label">Age Requirement</div>
+              <div class="rule-value">Under 30 years of age at time of joining</div>
+            </div>
+          </div>
+
+          <div class="protocol-note">
+            ${moiLogoSVG(15)}
+            <p>YPO uses the <strong>MOI™ No-Yes Protocol</strong> to check age eligibility. We ask your vault a single yes-or-no question — we never receive or store your date of birth. Only the answer ("Yes, under 30" or "No") is returned.</p>
+          </div>
+
+          <button class="btn-verify" onclick="requestVerification()">
+            ${moiLogoSVG(16)} Check Eligibility via MOI™
+          </button>
+        </div>
+
+        <div class="card" style="border-color:#c7d7f5">
+          <h2>Other Eligibility Criteria</h2>
+          <p>In addition to the age requirement, YPO members must hold the title of President, CEO, Managing Director, or equivalent, and lead an organisation with a minimum annual revenue of USD $1 million or 50 employees. Full criteria are reviewed during the application process.</p>
+        </div>`;
+    }
+
+    function requestVerification() {
+      sessionStorage.removeItem('moi_nc_result');
+      sessionStorage.setItem('moi_nc_request', JSON.stringify({
+        appName:        "Young Presidents' Organization",
+        returnTo:       'ypo.html',
+        queryType:      'age_under',
+        ageThreshold:   30,
+        requesterIcon:  'Y',
+        requesterColor: '#001f5b',
+      }));
+      location.href = 'moi.html#consent';
+    }
+
+    function reset() {
+      sessionStorage.removeItem('moi_nc_result');
+      location.hash = '';
+      render();
+    }
+
+    window.addEventListener('hashchange', render);
+    render();
+  </script>
+</body>
+</html>

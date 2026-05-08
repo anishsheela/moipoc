@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LuckyAce Casino</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: #0e0e14; color: #f0e6c8; min-height: 100vh; }
+
+    /* ── Header ── */
+    .header {
+      background: linear-gradient(90deg, #1a0500 0%, #2a0d00 100%);
+      border-bottom: 2px solid #c9a227;
+      padding: 0 32px; height: 60px;
+      display: flex; align-items: center; justify-content: space-between;
+      position: sticky; top: 0; z-index: 100;
+    }
+    .logo { display: flex; align-items: center; gap: 10px; }
+    .logo-icon { font-size: 24px; }
+    .logo-text { font-size: 20px; font-weight: 900; color: #c9a227; letter-spacing: -.3px; }
+    .logo-text span { color: #fff; }
+    .header-nav { display: flex; gap: 24px; }
+    .nav-item { font-size: 13px; font-weight: 600; color: rgba(240,230,200,.5); cursor: pointer; }
+    .nav-item.active { color: #c9a227; }
+
+    /* ── Main ── */
+    .main { max-width: 860px; margin: 0 auto; padding: 36px 24px 60px; }
+
+    .hero {
+      background: linear-gradient(135deg, #1a0a00 0%, #0e0710 100%);
+      border: 1px solid rgba(201,162,39,.2);
+      border-radius: 18px; padding: 36px 40px; margin-bottom: 28px;
+      display: flex; align-items: center; gap: 32px;
+    }
+    .hero-text h1 { font-size: 30px; font-weight: 900; color: #c9a227; margin-bottom: 8px; line-height: 1.2; }
+    .hero-text p  { font-size: 14px; color: rgba(240,230,200,.55); line-height: 1.65; max-width: 400px; }
+    .hero-icon { font-size: 64px; flex-shrink: 0; }
+
+    .games-section { margin-bottom: 28px; }
+    .games-label {
+      font-size: 10.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.2px;
+      color: rgba(201,162,39,.6); margin-bottom: 14px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .games-label::after { content: ''; flex: 1; height: 1px; background: rgba(201,162,39,.15); }
+    .game-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    .game-card {
+      background: #15111e; border: 1px solid rgba(201,162,39,.12);
+      border-radius: 12px; padding: 20px 12px; text-align: center; cursor: pointer;
+      transition: border-color .15s;
+    }
+    .game-card:hover { border-color: rgba(201,162,39,.35); }
+    .game-card-icon  { font-size: 32px; margin-bottom: 8px; line-height: 1; }
+    .game-card-name  { font-size: 12px; font-weight: 700; color: rgba(240,230,200,.7); }
+    .game-card-type  { font-size: 10.5px; color: rgba(240,230,200,.35); margin-top: 2px; }
+
+    /* ── Age gate / result ── */
+    .age-gate {
+      background: #130b00;
+      border: 2px solid #c9a227;
+      border-radius: 16px; padding: 30px 32px;
+    }
+    .age-gate-header {
+      display: flex; align-items: center; gap: 14px; margin-bottom: 16px;
+    }
+    .age-gate-icon-wrap {
+      width: 48px; height: 48px; border-radius: 12px; background: rgba(201,162,39,.1);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .age-gate h2 { font-size: 18px; font-weight: 800; color: #c9a227; margin-bottom: 3px; }
+    .age-gate p  { font-size: 13.5px; color: rgba(240,230,200,.55); line-height: 1.65; margin-bottom: 22px; }
+
+
+    .protocol-note {
+      display: flex; gap: 10px; align-items: flex-start;
+      padding: 12px 14px; background: rgba(0,180,216,.06);
+      border: 1px solid rgba(0,180,216,.15); border-radius: 10px; margin-bottom: 22px;
+    }
+    .protocol-note p { font-size: 12.5px; color: rgba(240,230,200,.55); line-height: 1.6; }
+    .protocol-note strong { color: #00b4d8; }
+
+    .btn-verify {
+      display: inline-flex; align-items: center; gap: 9px;
+      padding: 13px 26px; border-radius: 10px; border: none; cursor: pointer;
+      font-size: 14px; font-weight: 800; font-family: inherit;
+      background: linear-gradient(135deg, #c9a227, #a07d10); color: #0a0800;
+      box-shadow: 0 4px 20px rgba(201,162,39,.35); transition: all .15s;
+    }
+    .btn-verify:hover { opacity: .9; transform: translateY(-1px); }
+
+    /* MOI logo inline */
+    .moi-badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 12px; font-weight: 700; color: #00b4d8;
+    }
+
+    /* ── Result banners ── */
+    .result-granted {
+      background: #0a1f10; border: 1.5px solid #2d7a47; border-radius: 14px;
+      padding: 22px 24px; margin-bottom: 24px; display: flex; align-items: center; gap: 16px;
+    }
+    .result-granted-icon {
+      width: 44px; height: 44px; border-radius: 11px; background: rgba(22,163,74,.15);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .result-granted h3 { font-size: 15px; font-weight: 800; color: #4ade80; margin-bottom: 3px; }
+    .result-granted p  { font-size: 13px; color: rgba(74,222,128,.65); line-height: 1.5; }
+
+    .result-denied {
+      background: #1a0a0a; border: 1.5px solid #7a2d2d; border-radius: 14px;
+      padding: 22px 24px; margin-bottom: 24px; display: flex; align-items: center; gap: 16px;
+    }
+    .result-denied-icon {
+      width: 44px; height: 44px; border-radius: 11px; background: rgba(220,38,38,.12);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .result-denied h3 { font-size: 15px; font-weight: 800; color: #f87171; margin-bottom: 3px; }
+    .result-denied p  { font-size: 13px; color: rgba(248,113,113,.6); line-height: 1.5; }
+
+    .try-again {
+      font-size: 13px; color: #c9a227; font-weight: 700; background: none;
+      border: none; cursor: pointer; font-family: inherit; text-decoration: underline;
+      padding: 0; display: inline-block; margin-top: 6px;
+    }
+
+    /* locked overlay on game grid */
+    .games-locked { position: relative; }
+    .games-locked::after {
+      content: ''; position: absolute; inset: -6px;
+      background: rgba(14,14,20,.82); border-radius: 14px; backdrop-filter: blur(4px);
+    }
+
+    @keyframes fadeIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:none; } }
+    .main { animation: fadeIn .2s ease; }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="logo">
+      <span class="logo-icon">🃏</span>
+      <div class="logo-text"><span>Lucky</span>Ace Casino</div>
+    </div>
+    <nav class="header-nav">
+      <span class="nav-item active">Games</span>
+      <span class="nav-item">Promotions</span>
+      <span class="nav-item">Live Casino</span>
+      <span class="nav-item">Support</span>
+    </nav>
+  </header>
+
+  <main class="main">
+    <div id="content"></div>
+  </main>
+
+  <script>
+    function moiLogoSVG(size = 18) {
+      return `<svg width="${size}" height="${size}" viewBox="0 0 40 44" fill="none">
+        <defs><linearGradient id="mg" x1="4" y1="2" x2="36" y2="42" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#00c8f0"/><stop offset="1" stop-color="#005f88"/>
+        </linearGradient></defs>
+        <path d="M20 2L36 8.5V20C36 29.5 28 36.5 20 40C12 36.5 4 29.5 4 20V8.5L20 2Z" fill="url(#mg)"/>
+        <circle cx="20" cy="17" r="6" fill="white" opacity=".95"/>
+        <ellipse cx="20" cy="30.5" rx="9" ry="6" fill="white" opacity=".95"/>
+      </svg>`;
+    }
+
+    const GAMES = [
+      { icon: '🎰', name: 'Mega Jackpot',  type: 'Slots' },
+      { icon: '🃏', name: 'Blackjack Pro', type: 'Table' },
+      { icon: '🎲', name: 'Roulette Live', type: 'Live'  },
+      { icon: '🎯', name: 'Poker Room',    type: 'Poker'  },
+    ];
+
+    function gameGrid(locked) {
+      return `
+        <div class="games-section">
+          <div class="games-label">Featured Games</div>
+          <div class="${locked ? 'games-locked' : ''}" style="position:relative">
+            <div class="game-grid">
+              ${GAMES.map(g => `
+                <div class="game-card">
+                  <div class="game-card-icon">${g.icon}</div>
+                  <div class="game-card-name">${g.name}</div>
+                  <div class="game-card-type">${g.type}</div>
+                </div>`).join('')}
+            </div>
+          </div>
+        </div>`;
+    }
+
+    function render() {
+      const hash   = location.hash.slice(1);
+      const result = sessionStorage.getItem('moi_nc_result');
+      const el     = document.getElementById('content');
+
+      if (hash === 'granted' && result === 'granted') {
+        el.innerHTML = `
+          <div class="hero">
+            <div class="hero-text">
+              <h1>Welcome Back!</h1>
+              <p>Your age has been verified. Enjoy our full range of premium games and live casino experiences.</p>
+            </div>
+            <div class="hero-icon">🎰</div>
+          </div>
+          <div class="result-granted">
+            <div class="result-granted-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2.5" stroke-linecap="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/>
+              </svg>
+            </div>
+            <div>
+              <h3>Age Verified via MOI™</h3>
+              <p>You meet the minimum age requirement. Your date of birth was never disclosed to LuckyAce — only a Yes answer was shared via the No-Yes Protocol.</p>
+            </div>
+          </div>
+          ${gameGrid(false)}`;
+        return;
+      }
+
+      if (hash === 'declined' || result === 'declined') {
+        el.innerHTML = `
+          <div class="hero">
+            <div class="hero-text">
+              <h1>Access Restricted</h1>
+              <p>You must meet our minimum age requirement to access LuckyAce Casino games.</p>
+            </div>
+            <div class="hero-icon">🔒</div>
+          </div>
+          <div class="result-denied">
+            <div class="result-denied-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2.5" stroke-linecap="round">
+                <circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/>
+              </svg>
+            </div>
+            <div>
+              <h3>Age Requirement Not Met</h3>
+              <p>The No-Yes answer returned by MOI™ indicates you do not meet the minimum age requirement, or you declined to share your answer.</p>
+              <button class="try-again" onclick="reset()">Try with a different account</button>
+            </div>
+          </div>
+          ${gameGrid(true)}`;
+        return;
+      }
+
+      // Default: age gate
+      el.innerHTML = `
+        <div class="hero">
+          <div class="hero-text">
+            <h1>Premium Gaming<br>Awaits You</h1>
+            <p>Live dealers, jackpot slots, and exclusive tournaments. Age verification required to access our games.</p>
+          </div>
+          <div class="hero-icon">🎰</div>
+        </div>
+
+        <div class="age-gate">
+          <div class="age-gate-header">
+            <div class="age-gate-icon-wrap">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#c9a227" stroke-width="2" stroke-linecap="round">
+                <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+            </div>
+            <div>
+              <h2>Age Verification Required</h2>
+              <div style="font-size:12.5px;color:rgba(240,230,200,.45);font-weight:600">Minimum age 21 — verify via MOI™</div>
+            </div>
+          </div>
+
+          <p>To access LuckyAce Casino you must be 21 or older. We use the No-Yes Protocol — we ask only whether you qualify, and never see your date of birth.</p>
+
+          <div class="protocol-note">
+            <svg width="15" height="15" viewBox="0 0 40 44" fill="none" style="flex-shrink:0;margin-top:1px">
+              <defs><linearGradient id="mg2" x1="4" y1="2" x2="36" y2="42" gradientUnits="userSpaceOnUse"><stop stop-color="#00c8f0"/><stop offset="1" stop-color="#005f88"/></linearGradient></defs>
+              <path d="M20 2L36 8.5V20C36 29.5 28 36.5 20 40C12 36.5 4 29.5 4 20V8.5L20 2Z" fill="url(#mg2)"/>
+              <circle cx="20" cy="17" r="6" fill="white" opacity=".95"/>
+              <ellipse cx="20" cy="30.5" rx="9" ry="6" fill="white" opacity=".95"/>
+            </svg>
+            <p>Powered by <strong>MOI™ No-Yes Protocol</strong> — LuckyAce asks your vault a yes-or-no question. Your vault answers. Your date of birth is never transmitted to or stored by LuckyAce.</p>
+          </div>
+
+          <button class="btn-verify" onclick="requestVerification()">
+            ${moiLogoSVG(18)} Verify Age via MOI™
+          </button>
+        </div>
+
+        ${gameGrid(true)}`;
+    }
+
+    function requestVerification() {
+      sessionStorage.removeItem('moi_nc_result');
+      sessionStorage.setItem('moi_nc_request', JSON.stringify({
+        appName:        'LuckyAce Casino',
+        returnTo:       'gambling.html',
+        queryType:      'age_over',
+        ageThreshold:   21,
+        requesterIcon:  '🃏',
+        requesterColor: '#c9a227',
+      }));
+      location.href = 'moi.html#consent';
+    }
+
+    function reset() {
+      sessionStorage.removeItem('moi_nc_result');
+      location.hash = '';
+      render();
+    }
+
+    window.addEventListener('hashchange', render);
+    render();
+  </script>
+</body>
+</html>

@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OSMIO · Attestation Portal Demo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0c0917;
+      color: #ede9f8;
+      min-height: 100vh;
+      padding: 40px 24px 80px;
+    }
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: radial-gradient(rgba(124,58,237,.07) 1px, transparent 1px);
+      background-size: 28px 28px;
+      pointer-events: none;
+    }
+    body::after {
+      content: '';
+      position: fixed;
+      top: -180px; left: 50%; transform: translateX(-50%);
+      width: 800px; height: 600px;
+      background: radial-gradient(ellipse, rgba(124,58,237,.08) 0%, transparent 65%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .hub { max-width: 960px; margin: 0 auto; position: relative; z-index: 1; }
+
+    /* ── Back link ── */
+    .hub-back {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 12px; font-weight: 600; color: #5b4a7a;
+      text-decoration: none; margin-bottom: 32px;
+      transition: color .15s ease;
+    }
+    .hub-back:hover { color: #a78bfa; }
+
+    /* ── Header ── */
+    .hub-header { text-align: center; margin-bottom: 48px; }
+    .hub-logo { display: inline-flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+    .hub-logo-icon {
+      width: 48px; height: 48px;
+      background: linear-gradient(135deg, #7c3aed, #4c1d95);
+      border-radius: 14px; display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 0 28px rgba(124,58,237,.4);
+    }
+    .hub-logo-wordmark { text-align: left; }
+    .hub-logo-name { font-size: 18px; font-weight: 900; letter-spacing: -.2px; color: #ede9f8; }
+    .hub-logo-sub  { font-size: 10.5px; font-weight: 600; color: #6d5a90; letter-spacing: .5px; text-transform: uppercase; margin-top: 2px; }
+
+    .hub-kicker {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-size: 11px; font-weight: 700; letter-spacing: 1px;
+      text-transform: uppercase; color: #a78bfa;
+      border: 1px solid rgba(124,58,237,.3);
+      background: rgba(124,58,237,.08);
+      padding: 5px 14px; border-radius: 999px;
+      margin-bottom: 20px;
+    }
+    .hub-kicker-dot { width: 5px; height: 5px; border-radius: 50%; background: #a78bfa; animation: pulse 2s ease-in-out infinite; }
+    @keyframes pulse { 0%,100%{opacity:.5;transform:scale(1)}50%{opacity:1;transform:scale(1.3)} }
+
+    .hub-title { font-size: 30px; font-weight: 900; letter-spacing: -.6px; color: #ede9f8; margin-bottom: 10px; }
+    .hub-title span { color: #a78bfa; }
+    .hub-subtitle { font-size: 15px; color: #6d5a90; max-width: 580px; margin: 0 auto; line-height: 1.65; }
+
+    /* ── Role cards ── */
+    .role-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 48px;
+    }
+    @media (max-width: 640px) { .role-grid { grid-template-columns: 1fr; } }
+    .role-card {
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      padding: 20px 12px 18px;
+      background: #160e28; border: 1px solid rgba(255,255,255,.06);
+      border-radius: 16px; text-decoration: none; color: inherit;
+      transition: all .18s ease; cursor: pointer;
+    }
+    .role-card:hover { transform: translateY(-2px); }
+    .role-card.user:hover   { background: #1c1230; border-color: rgba(0,180,216,.25); }
+    .role-card.super:hover  { background: #1c1230; border-color: rgba(170,25,69,.3); }
+    .role-card.officer:hover{ background: #1c1230; border-color: rgba(124,58,237,.35); }
+
+    .role-icon {
+      width: 52px; height: 52px; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center; font-size: 22px;
+    }
+    .role-name { font-size: 13px; font-weight: 800; color: #c4b5f8; text-align: center; }
+    .role-tag  { font-size: 11px; color: #5b4a7a; font-weight: 600; text-align: center; }
+
+    /* ── Section labels ── */
+    .section-label {
+      font-size: 10px; font-weight: 800; text-transform: uppercase;
+      letter-spacing: 1.2px; color: #7c3aed;
+      margin-bottom: 14px; margin-top: 36px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .section-label:first-of-type { margin-top: 0; }
+    .section-label::after { content: ''; flex: 1; height: 1px; background: rgba(124,58,237,.15); }
+
+    /* ── Flow cards ── */
+    .flow-card {
+      background: #160e28; border: 1px solid rgba(255,255,255,.06);
+      border-radius: 16px; padding: 20px 24px; margin-bottom: 10px;
+      transition: border-color .15s ease;
+    }
+    .flow-card:hover { border-color: rgba(124,58,237,.2); }
+    .flow-card-header {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      gap: 12px;
+    }
+    .flow-number {
+      width: 26px; height: 26px; border-radius: 50%;
+      background: rgba(124,58,237,.18); border: 1px solid rgba(124,58,237,.3);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 800; color: #a78bfa; flex-shrink: 0; margin-top: 2px;
+    }
+    .flow-info { flex: 1; }
+    .flow-title { font-size: 15px; font-weight: 800; color: #ede9f8; margin-bottom: 3px; }
+    .flow-desc  { font-size: 12.5px; color: #6d5a90; line-height: 1.55; }
+    .flow-steps {
+      display: flex; align-items: center; gap: 5px; flex-wrap: wrap; margin-top: 10px;
+    }
+    .flow-step {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 4px 11px; background: #1e1438;
+      border: 1px solid rgba(255,255,255,.07); border-radius: 7px;
+      font-size: 12px; font-weight: 600; color: #9585b8;
+      text-decoration: none; transition: all .12s ease;
+    }
+    .flow-step:hover { background: #251a45; color: #c4b5f8; border-color: rgba(124,58,237,.3); }
+    .flow-step.user  { background: rgba(0,180,216,.1);   border-color: rgba(0,180,216,.2);   color: #00b4d8; }
+    .flow-step.sup   { background: rgba(170,25,69,.1);   border-color: rgba(170,25,69,.2);   color: #d4607a; }
+    .flow-step.off   { background: rgba(124,58,237,.12); border-color: rgba(124,58,237,.25); color: #a78bfa; }
+    .flow-step.email { background: rgba(100,116,139,.1); border-color: rgba(100,116,139,.2); color: #94a3b8; }
+    .flow-step.deny  { background: rgba(239,71,111,.08); border-color: rgba(239,71,111,.2);  color: #ef476f; }
+    .flow-arrow { color: rgba(255,255,255,.15); font-size: 11px; }
+
+    .flow-start-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 8px 16px; border-radius: 9px;
+      font-size: 12.5px; font-weight: 700; text-decoration: none;
+      flex-shrink: 0; transition: all .15s ease; white-space: nowrap; border: none; cursor: pointer;
+    }
+    .flow-start-btn.violet { background: #7c3aed; color: #fff; }
+    .flow-start-btn.violet:hover { background: #8b5cf6; transform: translateY(-1px); }
+    .flow-start-btn.rose   { background: #aa1945; color: #fff; }
+    .flow-start-btn.rose:hover   { background: #c01f50; }
+    .flow-start-btn.cyan   { background: #00b4d8; color: #0c0917; }
+    .flow-start-btn.cyan:hover   { background: #00caee; }
+    .flow-start-btn.dark   { background: #1e1438; color: #c4b5f8; border: 1px solid rgba(124,58,237,.2); }
+    .flow-start-btn.dark:hover   { background: #251a45; }
+
+    /* ── Quick jump grid ── */
+    .quick-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+      gap: 8px; margin-top: 4px;
+    }
+    .quick-link {
+      display: flex; align-items: center; gap: 7px;
+      padding: 9px 13px; background: #160e28;
+      border: 1px solid rgba(255,255,255,.06); border-radius: 9px;
+      font-size: 12.5px; font-weight: 600; color: #9585b8;
+      text-decoration: none; transition: all .12s ease;
+    }
+    .quick-link:hover { background: #1e1438; border-color: rgba(124,58,237,.25); color: #c4b5f8; }
+    .quick-link-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+
+    .stack-info {
+      margin-top: 36px; padding: 18px 22px;
+      background: rgba(124,58,237,.04); border: 1px solid rgba(124,58,237,.12);
+      border-radius: 12px; font-size: 12px; color: #5b4a7a; line-height: 1.7;
+    }
+    .stack-info strong { color: #7d6aa0; }
+  </style>
+</head>
+<body>
+  <div class="hub">
+
+    <a href="index.html" class="hub-back">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
+      Back to Demo Selector
+    </a>
+
+    <!-- ── Header ── -->
+    <div class="hub-header">
+      <div class="hub-logo">
+        <div class="hub-logo-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            <circle cx="12" cy="11" r="3"/>
+          </svg>
+        </div>
+        <div class="hub-logo-wordmark">
+          <div class="hub-logo-name">OSMIO</div>
+          <div class="hub-logo-sub">Attestation Portal</div>
+        </div>
+      </div>
+      <div class="hub-kicker"><span class="hub-kicker-dot"></span>Interactive Demo</div>
+      <h1 class="hub-title">Attestation Portal · <span>Demo Hub</span></h1>
+      <p class="hub-subtitle">The full officer workflow — from a user requesting verification, through supervisor scheduling, to video session and document approval. Three personas, one end-to-end flow.</p>
+    </div>
+
+    <!-- ── Role overview ── -->
+    <div class="role-grid">
+      <div class="role-card user">
+        <div class="role-icon" style="background:rgba(0,180,216,.12)">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#00b4d8" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        </div>
+        <div class="role-name">MOI User</div>
+        <div class="role-tag">Requests attestation</div>
+      </div>
+      <div class="role-card super">
+        <div class="role-icon" style="background:rgba(170,25,69,.12)">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#d4607a" stroke-width="2" stroke-linecap="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-4 0v2"/><path d="M12 12v4"/><path d="M10 14h4"/></svg>
+        </div>
+        <div class="role-name">Supervisor</div>
+        <div class="role-tag">Assigns officers</div>
+      </div>
+      <div class="role-card officer">
+        <div class="role-icon" style="background:rgba(124,58,237,.14)">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><circle cx="12" cy="11" r="3"/></svg>
+        </div>
+        <div class="role-name">Officer</div>
+        <div class="role-tag">Conducts sessions</div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════ -->
+    <!-- ── User: Request Attestation ── -->
+    <!-- ══════════════════════════════════════ -->
+    <div class="section-label">MOI User — Requesting Attestation</div>
+
+    <div class="flow-card">
+      <div class="flow-card-header">
+        <div class="flow-number">1</div>
+        <div class="flow-info">
+          <div class="flow-title">Request Attestation &amp; Schedule a Video Call</div>
+          <div class="flow-desc">Alex uploads supporting documents from the MOI vault, then picks a convenient 30-minute video call slot from the available calendar. A confirmation email is previewed before submission — the supervisor receives an automated alert.</div>
+          <div class="flow-steps">
+            <a href="moi.html#login" class="flow-step user">MOI Login</a>
+            <span class="flow-arrow">→</span>
+            <a href="moi.html#verify-request" class="flow-step user">Upload Docs</a>
+            <span class="flow-arrow">→</span>
+            <a href="moi.html#schedule-slot" class="flow-step user">Pick Slot</a>
+            <span class="flow-arrow">→</span>
+            <a href="email.html#alex" class="flow-step email">User Inbox</a>
+          </div>
+        </div>
+        <a href="moi.html#verify-request" class="flow-start-btn cyan">Start →</a>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════ -->
+    <!-- ── Supervisor ── -->
+    <!-- ══════════════════════════════════════ -->
+    <div class="section-label">Supervisor — Scheduling &amp; Officer Assignment</div>
+
+    <div class="flow-card">
+      <div class="flow-card-header">
+        <div class="flow-number">2</div>
+        <div class="flow-info">
+          <div class="flow-title">Supervisor Dashboard — Overview &amp; Queue</div>
+          <div class="flow-desc">Supervisor logs in and sees a live dashboard: pending requests needing assignment, upcoming sessions, and team workload at a glance.</div>
+          <div class="flow-steps">
+            <a href="admin.html#login" class="flow-step sup">Supervisor Login</a>
+            <span class="flow-arrow">→</span>
+            <a href="admin.html#sup-dashboard" class="flow-step sup">Dashboard</a>
+          </div>
+        </div>
+        <a href="admin.html#login" class="flow-start-btn rose">Start →</a>
+      </div>
+    </div>
+
+    <div class="flow-card">
+      <div class="flow-card-header">
+        <div class="flow-number">3</div>
+        <div class="flow-info">
+          <div class="flow-title">Assign an Attestation Officer</div>
+          <div class="flow-desc">Supervisor views pending requests with the user's chosen slot, checks officer availability for that exact time, and assigns an officer. Confirmation emails are automatically sent to both the user and the assigned officer.</div>
+          <div class="flow-steps">
+            <a href="admin.html#login" class="flow-step sup">Supervisor Login</a>
+            <span class="flow-arrow">→</span>
+            <a href="admin.html#sup-assign" class="flow-step sup">Assign Officer</a>
+            <span class="flow-arrow">→</span>
+            <a href="email.html#juanita" class="flow-step email">Supervisor Inbox</a>
+          </div>
+        </div>
+        <a href="admin.html#sup-assign" class="flow-start-btn dark">Start →</a>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════ -->
+    <!-- ── Officer ── -->
+    <!-- ══════════════════════════════════════ -->
+    <div class="section-label">Attestation Officer — Availability &amp; Sessions</div>
+
+    <div class="flow-card">
+      <div class="flow-card-header">
+        <div class="flow-number">4</div>
+        <div class="flow-info">
+          <div class="flow-title">Officer Dashboard &amp; Assigned Sessions</div>
+          <div class="flow-desc">Officer logs in and sees their upcoming assigned attestation sessions in a list or calendar view. Each session shows the user details and a join button for the video call.</div>
+          <div class="flow-steps">
+            <a href="admin.html#login" class="flow-step off">Officer Login</a>
+            <span class="flow-arrow">→</span>
+            <a href="admin.html#off-dashboard" class="flow-step off">Dashboard</a>
+            <span class="flow-arrow">→</span>
+            <a href="admin.html#off-schedule" class="flow-step off">My Schedule</a>
+          </div>
+        </div>
+        <a href="admin.html#login" class="flow-start-btn violet">Start →</a>
+      </div>
+    </div>
+
+    <div class="flow-card">
+      <div class="flow-card-header">
+        <div class="flow-number">5</div>
+        <div class="flow-info">
+          <div class="flow-title">Set Availability — Weekly Grid</div>
+          <div class="flow-desc">Officer marks which days and time slots they are available on a weekly recurring grid. Blocked slots prevent the supervisor from scheduling sessions during unavailable times.</div>
+          <div class="flow-steps">
+            <a href="admin.html#login" class="flow-step off">Officer Login</a>
+            <span class="flow-arrow">→</span>
+            <a href="admin.html#off-availability" class="flow-step off">Set Availability</a>
+            <span class="flow-arrow">→</span>
+            <a href="email.html#divya" class="flow-step email">Officer Inbox</a>
+          </div>
+        </div>
+        <a href="admin.html#off-availability" class="flow-start-btn dark">Start →</a>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════ -->
+    <!-- ── Live Session ── -->
+    <!-- ══════════════════════════════════════ -->
+    <div class="section-label">Officer — Live Video Session</div>
+
+    <div class="flow-card">
+      <div class="flow-card-header">
+        <div class="flow-number">6</div>
+        <div class="flow-info">
+          <div class="flow-title">Conduct a Live Attestation Session</div>
+          <div class="flow-desc">Officer opens case documents, then joins a simulated live video call with the applicant. Documents are visible in a side panel during the call. After ending the session, the officer adds notes and approves or rejects — issuing a notarial certificate instantly on approval.</div>
+          <div class="flow-steps">
+            <a href="admin.html#login" class="flow-step off">Officer Login</a>
+            <span class="flow-arrow">→</span>
+            <a href="admin.html#off-documents" class="flow-step off">Case Docs</a>
+            <span class="flow-arrow">→</span>
+            <a href="admin.html#off-session" class="flow-step off">Live Session</a>
+            <span class="flow-arrow">→</span>
+            <a href="admin.html#off-cert-issued" class="flow-step" style="background:rgba(6,214,160,.1);border-color:rgba(6,214,160,.2);color:#06d6a0">Certificate Issued</a>
+          </div>
+        </div>
+        <a href="admin.html#off-documents" class="flow-start-btn violet">Start →</a>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════ -->
+    <!-- ── Document Review ── -->
+    <!-- ══════════════════════════════════════ -->
+    <div class="section-label">Admin — Document Review Queue</div>
+
+    <div class="flow-card">
+      <div class="flow-card-header">
+        <div class="flow-number">7</div>
+        <div class="flow-info">
+          <div class="flow-title">Review Submitted Documents &amp; Decide</div>
+          <div class="flow-desc">After a video session the officer reviews the user's submitted documents and identity fields in the document queue, then approves or rejects the attestation request.</div>
+          <div class="flow-steps">
+            <a href="admin.html#login" class="flow-step off">Login</a>
+            <span class="flow-arrow">→</span>
+            <a href="admin.html#dashboard" class="flow-step off">Doc Queue</a>
+            <span class="flow-arrow">→</span>
+            <a href="admin.html#review" class="flow-step off">Review &amp; Decide</a>
+          </div>
+        </div>
+        <a href="admin.html#dashboard" class="flow-start-btn dark">Start →</a>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════ -->
+    <!-- ── Email Inboxes ── -->
+    <!-- ══════════════════════════════════════ -->
+    <div class="section-label">In-Demo Email Inboxes</div>
+
+    <div class="flow-card">
+      <div class="flow-card-header">
+        <div class="flow-number">8</div>
+        <div class="flow-info">
+          <div class="flow-title">Automated Email Notifications</div>
+          <div class="flow-desc">Every key action — request submitted, officer assigned, session confirmed — triggers an email. View each persona's inbox to see the full communication trail.</div>
+          <div class="flow-steps">
+            <a href="email.html#alex"    class="flow-step user">Alex (User)</a>
+            <span class="flow-arrow">·</span>
+            <a href="email.html#juanita" class="flow-step sup">Juanita (Supervisor)</a>
+            <span class="flow-arrow">·</span>
+            <a href="email.html#divya"   class="flow-step off">Divya (Officer)</a>
+            <span class="flow-arrow">·</span>
+            <a href="email.html#connor"  class="flow-step email">Connor (Officer)</a>
+            <span class="flow-arrow">·</span>
+            <a href="email.html#marcus"  class="flow-step email">Marcus (Officer)</a>
+          </div>
+        </div>
+        <a href="email.html#alex" class="flow-start-btn dark">View →</a>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════ -->
+    <!-- ── Public Self-Service Attestation ── -->
+    <!-- ══════════════════════════════════════ -->
+    <div class="section-label">Public — Self-Service Attestation (No Account Required)</div>
+
+    <div class="flow-card">
+      <div class="flow-card-header">
+        <div class="flow-number">9</div>
+        <div class="flow-info">
+          <div class="flow-title">Public Attestation Portal</div>
+          <div class="flow-desc">Any member of the public can upload their documents, schedule a live video session with an OSMIO notary, and receive an attested certificate — no MOI account needed. Documents are held in exclusive officer custody under US notarial privilege; a court order is required for disclosure.</div>
+          <div class="flow-steps">
+            <a href="admin.html#public-verify" class="flow-step" style="background:rgba(124,58,237,.12);border-color:rgba(124,58,237,.25);color:#a78bfa">Public Portal</a>
+            <span class="flow-arrow">→</span>
+            <a href="admin.html#public-upload" class="flow-step" style="background:rgba(124,58,237,.12);border-color:rgba(124,58,237,.25);color:#a78bfa">Upload Documents</a>
+            <span class="flow-arrow">→</span>
+            <a href="admin.html#public-schedule" class="flow-step" style="background:rgba(124,58,237,.12);border-color:rgba(124,58,237,.25);color:#a78bfa">Schedule Session</a>
+            <span class="flow-arrow">→</span>
+            <a href="admin.html#public-confirm" class="flow-step" style="background:rgba(6,214,160,.1);border-color:rgba(6,214,160,.2);color:#06d6a0">Confirm & Submit</a>
+          </div>
+        </div>
+        <a href="admin.html#public-verify" class="flow-start-btn violet">Start →</a>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════ -->
+    <!-- ── Certificate Verification ── -->
+    <!-- ══════════════════════════════════════ -->
+    <div class="section-label">Public — Certificate Verification</div>
+
+    <div class="flow-card">
+      <div class="flow-card-header">
+        <div class="flow-number">10</div>
+        <div class="flow-info">
+          <div class="flow-title">Verify a Notarial Certificate</div>
+          <div class="flow-desc">Anyone can check whether an OSMIO notarial certificate is valid by entering a certificate ID. Third parties — employers, services, institutions — can independently verify attestations without contacting OSMIO. Try it with <strong style="font-family:monospace;font-size:12px">NOTCERT-2026-00291</strong>.</div>
+          <div class="flow-steps">
+            <a href="admin.html#verify-cert" class="flow-step" style="background:rgba(124,58,237,.12);border-color:rgba(124,58,237,.25);color:#a78bfa">Public Portal</a>
+            <span class="flow-arrow">→</span>
+            <a href="admin.html#verify-cert" class="flow-step" style="background:rgba(124,58,237,.12);border-color:rgba(124,58,237,.25);color:#a78bfa">Enter Certificate ID</a>
+            <span class="flow-arrow">→</span>
+            <a href="admin.html#verify-cert" class="flow-step" style="background:rgba(6,214,160,.1);border-color:rgba(6,214,160,.2);color:#06d6a0">Verification Result</a>
+          </div>
+        </div>
+        <a href="admin.html#verify-cert" class="flow-start-btn violet">Verify →</a>
+      </div>
+    </div>
+
+    <!-- ── Quick Jump ── -->
+    <div class="section-label">Quick Jump to Any Screen</div>
+    <div class="quick-grid">
+      <a href="moi.html#login"              class="quick-link"><span class="quick-link-dot" style="background:#00b4d8"></span>MOI Login</a>
+      <a href="moi.html#dashboard"          class="quick-link"><span class="quick-link-dot" style="background:#00b4d8"></span>MOI Dashboard</a>
+      <a href="moi.html#verify-request"     class="quick-link"><span class="quick-link-dot" style="background:#00b4d8"></span>Upload Documents</a>
+      <a href="moi.html#schedule-slot"      class="quick-link"><span class="quick-link-dot" style="background:#00b4d8"></span>Schedule Slot</a>
+      <a href="admin.html#login"            class="quick-link"><span class="quick-link-dot" style="background:#9ca3af"></span>Admin Login</a>
+      <a href="admin.html#sup-dashboard"    class="quick-link"><span class="quick-link-dot" style="background:#aa1945"></span>Supervisor Dashboard</a>
+      <a href="admin.html#sup-assign"       class="quick-link"><span class="quick-link-dot" style="background:#aa1945"></span>Assign Officers</a>
+      <a href="admin.html#off-dashboard"    class="quick-link"><span class="quick-link-dot" style="background:#7c3aed"></span>Officer Dashboard</a>
+      <a href="admin.html#off-schedule"     class="quick-link"><span class="quick-link-dot" style="background:#7c3aed"></span>Officer Schedule</a>
+      <a href="admin.html#off-availability" class="quick-link"><span class="quick-link-dot" style="background:#7c3aed"></span>Officer Availability</a>
+      <a href="admin.html#off-documents"   class="quick-link"><span class="quick-link-dot" style="background:#7c3aed"></span>Case Documents</a>
+      <a href="admin.html#off-session"     class="quick-link"><span class="quick-link-dot" style="background:#7c3aed"></span>Live Session</a>
+      <a href="admin.html#off-cert-issued" class="quick-link"><span class="quick-link-dot" style="background:#06d6a0"></span>Certificate Issued</a>
+      <a href="admin.html#verify-cert"     class="quick-link"><span class="quick-link-dot" style="background:#7c3aed"></span>Verify Certificate</a>
+      <a href="admin.html#dashboard"        class="quick-link"><span class="quick-link-dot" style="background:#9ca3af"></span>Doc Queue</a>
+      <a href="admin.html#review"           class="quick-link"><span class="quick-link-dot" style="background:#9ca3af"></span>Review &amp; Decide</a>
+      <a href="email.html#alex"             class="quick-link"><span class="quick-link-dot" style="background:#00b4d8"></span>Inbox: Alex</a>
+      <a href="email.html#juanita"          class="quick-link"><span class="quick-link-dot" style="background:#aa1945"></span>Inbox: Juanita</a>
+      <a href="email.html#divya"            class="quick-link"><span class="quick-link-dot" style="background:#7c3aed"></span>Inbox: Divya</a>
+      <a href="email.html#connor"           class="quick-link"><span class="quick-link-dot" style="background:#0077a8"></span>Inbox: Connor</a>
+      <a href="email.html#marcus"           class="quick-link"><span class="quick-link-dot" style="background:#065f46"></span>Inbox: Marcus</a>
+      <a href="admin.html#public-verify"    class="quick-link"><span class="quick-link-dot" style="background:#7c3aed"></span>Public Attest</a>
+      <a href="admin.html#public-upload"    class="quick-link"><span class="quick-link-dot" style="background:#7c3aed"></span>Upload Docs</a>
+      <a href="admin.html#public-schedule"  class="quick-link"><span class="quick-link-dot" style="background:#7c3aed"></span>Schedule Session</a>
+      <a href="admin.html#public-confirm"   class="quick-link"><span class="quick-link-dot" style="background:#7c3aed"></span>Confirm & Submit</a>
+      <a href="moi.html#certificate"        class="quick-link"><span class="quick-link-dot" style="background:#06d6a0"></span>Notarial Certificate</a>
+    </div>
+
+    <div class="stack-info">
+      <strong>Personas:</strong> Alex (MOI user) · Juanita (Supervisor) · Divya, Connor, Marcus (Officers) ·
+      <strong>Flow:</strong> User requests → Supervisor assigns → Officer confirms availability → Video session → Document review &amp; decision ·
+      <strong>Stack:</strong> Vanilla JS · No build step · Hash-based routing
+    </div>
+  </div>
+</body>
+</html>

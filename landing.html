@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="refresh" content="0;url=index.html">
+  <title>MOI — My Own Information</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #060e1a;
+      color: #e8f4f8;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Dot-grid background */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: radial-gradient(rgba(0,180,216,.07) 1px, transparent 1px);
+      background-size: 28px 28px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Ambient glow */
+    body::after {
+      content: '';
+      position: fixed;
+      top: -200px; left: 50%; transform: translateX(-50%);
+      width: 800px; height: 600px;
+      background: radial-gradient(ellipse, rgba(0,180,216,.08) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .hero {
+      position: relative; z-index: 1;
+      max-width: 680px;
+      padding: 40px 32px;
+      text-align: center;
+    }
+
+    .hero-kicker {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-size: 11px; font-weight: 700; letter-spacing: 1px;
+      text-transform: uppercase; color: #00b4d8;
+      border: 1px solid rgba(0,180,216,.3);
+      background: rgba(0,180,216,.08);
+      padding: 5px 14px; border-radius: 999px;
+      margin-bottom: 28px;
+    }
+    .hero-kicker-dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: #00b4d8;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%,100% { opacity: .5; transform: scale(1); } 50% { opacity: 1; transform: scale(1.3); } }
+
+    h1 {
+      font-size: clamp(38px, 6vw, 62px);
+      font-weight: 900; letter-spacing: -1.5px;
+      line-height: 1.07;
+      margin-bottom: 24px;
+    }
+    h1 em {
+      font-style: normal;
+      background: linear-gradient(90deg, #00b4d8, #06d6a0);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .lead {
+      font-size: 17px; color: #6a8a99; line-height: 1.7;
+      margin-bottom: 44px;
+    }
+    .lead strong { color: #a8c4d0; font-weight: 600; }
+
+    .cta {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: #00b4d8;
+      color: #060e1a;
+      font-size: 15px; font-weight: 800;
+      padding: 15px 32px; border-radius: 14px;
+      text-decoration: none;
+      box-shadow: 0 0 32px rgba(0,180,216,.35), 0 4px 16px rgba(0,0,0,.3);
+      transition: all .18s ease;
+      letter-spacing: -.2px;
+    }
+    .cta:hover {
+      background: #00caee;
+      box-shadow: 0 0 48px rgba(0,180,216,.5), 0 6px 20px rgba(0,0,0,.35);
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+  <section class="hero">
+    <div class="hero-kicker">
+      <span class="hero-kicker-dot"></span>
+      Introducing a new way to think about identity
+    </div>
+    <h1>Your data.<br><em>Your terms.</em></h1>
+    <p class="lead">
+      MOI — <strong>My Own Information</strong> — keeps your personal data in an encrypted vault
+      that only you control. Apps no longer store your details: you licence them exactly what
+      they need, for as long as you choose. And when a service only needs to know you're over 18,
+      you can prove it — <strong>without ever revealing your date of birth</strong>.
+    </p>
+    <a href="/moi/concept" class="cta">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      Explore the interactive concept
+    </a>
+  </section>
+</body>
+</html>

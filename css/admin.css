@@ -522,3 +522,144 @@ body.admin-app {
   font-size: 14px;
 }
 @keyframes scaleIn { from { opacity:0; transform:scale(.93); } to { opacity:1; transform:scale(1); } }
+
+/* ── Role selection login ───────────────────────────────────── */
+.admin-role-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 20px 16px;
+  background: #fff;
+  border: 2px solid var(--adm-border);
+  border-radius: 12px;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  transition: all .15s ease;
+  text-align: center;
+  color: var(--adm-text-muted);
+}
+.admin-role-btn:hover { border-color: var(--adm-accent); color: var(--adm-accent); background: rgba(170,25,69,.03); }
+.admin-role-btn.active { border-color: var(--adm-accent); background: rgba(170,25,69,.08); color: var(--adm-text); box-shadow: 0 0 0 3px rgba(170,25,69,.12); }
+.admin-role-btn strong { font-size: 14px; color: var(--adm-text); display: block; }
+.admin-role-btn span   { font-size: 11.5px; color: var(--adm-text-muted); line-height: 1.4; }
+
+/* ── Persona selector ───────────────────────────────────────── */
+.admin-persona-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 10px 14px;
+  background: #fff;
+  border: 1.5px solid var(--adm-border);
+  border-radius: 10px;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  margin-bottom: 8px;
+  transition: all .15s ease;
+}
+.admin-persona-btn:hover { border-color: var(--adm-accent); background: rgba(170,25,69,.03); }
+.admin-persona-btn.active { border-color: var(--adm-accent); background: rgba(170,25,69,.06); }
+
+/* ── Officer assignment grid ────────────────────────────────── */
+.admin-officer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 10px;
+}
+.admin-officer-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border: 1.5px solid var(--adm-border);
+  border-radius: 10px;
+  background: #fff;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  transition: all .15s ease;
+  text-align: left;
+}
+.admin-officer-card:hover:not(.unavailable) { border-color: var(--adm-success); background: rgba(16,185,129,.04); }
+.admin-officer-card.selected { border-color: var(--adm-success); background: rgba(16,185,129,.08); }
+.admin-officer-card.unavailable { opacity: .5; cursor: not-allowed; }
+
+.admin-officer-avail-badge {
+  margin-left: auto;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 99px;
+  white-space: nowrap;
+}
+.admin-officer-avail-badge.yes { background: rgba(16,185,129,.1); color: var(--adm-success); }
+.admin-officer-avail-badge.no  { background: rgba(239,68,68,.1);  color: var(--adm-danger);  }
+
+/* ── Availability grid ──────────────────────────────────────── */
+.admin-avail-slot {
+  width: 100%;
+  padding: 5px 4px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  border: 1.5px solid #bbf7d0;
+  background: #dcfce7;
+  color: #16a34a;
+  cursor: pointer;
+  transition: all .15s ease;
+  margin-bottom: 3px;
+  text-align: center;
+}
+.admin-avail-slot:hover:not(:disabled) { opacity: .8; }
+.admin-avail-slot.blocked {
+  background: #fee2e2;
+  border-color: #fca5a5;
+  color: #dc2626;
+}
+.admin-avail-slot:disabled { opacity: .35; cursor: not-allowed; }
+
+.admin-dayoff-btn {
+  width: 100%;
+  padding: 4px 6px;
+  border-radius: 6px;
+  font-size: 10.5px;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  border: 1.5px solid var(--adm-border);
+  background: var(--adm-bg);
+  color: var(--adm-text-muted);
+  cursor: pointer;
+  margin-bottom: 6px;
+  transition: all .15s;
+}
+.admin-dayoff-btn:hover { border-color: var(--adm-danger); color: var(--adm-danger); }
+.admin-dayoff-btn.off { background: #fee2e2; border-color: #fca5a5; color: #dc2626; }
+
+/* ── Toast notification ─────────────────────────────────────── */
+.admin-toast {
+  position: fixed;
+  bottom: 72px;
+  left: 50%;
+  transform: translateX(-50%) translateY(10px);
+  background: #111827;
+  color: #fff;
+  font-size: 13.5px;
+  font-weight: 500;
+  padding: 12px 22px;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0,0,0,.25);
+  z-index: 9999;
+  opacity: 0;
+  transition: opacity .25s ease, transform .25s ease;
+  pointer-events: none;
+  white-space: nowrap;
+}
+.admin-toast.visible { opacity: 1; transform: translateX(-50%) translateY(0); }
+.admin-toast.admin-toast-success::before {
+  content: '✓ ';
+  color: #34d399;
+  font-weight: 700;
+}
+

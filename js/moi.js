@@ -480,6 +480,37 @@ function renderDashboard() {
           ${consentRows || `<div style="font-size:13px;color:var(--moi-text-muted);padding:8px 0;font-style:italic">No active licences.</div>`}
         </div>
 
+        <!-- Notarial Certificates -->
+        <div class="moi-card">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+            <div>
+              <div class="moi-card-title" style="margin-bottom:2px">Notarial Certificates</div>
+              <div style="font-size:12px;color:var(--moi-text-muted)">Certificates issued by your Attestation Officer after successful identity sessions</div>
+            </div>
+            <span style="font-size:11px;color:var(--moi-text-muted);font-weight:600">${u.notarialCertificates.length} issued</span>
+          </div>
+          ${u.notarialCertificates.length === 0 ? `<div style="font-size:13px;color:var(--moi-text-muted);padding:8px 0;font-style:italic">No certificates issued yet. A certificate will appear here after your attestation session is completed.</div>` :
+            u.notarialCertificates.map(cert => `
+            <div style="display:flex;align-items:flex-start;gap:14px;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.06)">
+              <div style="width:40px;height:40px;border-radius:10px;background:rgba(6,214,160,.12);border:1px solid rgba(6,214,160,.25);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#06d6a0" stroke-width="2.5" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+              </div>
+              <div style="flex:1">
+                <div style="font-size:13.5px;font-weight:700;color:var(--moi-text);margin-bottom:3px">Notarial Certificate <span style="font-family:monospace;font-size:12px;color:var(--moi-text-muted)">${cert.id}</span></div>
+                <div style="font-size:12px;color:var(--moi-text-muted);line-height:1.5">
+                  Issued by <strong style="color:var(--moi-text)">${cert.officerName}</strong> · ${cert.officerJurisdiction}<br>
+                  Fields attested: ${cert.fieldsAttested.join(', ')}<br>
+                  Issued ${formatDate(cert.issuedDate)} · Expires ${formatDate(cert.expiresDate)}
+                </div>
+                <div style="margin-top:6px;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+                  <span class="badge badge-verified">Valid</span>
+                  <span style="font-size:11px;color:var(--moi-text-muted);font-family:monospace">Ref: ${cert.sessionRef}</span>
+                </div>
+              </div>
+              <button class="btn-moi-outline" onclick="viewCertificate('${cert.id}')" style="font-size:12px;padding:6px 14px;white-space:nowrap;flex-shrink:0">View →</button>
+            </div>`).join('')}
+        </div>
+
         <!-- Licence History -->
         <div class="moi-card">
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
@@ -871,9 +902,15 @@ function renderVerifyRequest() {
             </div>
           </div>
 
-          <div class="moi-privacy-note">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="flex-shrink:0;margin-top:1px"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-            <span>Your data and documents are sent securely to the OSMIO Attestation Officer's portal. They are used only for attestation purposes and are not shared with third parties.</span>
+          <div class="moi-privacy-note" style="flex-direction:column;gap:10px;align-items:flex-start">
+            <div style="display:flex;align-items:flex-start;gap:8px">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="flex-shrink:0;margin-top:1px"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              <span><strong style="color:var(--moi-text)">Officer-only custody.</strong> Your documents are transmitted securely and held exclusively by your assigned Attestation Officer — a commissioned US Notary Public. Your supervisor and all other OSMIO staff have no access. Documents may only be disclosed under a valid court order and are otherwise legally protected under US notarial privilege law.</span>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:8px">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="flex-shrink:0;margin-top:1px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              <span><strong style="color:var(--moi-text)">Session recording.</strong> Your video attestation session will be recorded and retained in the secure custody of your Attestation Officer under the same notarial privilege protections. The recording cannot be shared with any third party without a court order.</span>
+            </div>
           </div>
 
           <div style="display:flex;gap:10px">
@@ -890,28 +927,204 @@ function renderVerifyRequest() {
 function submitVerification() {
   const btn = document.querySelector('.btn-moi');
   if (!btn) return;
-  btn.innerHTML = `${SPINNER_SVG} Submitting…`;
+  btn.innerHTML = `${SPINNER_SVG} Saving documents…`;
   btn.disabled = true;
   setTimeout(() => {
-    MOCK.currentUser.verificationStatus = 'pending';
-    document.getElementById('app').innerHTML = `
-      <div class="moi-screen">
-        ${moiTopBar('Attestation Submitted')}
-        <div class="moi-success-screen">
-          <div class="moi-success-card">
-            <div class="moi-success-icon">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+    router.go('schedule-slot');
+  }, 900);
+}
+
+// ── Screen: Schedule Slot ──────────────────────────────────────
+let selectedSlot = null; // { date, time, label }
+
+function renderScheduleSlot() {
+  // Build 2-week slot grid starting next Monday
+  const today = new Date('2026-04-24');
+  const slots = [];
+  const days = [];
+  // Find next Mon
+  let d = new Date(today);
+  d.setDate(d.getDate() + ((1 + 7 - d.getDay()) % 7 || 7));
+
+  for (let w = 0; w < 2; w++) {
+    const weekDays = [];
+    for (let i = 0; i < 5; i++) {
+      const dd = new Date(d);
+      dd.setDate(d.getDate() + w * 7 + i);
+      weekDays.push(dd);
+    }
+    days.push(weekDays);
+  }
+
+  const times = ['09:00','09:30','10:00','10:30','11:00','11:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30'];
+
+  // Busy slots = all sessions already scheduled (any officer)
+  const busySet = new Set(
+    MOCK.attestationRequests
+      .filter(r => r.slotDate && r.slotTime && r.status !== 'completed')
+      .map(r => r.slotDate + 'T' + r.slotTime)
+  );
+
+  function fmtDay(d) {
+    return d.toLocaleDateString('en-GB', { weekday:'short', day:'numeric', month:'short' });
+  }
+  function fmtISO(d) {
+    return d.toISOString().slice(0,10);
+  }
+
+  let weekIdx = 0;
+
+  function buildGrid(wi) {
+    const weekDays = days[wi];
+    return `<div class="moi-slot-grid">
+      ${weekDays.map(day => {
+        const iso = fmtISO(day);
+        return `<div class="moi-slot-col">
+          <div class="moi-slot-day-hdr">${fmtDay(day)}</div>
+          ${times.map(t => {
+            const key = iso + 'T' + t;
+            const busy = busySet.has(key);
+            const isSelected = selectedSlot && selectedSlot.date === iso && selectedSlot.time === t;
+            return `<button
+              class="moi-slot-btn ${busy ? 'busy' : ''} ${isSelected ? 'selected' : ''}"
+              ${busy ? 'disabled' : ''}
+              onclick="selectSlot('${iso}','${t}','${fmtDay(day)} ${t}')">
+              ${t}
+            </button>`;
+          }).join('')}
+        </div>`;
+      }).join('')}
+    </div>`;
+  }
+
+  document.getElementById('app').innerHTML = `
+    <div class="moi-screen">
+      ${moiTopBar('Schedule Video Call')}
+      <div class="moi-schedule-screen">
+        <div class="moi-schedule-card">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+            <button class="btn-moi-outline" onclick="router.go('verify-request')" style="font-size:13px;padding:7px 14px">← Back</button>
+            <h2 style="margin:0">Schedule Your Attestation Call</h2>
+          </div>
+          <p style="color:var(--moi-text-muted);font-size:13.5px;margin:0 0 12px;line-height:1.55">Select an available 30-minute slot for a video call with your Attestation Officer. Once confirmed, the supervisor will assign you an officer and you'll receive a calendar invite by email.</p>
+          <div style="display:flex;align-items:flex-start;gap:8px;padding:10px 14px;background:rgba(255,209,102,.06);border:1px solid rgba(255,209,102,.18);border-radius:9px;margin-bottom:20px;font-size:12.5px;color:var(--moi-warning);line-height:1.55">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="flex-shrink:0;margin-top:1px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            <span>This video session will be <strong>recorded</strong> and held in the exclusive secure custody of your Attestation Officer (a commissioned US Notary Public). The recording is protected under notarial privilege — it cannot be shared with any third party, including OSMIO supervisory staff, without a court order.</span>
+          </div>
+
+          <div class="moi-slot-week-nav">
+            <button class="moi-slot-week-btn active" id="wbtn-0" onclick="switchSlotWeek(0)">Week 1 · Apr 27 – May 1</button>
+            <button class="moi-slot-week-btn" id="wbtn-1" onclick="switchSlotWeek(1)">Week 2 · May 4 – May 8</button>
+          </div>
+
+          <div id="slot-grid-wrap">
+            ${buildGrid(0)}
+          </div>
+
+          <div class="moi-slot-legend">
+            <span><span class="moi-slot-dot available"></span>Available</span>
+            <span><span class="moi-slot-dot busy"></span>Unavailable</span>
+            <span><span class="moi-slot-dot selected"></span>Selected</span>
+          </div>
+
+          <div id="slot-confirm-bar" class="moi-slot-confirm ${selectedSlot ? '' : 'hidden'}">
+            <div>
+              <div style="font-size:13px;font-weight:700;color:var(--moi-text)">Selected: <span id="slot-confirm-label">${selectedSlot ? selectedSlot.label : ''}</span></div>
+              <div style="font-size:11.5px;color:var(--moi-text-muted);margin-top:2px">30-minute video call · Officer assigned by supervisor</div>
             </div>
-            <h2>Submitted for attestation</h2>
-            <p>Your attestation request has been queued. An Attestation officer will review your submission, typically within 1–2 business days. You'll be notified once reviewed.</p>
-            <div style="margin-top:24px;padding:12px;background:rgba(0,180,216,.06);border:1px solid rgba(0,180,216,.15);border-radius:9px;font-size:12px;color:var(--moi-text-muted)">
-              Reference ID: <strong style="color:var(--moi-accent);font-family:monospace">VRF-2026-00${Math.floor(1000+Math.random()*8999)}</strong>
-            </div>
-            <button class="btn-moi" style="width:100%;margin-top:20px" onclick="router.go('dashboard')">Back to Dashboard</button>
+            <button class="btn-moi" onclick="confirmSlotAndShowEmail()">
+              Continue →
+            </button>
           </div>
         </div>
-      </div>`;
-  }, 1400);
+      </div>
+    </div>
+
+    <!-- Email preview modal -->
+    <div id="email-preview-modal" class="moi-email-modal hidden" onclick="if(event.target.id==='email-preview-modal')this.classList.add('hidden')">
+      <div class="moi-email-modal-inner">
+        <div class="moi-email-modal-hdr">
+          <div>
+            <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#9ca3af;margin-bottom:4px">Email Preview — sent to you on confirmation</div>
+            <div style="font-size:15px;font-weight:700;color:#111827">Attestation Request Received · ATT-2026-01024</div>
+          </div>
+          <button onclick="document.getElementById('email-preview-modal').classList.add('hidden')" style="font-size:22px;color:#6b7280;background:none;border:none;cursor:pointer;line-height:1">×</button>
+        </div>
+        <div class="moi-email-modal-meta">
+          <span><strong>From:</strong> no-reply@osmio.id</span>
+          <span><strong>To:</strong> alex.johnson@example.com</span>
+        </div>
+        <div class="moi-email-modal-body">
+          ${MOCK.emails['alex.johnson@example.com'].find(e=>e.tag==='attestation-submitted').body}
+        </div>
+        <div class="moi-email-modal-footer">
+          <button class="btn-moi-outline" onclick="document.getElementById('email-preview-modal').classList.add('hidden')" style="font-size:13px">Close Preview</button>
+          <button class="btn-moi" onclick="finalSubmitAttestation()" style="font-size:13px">
+            Confirm & Submit
+          </button>
+        </div>
+      </div>
+    </div>`;
+
+  // Re-store weekIdx for switching
+  window._slotWeekDays = days;
+  window._slotBusySet = busySet;
+  window._slotTimes = times;
+  window._slotFmtDay = fmtDay;
+  window._slotFmtISO = fmtISO;
+  window._buildSlotGrid = buildGrid;
+}
+
+function switchSlotWeek(wi) {
+  document.getElementById('slot-grid-wrap').innerHTML = window._buildSlotGrid(wi);
+  document.querySelectorAll('.moi-slot-week-btn').forEach((b,i) => b.classList.toggle('active', i===wi));
+}
+
+function selectSlot(date, time, label) {
+  selectedSlot = { date, time, label };
+  document.querySelectorAll('.moi-slot-btn').forEach(b => b.classList.remove('selected'));
+  event.currentTarget.classList.add('selected');
+  const bar = document.getElementById('slot-confirm-bar');
+  const lbl = document.getElementById('slot-confirm-label');
+  if (bar) bar.classList.remove('hidden');
+  if (lbl) lbl.textContent = label;
+}
+
+function confirmSlotAndShowEmail() {
+  if (!selectedSlot) return;
+  document.getElementById('email-preview-modal').classList.remove('hidden');
+}
+
+function finalSubmitAttestation() {
+  document.getElementById('email-preview-modal').classList.add('hidden');
+  const btn = document.querySelector('.btn-moi');
+  MOCK.currentUser.verificationStatus = 'pending';
+
+  const refId = 'ATT-2026-01024';
+  document.getElementById('app').innerHTML = `
+    <div class="moi-screen">
+      ${moiTopBar('Request Submitted')}
+      <div class="moi-success-screen">
+        <div class="moi-success-card">
+          <div class="moi-success-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <h2>Attestation request submitted</h2>
+          <p>Your documents and chosen time slot have been sent to the supervisor team. You'll receive a confirmation email once an officer is assigned — typically within 1 business day.</p>
+          <div style="margin-top:16px;padding:14px 16px;background:rgba(0,180,216,.06);border:1px solid rgba(0,180,216,.15);border-radius:9px;font-size:13px;color:var(--moi-text-muted);line-height:1.6">
+            <div>Reference: <strong style="color:var(--moi-accent);font-family:monospace">${refId}</strong></div>
+            <div style="margin-top:4px">Slot: <strong style="color:var(--moi-text)">${selectedSlot ? selectedSlot.label : '—'}</strong></div>
+          </div>
+          <div style="display:flex;gap:10px;margin-top:20px;flex-wrap:wrap">
+            <button class="btn-moi" style="flex:1" onclick="router.go('dashboard')">Back to Dashboard</button>
+            <a href="email.html#alex" style="flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:10px 16px;background:rgba(0,180,216,.1);border:1px solid rgba(0,180,216,.2);border-radius:10px;font-size:13px;font-weight:700;color:var(--moi-accent);text-decoration:none">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              View in Inbox
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>`;
 }
 
 function previewDoc(svgKey, title) {
@@ -934,6 +1147,88 @@ function handleDocUpload(input) {
   label.innerHTML = `<span style="color:var(--moi-success)">✓ ${input.files[0].name} ready to submit</span>`;
 }
 
+function viewCertificate(certId) {
+  sessionStorage.setItem('moi_viewing_cert', certId);
+  router.go('certificate');
+}
+
+// ── Screen: Notarial Certificate Detail ───────────────────────
+function renderCertificateDetail() {
+  const certId = sessionStorage.getItem('moi_viewing_cert');
+  const cert = MOCK.currentUser.notarialCertificates.find(c => c.id === certId);
+  if (!cert) { router.go('dashboard'); return; }
+  const u = MOCK.currentUser;
+
+  document.getElementById('app').innerHTML = `
+    <div class="moi-screen">
+      ${moiTopBar('Notarial Certificate')}
+      <div class="moi-verify-screen">
+        <div class="moi-verify-card">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px">
+            <button class="btn-moi-outline" onclick="router.go('dashboard')" style="font-size:13px;padding:7px 14px">← Back</button>
+            <h2 style="margin:0">Notarial Certificate</h2>
+          </div>
+
+          <!-- Certificate document -->
+          <div style="background:#fff;border-radius:14px;padding:36px 40px;border:2px solid rgba(6,214,160,.3);box-shadow:0 4px 32px rgba(0,0,0,.18);font-family:'Times New Roman',serif;color:#111;position:relative;overflow:hidden">
+
+            <!-- Watermark -->
+            <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-30deg);font-size:80px;font-weight:900;color:rgba(0,180,216,.04);pointer-events:none;white-space:nowrap;letter-spacing:8px">OSMIO</div>
+
+            <div style="text-align:center;margin-bottom:28px">
+              <div style="display:inline-flex;align-items:center;gap:8px;margin-bottom:8px">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0077a8" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+                <span style="font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#0077a8">OSMIO Identity Network</span>
+              </div>
+              <div style="font-size:22px;font-weight:700;letter-spacing:1px;margin-bottom:4px;color:#111">NOTARIAL CERTIFICATE</div>
+              <div style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#666">Certificate of Identity Attestation</div>
+              <div style="width:80px;height:2px;background:linear-gradient(90deg,#0077a8,#06d6a0);border-radius:999px;margin:12px auto 0"></div>
+            </div>
+
+            <div style="font-size:13.5px;line-height:1.9;margin-bottom:20px;color:#222">
+              <p>I, <strong>${cert.officerName}</strong>, a Notary Public duly commissioned in the <strong>${cert.officerJurisdiction}</strong>, Commission No. <strong>${cert.notaryCommissionNo}</strong>, do hereby certify that on <strong>${formatDate(cert.issuedDate)}</strong>, the following individual appeared before me by live video call and presented satisfactory evidence of their identity:</p>
+            </div>
+
+            <div style="background:rgba(0,119,168,.05);border:1px solid rgba(0,119,168,.15);border-radius:10px;padding:18px 22px;margin-bottom:20px">
+              <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:#0077a8;margin-bottom:10px">Subject of Attestation</div>
+              <table style="width:100%;font-size:13.5px;border-collapse:collapse">
+                <tr><td style="padding:4px 0;color:#555;width:40%">Full Name</td><td style="padding:4px 0;font-weight:600">${cert.issuedTo}</td></tr>
+                <tr><td style="padding:4px 0;color:#555">OSMIO Certificate ID</td><td style="padding:4px 0;font-family:monospace;font-size:12.5px">${cert.issuedToCertId}</td></tr>
+                <tr><td style="padding:4px 0;color:#555">Fields Attested</td><td style="padding:4px 0;font-weight:600">${cert.fieldsAttested.join(', ')}</td></tr>
+              </table>
+            </div>
+
+            <div style="font-size:13.5px;line-height:1.9;margin-bottom:20px;color:#222">
+              <p>${cert.notes}</p>
+              <p>This certificate is issued pursuant to US notarial law and is valid until <strong>${formatDate(cert.expiresDate)}</strong>. The identity session was recorded and the recording is retained in the secure custody of the undersigned Notary Public. It may only be disclosed pursuant to a valid court order.</p>
+            </div>
+
+            <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-top:28px;padding-top:20px;border-top:1px solid #ddd">
+              <div style="font-size:12px;color:#555">
+                <div style="font-family:monospace;font-size:11px;margin-bottom:2px;color:#999">Certificate Ref: ${cert.id} · Session: ${cert.sessionRef}</div>
+                <div>Issued: ${formatDate(cert.issuedDate)}</div>
+                <div>Notary Commission: ${cert.notaryCommissionNo}</div>
+              </div>
+              <div style="text-align:right">
+                <div style="font-style:italic;font-size:15px;color:#333;margin-bottom:2px;font-family:'Dancing Script',cursive,serif">${cert.officerName}</div>
+                <div style="font-size:11px;color:#555;text-transform:uppercase;letter-spacing:.5px">Notary Public</div>
+                <div style="font-size:11px;color:#555">${cert.officerJurisdiction}</div>
+              </div>
+            </div>
+
+            <div style="margin-top:24px;padding:10px 14px;background:rgba(0,0,0,.02);border-radius:8px;text-align:center">
+              <div style="font-size:10px;color:#999;letter-spacing:.5px">Verify this certificate at <strong style="color:#0077a8">verify.osmio.id</strong> · Ref: ${cert.id}</div>
+            </div>
+          </div>
+
+          <div style="margin-top:16px;padding:12px 16px;background:rgba(0,180,216,.05);border:1px solid rgba(0,180,216,.12);border-radius:9px;font-size:12px;color:var(--moi-text-muted);line-height:1.6">
+            <strong style="color:var(--moi-accent)">About this certificate.</strong> This notarial certificate was issued by a licensed US Notary Public after your live video attestation session. It is legally protected under US notarial law. The originating documents and session recording remain in the exclusive custody of the issuing officer and are accessible only under court order.
+          </div>
+        </div>
+      </div>
+    </div>`;
+}
+
 // ── Router init ────────────────────────────────────────────────
 router
   .on('login',          renderLogin)
@@ -941,6 +1236,8 @@ router
   .on('dashboard',      renderDashboard)
   .on('manage',         renderManage)
   .on('verify-request', renderVerifyRequest)
+  .on('schedule-slot',  renderScheduleSlot)
+  .on('certificate',    renderCertificateDetail)
   .init('login');
 
 window.addEventListener('hashchange', () => {

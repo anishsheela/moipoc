@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HealthBridge — Medical Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: #f8fafc; color: #1e293b; min-height: 100vh; }
+
+    /* ── Header ── */
+    .header {
+      background: #0d47a1; padding: 0 32px; height: 60px;
+      display: flex; align-items: center; justify-content: space-between;
+      position: sticky; top: 0; z-index: 100;
+      box-shadow: 0 2px 10px rgba(13,71,161,.4);
+    }
+    .logo { display: flex; align-items: center; gap: 12px; }
+    .logo-cross {
+      width: 34px; height: 34px; border-radius: 8px; background: rgba(255,255,255,.15);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .logo-name { font-size: 16px; font-weight: 800; color: #fff; letter-spacing: -.2px; }
+    .logo-sub  { font-size: 10px; color: rgba(255,255,255,.6); display: block; font-weight: 500; }
+    .header-nav { display: flex; gap: 4px; }
+    .nav-item {
+      padding: 7px 14px; border-radius: 6px; font-size: 12.5px; font-weight: 600;
+      color: rgba(255,255,255,.65); cursor: pointer; transition: background .12s;
+    }
+    .nav-item:hover { background: rgba(255,255,255,.1); color: #fff; }
+    .nav-item.active { background: rgba(255,255,255,.15); color: #fff; }
+
+    /* ── Layout ── */
+    .layout { display: flex; min-height: calc(100vh - 60px); }
+    .sidebar {
+      width: 240px; background: #fff; border-right: 1px solid #e2e8f0;
+      padding: 20px 0; flex-shrink: 0;
+    }
+    .sidebar-group { padding: 0 12px; margin-bottom: 20px; }
+    .sidebar-label {
+      font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px;
+      color: #94a3b8; margin-bottom: 6px; padding: 0 4px;
+    }
+    .sidebar-item {
+      display: flex; align-items: center; gap: 10px; padding: 8px 10px;
+      border-radius: 8px; font-size: 13px; font-weight: 500; color: #475569;
+      cursor: pointer; transition: background .1s;
+    }
+    .sidebar-item:hover  { background: #f1f5f9; }
+    .sidebar-item.active { background: #eff6ff; color: #0d47a1; font-weight: 700; }
+    .sidebar-badge {
+      margin-left: auto; background: #0d47a1; color: #fff;
+      font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 99px;
+    }
+
+    .main { flex: 1; padding: 36px 40px; }
+    .page-header { margin-bottom: 28px; }
+    .page-title { font-size: 22px; font-weight: 800; color: #1e293b; margin-bottom: 4px; }
+    .page-sub   { font-size: 13.5px; color: #64748b; }
+
+    /* ── Patient card ── */
+    .patient-card {
+      background: #fff; border: 1px solid #e2e8f0; border-radius: 14px;
+      padding: 24px 28px; margin-bottom: 20px; display: flex; align-items: center; gap: 20px;
+    }
+    .patient-avatar {
+      width: 56px; height: 56px; border-radius: 14px; background: #e8f0fe;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .patient-status {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 3px 10px; border-radius: 99px;
+      font-size: 11px; font-weight: 700; background: #fef9c3; color: #854d0e;
+      border: 1px solid #fde68a;
+    }
+
+    /* ── Doctor card ── */
+    .doctor-card {
+      display: flex; align-items: center; gap: 14px; padding: 16px 20px;
+      background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 12px; margin-bottom: 20px;
+    }
+    .doctor-avatar {
+      width: 46px; height: 46px; border-radius: 50%; background: #0d47a1; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 15px; font-weight: 800; color: #fff;
+    }
+    .doctor-name { font-size: 14px; font-weight: 700; color: #1e293b; }
+    .doctor-role { font-size: 12px; color: #64748b; margin-top: 1px; }
+    .doctor-verified {
+      margin-left: auto; display: inline-flex; align-items: center; gap: 5px;
+      padding: 4px 10px; border-radius: 99px; font-size: 11px; font-weight: 700;
+      background: #dcfce7; color: #15803d; border: 1px solid #86efac;
+    }
+
+    /* ── Main card ── */
+    .card {
+      background: #fff; border-radius: 14px; padding: 28px 32px;
+      border: 1px solid #e2e8f0; box-shadow: 0 1px 6px rgba(0,0,0,.04);
+      margin-bottom: 20px;
+    }
+    .card h2 { font-size: 17px; font-weight: 800; color: #1e293b; margin-bottom: 8px; }
+    .card p  { font-size: 13.5px; color: #64748b; line-height: 1.7; }
+
+    .dob-note {
+      display: flex; gap: 10px; align-items: flex-start;
+      padding: 14px 16px; background: #fff7ed; border: 1px solid #fdba74;
+      border-radius: 10px; margin: 18px 0;
+    }
+    .dob-note p { font-size: 12.5px; color: #9a3412; line-height: 1.6; }
+    .dob-note strong { color: #7c2d12; }
+
+    .btn-request {
+      display: inline-flex; align-items: center; gap: 9px;
+      padding: 12px 24px; border-radius: 9px; border: none; cursor: pointer;
+      font-size: 14px; font-weight: 700; font-family: inherit;
+      background: #0d47a1; color: #fff;
+      box-shadow: 0 4px 14px rgba(13,71,161,.25); transition: all .15s;
+    }
+    .btn-request:hover { background: #1565c0; transform: translateY(-1px); }
+
+    /* ── Results ── */
+    .result-granted {
+      background: #f0fdf4; border: 1.5px solid #86efac;
+      border-radius: 12px; padding: 22px 24px; margin-bottom: 20px;
+    }
+    .result-granted-row { display: flex; align-items: flex-start; gap: 14px; }
+    .result-granted-icon {
+      width: 44px; height: 44px; border-radius: 10px; background: #dcfce7;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .result-granted h3 { font-size: 15px; font-weight: 800; color: #15803d; margin-bottom: 10px; }
+    .dob-record {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px;
+    }
+    .dob-field {
+      background: #fff; border: 1px solid #d1fae5; border-radius: 10px; padding: 12px 16px;
+    }
+    .dob-field-label { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; color: #4b7a59; margin-bottom: 4px; }
+    .dob-field-value { font-size: 15px; font-weight: 800; color: #15803d; }
+
+    .result-denied {
+      background: #fef2f2; border: 1.5px solid #fca5a5;
+      border-radius: 12px; padding: 20px 24px; margin-bottom: 20px;
+      display: flex; align-items: center; gap: 14px;
+    }
+    .result-denied-icon {
+      width: 44px; height: 44px; border-radius: 10px; background: #fee2e2;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .result-denied h3 { font-size: 15px; font-weight: 800; color: #dc2626; margin-bottom: 3px; }
+    .result-denied p  { font-size: 13px; color: #7f1d1d; line-height: 1.5; }
+
+    .try-again {
+      font-size: 13px; color: #0d47a1; font-weight: 700; background: none;
+      border: none; cursor: pointer; font-family: inherit; text-decoration: underline;
+      padding: 0; display: inline-block; margin-top: 6px;
+    }
+
+    @keyframes fadeIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:none; } }
+    .layout { animation: fadeIn .2s ease; }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="logo">
+      <div class="logo-cross">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round">
+          <path d="M12 5v14M5 12h14"/>
+        </svg>
+      </div>
+      <div>
+        <div class="logo-name">HealthBridge</div>
+        <span class="logo-sub">Secure Medical Records Portal</span>
+      </div>
+    </div>
+    <nav class="header-nav">
+      <span class="nav-item">Dashboard</span>
+      <span class="nav-item active">Patient Records</span>
+      <span class="nav-item">Appointments</span>
+      <span class="nav-item">Prescriptions</span>
+    </nav>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-group">
+        <div class="sidebar-label">Patient Records</div>
+        <div class="sidebar-item active">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          Patient File
+          <span class="sidebar-badge">!</span>
+        </div>
+        <div class="sidebar-item">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          Vitals &amp; History
+        </div>
+        <div class="sidebar-item">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 12l2 2 4-4"/><path d="M7.5 4.27l9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/></svg>
+          Lab Results
+        </div>
+      </div>
+      <div class="sidebar-group">
+        <div class="sidebar-label">Administration</div>
+        <div class="sidebar-item">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Appointments
+        </div>
+        <div class="sidebar-item">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          Secure Messages
+        </div>
+      </div>
+    </aside>
+
+    <main class="main" id="main">
+      <!-- rendered by JS -->
+    </main>
+  </div>
+
+  <script>
+    function moiLogoSVG(size = 16) {
+      return `<svg width="${size}" height="${size}" viewBox="0 0 40 44" fill="none">
+        <defs><linearGradient id="mg" x1="4" y1="2" x2="36" y2="42" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#00c8f0"/><stop offset="1" stop-color="#005f88"/>
+        </linearGradient></defs>
+        <path d="M20 2L36 8.5V20C36 29.5 28 36.5 20 40C12 36.5 4 29.5 4 20V8.5L20 2Z" fill="url(#mg)"/>
+        <circle cx="20" cy="17" r="6" fill="white" opacity=".95"/>
+        <ellipse cx="20" cy="30.5" rx="9" ry="6" fill="white" opacity=".95"/>
+      </svg>`;
+    }
+
+    function render() {
+      const hash    = location.hash.slice(1);
+      const result  = sessionStorage.getItem('moi_nc_result');
+      const dob     = sessionStorage.getItem('moi_nc_dob');
+      const patient = sessionStorage.getItem('moi_nc_patient');
+      const el      = document.getElementById('main');
+
+      if (hash === 'granted' && result === 'granted' && dob) {
+        el.innerHTML = `
+          <div class="page-header">
+            <div class="page-title">Patient Records</div>
+            <div class="page-sub">HealthBridge Medical Portal · Dr. Sarah Mitchell</div>
+          </div>
+
+          <div class="doctor-card">
+            <div class="doctor-avatar">SM</div>
+            <div>
+              <div class="doctor-name">Dr. Sarah Mitchell</div>
+              <div class="doctor-role">GP · HealthBridge Medical Centre · GMC No. 4821739</div>
+            </div>
+            <div class="doctor-verified">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Verified Clinician
+            </div>
+          </div>
+
+          <div class="result-granted">
+            <div class="result-granted-row">
+              <div class="result-granted-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/>
+                </svg>
+              </div>
+              <div style="flex:1">
+                <h3>Date of Birth Received via MOI™</h3>
+                <p style="font-size:12.5px;color:#4b7a59;margin-top:2px">Patient consented to share their date of birth. The data was transmitted directly from the patient's vault — HealthBridge did not access any other personal information.</p>
+                <div class="dob-record">
+                  <div class="dob-field">
+                    <div class="dob-field-label">Patient Name</div>
+                    <div class="dob-field-value">${patient || '—'}</div>
+                  </div>
+                  <div class="dob-field">
+                    <div class="dob-field-label">Date of Birth</div>
+                    <div class="dob-field-value">${dob}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h2>Record Updated</h2>
+            <p>The patient's date of birth has been added to their HealthBridge record. This information was shared with explicit patient consent via the MOI™ vault, in compliance with data protection requirements.</p>
+          </div>`;
+        return;
+      }
+
+      if (hash === 'declined' || result === 'declined') {
+        el.innerHTML = `
+          <div class="page-header">
+            <div class="page-title">Patient Records</div>
+            <div class="page-sub">HealthBridge Medical Portal · Dr. Sarah Mitchell</div>
+          </div>
+
+          <div class="doctor-card">
+            <div class="doctor-avatar">SM</div>
+            <div>
+              <div class="doctor-name">Dr. Sarah Mitchell</div>
+              <div class="doctor-role">GP · HealthBridge Medical Centre</div>
+            </div>
+          </div>
+
+          <div class="result-denied">
+            <div class="result-denied-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2.5" stroke-linecap="round">
+                <circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/>
+              </svg>
+            </div>
+            <div>
+              <h3>Patient Declined to Share</h3>
+              <p>The patient did not consent to share their date of birth at this time. No data was transmitted to HealthBridge.</p>
+              <button class="try-again" onclick="reset()">Request again with a different account</button>
+            </div>
+          </div>`;
+        return;
+      }
+
+      // Default: request DOB
+      el.innerHTML = `
+        <div class="page-header">
+          <div class="page-title">Patient Records</div>
+          <div class="page-sub">HealthBridge Medical Portal · Dr. Sarah Mitchell</div>
+        </div>
+
+        <div class="patient-card">
+          <div class="patient-avatar">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0d47a1" stroke-width="1.8" stroke-linecap="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+            </svg>
+          </div>
+          <div style="flex:1">
+            <div style="font-size:15px;font-weight:800;color:#1e293b;margin-bottom:3px">New Patient Consultation</div>
+            <div style="font-size:13px;color:#64748b">Date of birth required to complete registration</div>
+          </div>
+          <div class="patient-status">⚠ Incomplete Record</div>
+        </div>
+
+        <div class="doctor-card">
+          <div class="doctor-avatar">SM</div>
+          <div>
+            <div class="doctor-name">Dr. Sarah Mitchell</div>
+            <div class="doctor-role">GP · HealthBridge Medical Centre · GMC No. 4821739</div>
+          </div>
+          <div class="doctor-verified">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Verified Clinician
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>Date of Birth Required</h2>
+          <p>Dr. Mitchell requires the patient's date of birth to complete the medical record and to calculate age-related clinical information. Unlike age-verification services, this request asks for the actual date of birth.</p>
+
+          <div class="dob-note">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#c2410c" stroke-width="2" stroke-linecap="round" style="flex-shrink:0;margin-top:1px">
+              <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
+            <p>This is a request for the patient's <strong>actual date of birth</strong>, not a derived Yes/No answer. The patient must grant explicit consent via their MOI™ vault before any data is shared with HealthBridge.</p>
+          </div>
+
+          <button class="btn-request" onclick="requestDOB()">
+            ${moiLogoSVG(16)} Request Date of Birth via MOI™
+          </button>
+        </div>`;
+    }
+
+    function requestDOB() {
+      sessionStorage.removeItem('moi_nc_result');
+      sessionStorage.removeItem('moi_nc_dob');
+      sessionStorage.removeItem('moi_nc_patient');
+      sessionStorage.setItem('moi_nc_request', JSON.stringify({
+        appName:        'HealthBridge Medical',
+        returnTo:       'medical.html',
+        queryType:      'dob',
+        doctorName:     'Dr. Sarah Mitchell',
+        requesterIcon:  '⚕',
+        requesterColor: '#0d47a1',
+      }));
+      location.href = 'moi.html#consent';
+    }
+
+    function reset() {
+      sessionStorage.removeItem('moi_nc_result');
+      sessionStorage.removeItem('moi_nc_dob');
+      sessionStorage.removeItem('moi_nc_patient');
+      location.hash = '';
+      render();
+    }
+
+    window.addEventListener('hashchange', render);
+    render();
+  </script>
+</body>
+</html>

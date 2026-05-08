@@ -1,0 +1,212 @@
+/* =============================================================
+   EMAIL CLIENT — OSMIO Mock Inbox
+   Design: Light · Three-column · Professional mail client
+   ============================================================= */
+
+:root {
+  --em-sidebar:   #1e1e2e;
+  --em-panel:     #f4f6fb;
+  --em-card:      #ffffff;
+  --em-border:    #e2e6ef;
+  --em-accent:    #aa1945;
+  --em-text:      #111827;
+  --em-muted:     #6b7280;
+  --em-light:     #9ca3af;
+  --em-selected:  #eef2ff;
+  --em-unread:    #dbeafe;
+}
+
+body.email-app {
+  font-family: 'Inter', sans-serif;
+  background: var(--em-panel);
+  color: var(--em-text);
+}
+
+.email-layout {
+  display: grid;
+  grid-template-columns: 220px 320px 1fr;
+  height: 100vh;
+  padding-bottom: 56px;
+}
+
+/* ── Personas sidebar ───────────────────────────────────────── */
+.em-personas {
+  background: var(--em-sidebar);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+.em-personas-header {
+  padding: 20px 16px 14px;
+  border-bottom: 1px solid rgba(255,255,255,.06);
+}
+.em-personas-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+.em-personas-logo-icon {
+  width: 26px; height: 26px;
+  background: linear-gradient(135deg, #aa1945, #82002b);
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+}
+.em-personas-logo-text { font-size: 14px; font-weight: 800; color: rgba(255,255,255,.9); }
+.em-personas-sub { font-size: 10px; color: rgba(255,255,255,.3); margin-top: 2px; }
+
+.em-persona-list { padding: 10px 8px; flex: 1; }
+.em-persona-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 10px;
+  border-radius: 9px;
+  cursor: pointer;
+  transition: background .12s ease;
+  margin-bottom: 3px;
+}
+.em-persona-item:hover { background: rgba(255,255,255,.06); }
+.em-persona-item.active { background: rgba(255,255,255,.1); }
+.em-persona-info { flex: 1; min-width: 0; }
+.em-persona-name { font-size: 13px; font-weight: 700; color: rgba(255,255,255,.85); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.em-persona-role { font-size: 10.5px; color: rgba(255,255,255,.35); margin-top: 1px; }
+.em-persona-badge {
+  background: var(--em-accent);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 99px;
+  display: flex; align-items: center; justify-content: center;
+  padding: 0 5px;
+  flex-shrink: 0;
+}
+
+/* ── Inbox list ─────────────────────────────────────────────── */
+.em-inbox {
+  background: var(--em-card);
+  border-right: 1px solid var(--em-border);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.em-inbox-header {
+  padding: 18px 16px 14px;
+  border-bottom: 1px solid var(--em-border);
+  position: sticky;
+  top: 0;
+  background: var(--em-card);
+  z-index: 10;
+}
+.em-inbox-title { font-size: 15px; font-weight: 800; color: var(--em-text); }
+.em-inbox-sub { font-size: 11.5px; color: var(--em-muted); margin-top: 2px; }
+.em-inbox-list { flex: 1; overflow-y: auto; }
+
+.em-email-row {
+  display: flex;
+  gap: 10px;
+  padding: 14px 16px;
+  cursor: pointer;
+  border-bottom: 1px solid var(--em-border);
+  transition: background .1s ease;
+  position: relative;
+}
+.em-email-row:hover { background: #f8f9fc; }
+.em-email-row.active { background: var(--em-selected); }
+.em-email-row.unread { background: #f5f8ff; border-left: 3px solid var(--em-accent); }
+.em-email-row.unread .em-email-from { color: var(--em-text); }
+.em-email-row.unread .em-email-subject { font-weight: 800; color: var(--em-text); font-size: 13px; }
+.em-email-unread-dot {
+  position: absolute;
+  left: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--em-accent);
+}
+.em-email-avatar { flex-shrink: 0; margin-top: 2px; }
+.em-email-body-wrap { flex: 1; min-width: 0; }
+.em-email-from { font-size: 13px; font-weight: 700; color: var(--em-text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.em-email-subject { font-size: 12.5px; font-weight: 600; color: var(--em-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 2px; }
+.em-email-preview { font-size: 11.5px; color: var(--em-light); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 2px; }
+.em-email-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; flex-shrink: 0; }
+.em-email-time { font-size: 11px; color: var(--em-light); white-space: nowrap; }
+.em-email-tag {
+  font-size: 9.5px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: .3px;
+}
+.em-email-tag.new-request     { background: #dbeafe; color: #1d4ed8; }
+.em-email-tag.attestation-submitted { background: #ede9fe; color: #7c3aed; }
+.em-email-tag.officer-assigned { background: #dcfce7; color: #16a34a; }
+.em-email-tag.new-assignment  { background: #fef3c7; color: #92400e; }
+.em-email-tag.reminder        { background: #fee2e2; color: #dc2626; }
+.em-email-tag.schedule        { background: #f0fdf4; color: #16a34a; }
+.em-email-tag.availability    { background: #f1f5f9; color: #475569; }
+
+/* ── Email reader ───────────────────────────────────────────── */
+.em-reader {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--em-panel);
+}
+.em-reader-empty {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--em-light);
+  gap: 12px;
+}
+.em-reader-header {
+  padding: 20px 28px 16px;
+  background: var(--em-card);
+  border-bottom: 1px solid var(--em-border);
+}
+.em-reader-subject { font-size: 18px; font-weight: 800; color: var(--em-text); margin-bottom: 10px; line-height: 1.3; }
+.em-reader-meta-row {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.em-reader-meta-item { font-size: 12.5px; color: var(--em-muted); }
+.em-reader-meta-item strong { color: var(--em-text); font-weight: 600; }
+.em-reader-meta-date { font-size: 12px; color: var(--em-light); margin-left: auto; }
+.em-reader-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 28px;
+  display: flex;
+  justify-content: center;
+}
+.em-reader-body-inner {
+  width: 100%;
+  max-width: 600px;
+  background: var(--em-panel);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0,0,0,.06);
+}
+
+/* ── Empty / loading ────────────────────────────────────────── */
+.em-no-email {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 12px;
+  color: #c4cad4;
+  padding: 40px;
+  text-align: center;
+}
+.em-no-email svg { opacity: .4; }
