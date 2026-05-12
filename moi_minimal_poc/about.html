@@ -11,17 +11,17 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:       #0d1117;
-      --surface:  #161b22;
-      --surface2: #1e2530;
-      --border:   rgba(255,255,255,.08);
-      --border2:  rgba(255,255,255,.13);
-      --text:     #e6edf3;
-      --muted:    rgba(230,237,243,.5);
-      --accent:   #00c8f0;
-      --accent2:  #005f88;
-      --success:  #06d6a0;
-      --warn:     #f59e0b;
+      --bg:       #f0f5f9;
+      --surface:  #ffffff;
+      --surface2: #f4f8fb;
+      --border:   rgba(0,0,0,.1);
+      --border2:  rgba(0,0,0,.08);
+      --text:     #0f172a;
+      --muted:    #64748b;
+      --accent:   #0369a1;
+      --accent2:  #01527e;
+      --success:  #059669;
+      --warn:     #b45309;
     }
 
     body {
@@ -32,7 +32,7 @@
     }
     body::before {
       content: ''; position: fixed; inset: 0;
-      background-image: radial-gradient(rgba(0,200,240,.04) 1px, transparent 1px);
+      background-image: radial-gradient(rgba(0,80,140,.05) 1px, transparent 1px);
       background-size: 32px 32px; pointer-events: none; z-index: 0;
     }
 
@@ -41,8 +41,8 @@
       position: sticky; top: 0; z-index: 100;
       display: flex; align-items: center; justify-content: space-between;
       padding: 14px 32px;
-      background: rgba(13,17,23,.94); backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border);
+      background: rgba(255,255,255,.96); backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(0,0,0,.09); box-shadow: 0 1px 4px rgba(0,0,0,.06);
     }
     .topbar-left { display: flex; align-items: center; gap: 10px; }
     .topbar-brand { font-size: 14px; font-weight: 700; color: var(--muted); letter-spacing: -.1px; }
@@ -50,11 +50,11 @@
     .btn-back {
       display: inline-flex; align-items: center; gap: 6px;
       padding: 6px 14px; border-radius: 8px;
-      border: 1px solid var(--border2); background: rgba(255,255,255,.04);
-      font-size: 12.5px; font-weight: 600; color: var(--muted);
+      border: 1px solid var(--border2); background: rgba(0,0,0,.03);
+      font-size: 13.5px; font-weight: 600; color: var(--muted);
       text-decoration: none; transition: all .15s;
     }
-    .btn-back:hover { color: var(--text); border-color: rgba(255,255,255,.22); }
+    .btn-back:hover { color: var(--text); border-color: rgba(0,0,0,.22); }
 
     /* ── Page content ── */
     .page {
@@ -68,8 +68,8 @@
     .hero-eyebrow {
       display: inline-flex; align-items: center; gap: 8px;
       padding: 5px 15px; border-radius: 99px;
-      background: rgba(0,200,240,.08); border: 1px solid rgba(0,200,240,.2);
-      font-size: 11.5px; font-weight: 700; color: var(--accent);
+      background: rgba(3,105,161,.08); border: 1px solid rgba(3,105,161,.2);
+      font-size: 13px; font-weight: 700; color: var(--accent);
       text-transform: uppercase; letter-spacing: .8px; margin-bottom: 22px;
     }
     .hero h1 {
@@ -85,7 +85,7 @@
     /* ── Section ── */
     .section { margin-bottom: 60px; }
     .section-label {
-      font-size: 10.5px; font-weight: 800; text-transform: uppercase;
+      font-size: 12.5px; font-weight: 800; text-transform: uppercase;
       letter-spacing: 1.4px; color: var(--muted);
       display: flex; align-items: center; gap: 10px; margin-bottom: 20px;
     }
@@ -103,14 +103,14 @@
     /* ── Badges ── */
     .badge-live {
       display: inline-flex; align-items: center; gap: 5px;
-      padding: 3px 10px; border-radius: 99px; font-size: 11px; font-weight: 700;
-      background: rgba(6,214,160,.1); color: var(--success);
-      border: 1px solid rgba(6,214,160,.25);
+      padding: 3px 10px; border-radius: 99px; font-size: 12.5px; font-weight: 700;
+      background: rgba(5,150,105,.1); color: var(--success);
+      border: 1px solid rgba(5,150,105,.25);
     }
     .badge-live::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--success); box-shadow: 0 0 5px var(--success); }
     .badge-dev {
       display: inline-flex; align-items: center; gap: 5px;
-      padding: 3px 10px; border-radius: 99px; font-size: 11px; font-weight: 700;
+      padding: 3px 10px; border-radius: 99px; font-size: 12.5px; font-weight: 700;
       background: rgba(245,158,11,.1); color: var(--warn);
       border: 1px solid rgba(245,158,11,.25);
     }
@@ -132,7 +132,7 @@
     }
     .enterprise-name { font-size: 15px; font-weight: 800; color: var(--text); margin-bottom: 4px; }
     .enterprise-tag {
-      font-size: 10.5px; font-weight: 600; text-transform: uppercase;
+      font-size: 12.5px; font-weight: 600; text-transform: uppercase;
       letter-spacing: .6px; color: var(--muted); margin-bottom: 12px;
     }
     .enterprise-desc { font-size: 13px; color: var(--muted); line-height: 1.65; margin-top: 12px; }
@@ -155,19 +155,19 @@
     .drawer-desc   { font-size: 13px; color: var(--muted); line-height: 1.62; }
     .drawer-tech {
       display: inline-flex; align-items: center; gap: 5px; margin-top: 9px;
-      font-size: 11.5px; font-weight: 600; color: var(--accent);
-      background: rgba(0,200,240,.06); border: 1px solid rgba(0,200,240,.15);
+      font-size: 13px; font-weight: 600; color: var(--accent);
+      background: rgba(3,105,161,.06); border: 1px solid rgba(3,105,161,.15);
       padding: 3px 10px; border-radius: 6px;
     }
 
     /* ── Callouts ── */
     .callout {
-      background: rgba(0,200,240,.05); border: 1px solid rgba(0,200,240,.15);
+      background: rgba(3,105,161,.05); border: 1px solid rgba(3,105,161,.15);
       border-left: 3px solid var(--accent); border-radius: 0 10px 10px 0;
       padding: 16px 18px; margin: 20px 0;
     }
     .callout-label {
-      font-size: 10px; font-weight: 800; text-transform: uppercase;
+      font-size: 12px; font-weight: 800; text-transform: uppercase;
       letter-spacing: .8px; color: var(--accent); margin-bottom: 6px;
     }
     .callout p { font-size: 13.5px; color: var(--muted); line-height: 1.65; }
@@ -193,8 +193,8 @@
       border-radius: 12px; padding: 18px 14px; text-align: center;
     }
     .proto-icon  { font-size: 26px; margin-bottom: 7px; line-height: 1; }
-    .proto-label { font-size: 12px; font-weight: 800; color: var(--text); margin-bottom: 3px; }
-    .proto-sub   { font-size: 11px; color: var(--muted); line-height: 1.4; }
+    .proto-label { font-size: 13px; font-weight: 800; color: var(--text); margin-bottom: 3px; }
+    .proto-sub   { font-size: 12.5px; color: var(--muted); line-height: 1.4; }
     .proto-arrow { font-size: 20px; color: var(--muted); flex-shrink: 0; }
 
     /* ── Legal grid ── */
@@ -207,7 +207,7 @@
     }
     .legal-icon  { font-size: 20px; margin-bottom: 10px; }
     .legal-title { font-size: 13.5px; font-weight: 800; color: var(--text); margin-bottom: 6px; }
-    .legal-body  { font-size: 12.5px; color: var(--muted); line-height: 1.62; }
+    .legal-body  { font-size: 13.5px; color: var(--muted); line-height: 1.62; }
 
     /* ── Role steps ── */
     .roles-list { display: flex; flex-direction: column; gap: 10px; margin-top: 22px; }
@@ -219,7 +219,7 @@
       transition: border-color .15s, transform .15s, box-shadow .15s;
     }
     .role-card:hover {
-      border-color: rgba(0,200,240,.3);
+      border-color: rgba(3,105,161,.3);
       transform: translateX(4px);
       box-shadow: 0 4px 24px rgba(0,0,0,.3);
     }
@@ -231,10 +231,10 @@
     }
     .role-body  { flex: 1; }
     .role-title { font-size: 14px; font-weight: 800; color: var(--text); margin-bottom: 3px; }
-    .role-desc  { font-size: 12.5px; color: var(--muted); line-height: 1.5; }
+    .role-desc  { font-size: 13.5px; color: var(--muted); line-height: 1.5; }
     .role-app {
-      font-size: 11px; font-weight: 600; color: var(--accent);
-      background: rgba(0,200,240,.07); border: 1px solid rgba(0,200,240,.18);
+      font-size: 12.5px; font-weight: 600; color: var(--accent);
+      background: rgba(3,105,161,.07); border: 1px solid rgba(3,105,161,.18);
       padding: 3px 9px; border-radius: 6px; white-space: nowrap; flex-shrink: 0;
     }
     .role-arrow { color: var(--muted); flex-shrink: 0; }
@@ -247,7 +247,7 @@
       margin-bottom: 24px;
     }
     .dev-banner svg { flex-shrink: 0; margin-top: 1px; }
-    .dev-banner p { font-size: 13px; color: rgba(245,158,11,.85); line-height: 1.55; }
+    .dev-banner p { font-size: 13px; color: #92400e; line-height: 1.55; }
     .dev-banner strong { color: var(--warn); }
 
     /* ── CTA ── */
@@ -258,7 +258,7 @@
       background: linear-gradient(135deg, var(--accent), var(--accent2));
       color: #fff; font-size: 14px; font-weight: 700; font-family: inherit;
       text-decoration: none;
-      box-shadow: 0 4px 20px rgba(0,200,240,.25); transition: all .15s; cursor: pointer;
+      box-shadow: 0 4px 20px rgba(3,105,161,.25); transition: all .15s; cursor: pointer;
     }
     .btn-start:hover { opacity: .9; transform: translateY(-1px); }
     .btn-outline {
@@ -271,7 +271,7 @@
     .btn-outline:hover { color: var(--text); border-color: rgba(255,255,255,.22); }
 
     /* ── Footer ── */
-    .footer { text-align: center; margin-top: 64px; font-size: 12px; color: rgba(230,237,243,.18); }
+    .footer { text-align: center; margin-top: 64px; font-size: 13px; color: rgba(230,237,243,.42); }
 
     @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
     .page { animation: fadeUp .25s ease; }
@@ -330,7 +330,7 @@
       <div class="enterprise-grid">
 
         <div class="enterprise-card">
-          <div class="enterprise-icon" style="background:linear-gradient(135deg,rgba(0,200,240,.15),rgba(0,95,136,.12))">
+          <div class="enterprise-icon" style="background:linear-gradient(135deg,rgba(3,105,161,.15),rgba(0,95,136,.12))">
             <svg width="26" height="28" viewBox="0 0 40 44" fill="none">
               <defs><linearGradient id="eg1" x1="4" y1="2" x2="36" y2="42" gradientUnits="userSpaceOnUse">
                 <stop stop-color="#00c8f0"/><stop offset="1" stop-color="#005f88"/>
@@ -465,7 +465,7 @@
           <div class="proto-sub">Sends a binary<br>question</div>
         </div>
         <div class="proto-arrow">→</div>
-        <div class="proto-node" style="border-color:rgba(0,200,240,.2)">
+        <div class="proto-node" style="border-color:rgba(3,105,161,.2)">
           <div class="proto-icon">
             <svg width="26" height="28" viewBox="0 0 40 44" fill="none">
               <defs><linearGradient id="pf" x1="4" y1="2" x2="36" y2="42" gradientUnits="userSpaceOnUse">

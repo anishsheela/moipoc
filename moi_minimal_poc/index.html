@@ -10,12 +10,12 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --bg:      #0d1117;
-      --surface: #161b22;
-      --border:  rgba(255,255,255,.08);
-      --text:    #e6edf3;
-      --muted:   rgba(230,237,243,.45);
-      --accent:  #00c8f0;
+      --bg:      #f0f5f9;
+      --surface: #ffffff;
+      --border:  rgba(0,0,0,.1);
+      --text:    #0f172a;
+      --muted:   #64748b;
+      --accent:  #0369a1;
     }
     body {
       font-family: 'Inter', sans-serif;
@@ -49,7 +49,7 @@
       font-size: 26px;
       font-weight: 900;
       letter-spacing: -.5px;
-      background: linear-gradient(135deg, #00c8f0 0%, #0d6e6e 100%);
+      background: linear-gradient(135deg, #0277a0 0%, #01527e 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -86,13 +86,14 @@
       gap: 14px;
       text-decoration: none;
       color: inherit;
+      box-shadow: 0 1px 6px rgba(0,0,0,.07);
       transition: border-color .18s, transform .18s, box-shadow .18s;
       cursor: pointer;
     }
     .card:hover {
-      border-color: rgba(255,255,255,.18);
+      border-color: rgba(0,0,0,.2);
       transform: translateY(-3px);
-      box-shadow: 0 12px 40px rgba(0,0,0,.4);
+      box-shadow: 0 8px 28px rgba(0,0,0,.12);
     }
     .card-icon {
       width: 48px; height: 48px;
@@ -107,15 +108,15 @@
       letter-spacing: -.2px;
     }
     .card-subtitle {
-      font-size: 11.5px;
+      font-size: 13px;
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: .6px;
-      opacity: .45;
+      opacity: .65;
       margin-top: 3px;
     }
     .card-desc {
-      font-size: 13px;
+      font-size: 14px;
       color: var(--muted);
       line-height: 1.65;
       flex: 1;
@@ -124,7 +125,7 @@
       display: inline-flex;
       align-items: center;
       gap: 5px;
-      font-size: 11.5px;
+      font-size: 13px;
       font-weight: 600;
       padding: 4px 10px;
       border-radius: 99px;
@@ -133,27 +134,27 @@
 
     /* ── Per-card accent colours ── */
     /* MOI Vault */
-    .card--moi { border-color: rgba(0,200,240,.18); }
-    .card--moi .card-icon { background: linear-gradient(135deg,#00c8f0,#005f88); }
-    .card--moi .card-tag  { background: rgba(0,200,240,.12); color: #00c8f0; }
+    .card--moi { border-color: rgba(3,105,161,.2); }
+    .card--moi .card-icon { background: linear-gradient(135deg,#0277a0,#01527e); }
+    .card--moi .card-tag  { background: #0369a1; color: #fff; }
 
     /* Gambling */
     .card--casino .card-icon { background: linear-gradient(135deg,#8b1a1a,#c9a227); }
-    .card--casino .card-tag  { background: rgba(201,162,39,.12); color: #c9a227; }
+    .card--casino .card-tag  { background: #a07d10; color: #fff; }
 
     /* Young CEOs Association */
     .card--ypo .card-icon { background: linear-gradient(135deg,#001f5b,#c9a227); }
-    .card--ypo .card-tag  { background: rgba(0,31,91,.35); color: #8fb3ff; }
+    .card--ypo .card-tag  { background: #001f5b; color: #fff; }
 
     /* Medical */
     .card--medical .card-icon { background: linear-gradient(135deg,#0d47a1,#42a5f5); }
-    .card--medical .card-tag  { background: rgba(13,71,161,.25); color: #90caf9; }
+    .card--medical .card-tag  { background: #0d47a1; color: #fff; }
 
     /* ── About link ── */
     .about-bar {
       display: flex; align-items: center; justify-content: center; gap: 10px;
       margin-bottom: 44px; padding: 14px 20px;
-      background: rgba(0,200,240,.05); border: 1px solid rgba(0,200,240,.15);
+      background: rgba(3,105,161,.05); border: 1px solid rgba(3,105,161,.15);
       border-radius: 14px; max-width: 960px; width: 100%;
     }
     .about-bar p { font-size: 13.5px; color: var(--muted); line-height: 1.5; }
@@ -161,17 +162,17 @@
     .about-link {
       display: inline-flex; align-items: center; gap: 6px; white-space: nowrap;
       padding: 7px 16px; border-radius: 8px; flex-shrink: 0;
-      background: rgba(0,200,240,.1); border: 1px solid rgba(0,200,240,.25);
-      font-size: 12.5px; font-weight: 700; color: var(--accent);
+      background: rgba(3,105,161,.08); border: 1px solid rgba(3,105,161,.22);
+      font-size: 13.5px; font-weight: 700; color: var(--accent);
       text-decoration: none; transition: all .15s;
     }
-    .about-link:hover { background: rgba(0,200,240,.16); }
+    .about-link:hover { background: rgba(3,105,161,.14); }
 
     /* ── Footer ── */
     .footer {
       margin-top: 56px;
-      font-size: 12px;
-      color: rgba(230,237,243,.2);
+      font-size: 13px;
+      color: rgba(230,237,243,.45);
       text-align: center;
     }
   </style>
@@ -184,7 +185,7 @@
       <svg class="moi-shield" viewBox="0 0 40 44" fill="none">
         <defs>
           <linearGradient id="sg" x1="4" y1="2" x2="36" y2="42" gradientUnits="userSpaceOnUse">
-            <stop stop-color="#00c8f0"/>
+            <stop stop-color="#0277a0"/>
             <stop offset="1" stop-color="#005f88"/>
           </linearGradient>
         </defs>
