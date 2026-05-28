@@ -23,6 +23,8 @@ function tagLabel(tag) {
     'attestation-submitted': 'Submitted',
     'officer-assigned':      'Confirmed',
     'new-assignment':        'Assignment',
+    'pending-acceptance':    'Action Required',
+    'needs-new-slot':        'New Slot Needed',
     'reminder':              'Reminder',
     'schedule':              'Schedule',
     'availability':          'Availability',

@@ -421,7 +421,7 @@ function renderDashboard() {
                   <div class="moi-idqa-bar" style="width:${idqaPct}%"></div>
                 </div>
                 <div class="moi-idqa-labels"><span>0</span><span>8</span><span>12</span><span>24</span></div>
-                <div style="font-size:10px;color:var(--moi-text-muted);margin-top:4px;opacity:.7">Scores above 12 require additional attestation — further documents or a live video call with an Attestation Officer. This level is not yet rolled out.</div>
+                <div style="font-size:10px;color:var(--moi-text-muted);margin-top:4px;opacity:.7">Scores above 12 require additional attestation — a follow-up session with an Attestation Officer. This level is not yet rolled out.</div>
               </div>
 
               <div class="moi-cert-mini">
@@ -733,46 +733,57 @@ function renderVerifyRequest() {
             <button class="btn-moi-outline" onclick="router.go('dashboard')" style="font-size:13px;padding:7px 14px">← Back</button>
             <h2 style="margin-bottom:0">Request Identity Attestation</h2>
           </div>
-          <p>Submit your stored information for attestation review. An Attestation Officer will cross-check against your enrollment records and liveliness check results.</p>
+          <p>Submit your stored information for attestation review. An Attestation Officer will verify your identity via an idenfy session.</p>
 
           <div style="margin-bottom:14px">
-            <div style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--moi-text-muted);margin-bottom:10px">Select data to submit for attestation</div>
+            <div style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--moi-text-muted);margin-bottom:6px">Required — shared with your Attestation Officer</div>
+            <div style="font-size:11.5px;color:var(--moi-text-muted);margin-bottom:12px">These fields are mandatory and will always be shared with your assigned officer.</div>
 
-            <label class="moi-verify-item">
-              <input type="checkbox" checked>
+            <div class="moi-verify-item" style="cursor:default;opacity:1">
+              <div style="width:16px;height:16px;border-radius:3px;background:var(--moi-accent);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
               <div class="moi-verify-item-text">
                 <strong>First Name — <span style="color:var(--moi-text-muted);font-weight:400">${moi.firstName.value}</span></strong>
-                <span>Cross-checked against enrollment record</span>
+                <span>Shared with your Attestation Officer</span>
               </div>
               ${verifiedBadge(moi.firstName.verified)}
-            </label>
+            </div>
 
-            <label class="moi-verify-item">
-              <input type="checkbox" checked>
+            <div class="moi-verify-item" style="cursor:default;opacity:1">
+              <div style="width:16px;height:16px;border-radius:3px;background:var(--moi-accent);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
               <div class="moi-verify-item-text">
                 <strong>Last Name — <span style="color:var(--moi-text-muted);font-weight:400">${moi.lastName.value}</span></strong>
-                <span>Cross-checked against enrollment record</span>
+                <span>Shared with your Attestation Officer</span>
               </div>
               ${verifiedBadge(moi.lastName.verified)}
-            </label>
+            </div>
 
-            <label class="moi-verify-item">
-              <input type="checkbox" checked>
+            <div class="moi-verify-item" style="cursor:default;opacity:1">
+              <div style="width:16px;height:16px;border-radius:3px;background:var(--moi-accent);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
               <div class="moi-verify-item-text">
                 <strong>Date of Birth — <span style="color:var(--moi-text-muted);font-weight:400">${moi.dob.value}</span></strong>
-                <span>Cross-checked against liveliness check</span>
+                <span>Shared with your Attestation Officer</span>
               </div>
               ${verifiedBadge(moi.dob.verified)}
-            </label>
+            </div>
 
-            <label class="moi-verify-item">
-              <input type="checkbox" checked>
+            <div class="moi-verify-item" style="cursor:default;opacity:1">
+              <div style="width:16px;height:16px;border-radius:3px;background:var(--moi-accent);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
               <div class="moi-verify-item-text">
                 <strong>Profile Photo</strong>
-                <span>Compared against liveliness check</span>
+                <span>Shared with your Attestation Officer</span>
               </div>
               ${verifiedBadge(false)}
-            </label>
+            </div>
+
+            <div style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--moi-text-muted);margin:16px 0 10px">Optional — select any additional fields</div>
 
             <label class="moi-verify-item">
               <input type="checkbox">
@@ -805,7 +816,7 @@ function renderVerifyRequest() {
               <input type="checkbox">
               <div class="moi-verify-item-text">
                 <strong>Address — <span style="color:var(--moi-text-muted);font-weight:400">${moi.address.value}</span></strong>
-                <span>Cross-checked against proof of address document</span>
+                <span>Optional</span>
               </div>
               ${verifiedBadge(moi.address.verified)}
             </label>
@@ -814,7 +825,7 @@ function renderVerifyRequest() {
               <input type="checkbox">
               <div class="moi-verify-item-text">
                 <strong>City — <span style="color:var(--moi-text-muted);font-weight:400">${moi.city.value}</span></strong>
-                <span>Cross-checked against proof of address document</span>
+                <span>Optional</span>
               </div>
               ${verifiedBadge(moi.city.verified)}
             </label>
@@ -822,17 +833,8 @@ function renderVerifyRequest() {
             <label class="moi-verify-item">
               <input type="checkbox">
               <div class="moi-verify-item-text">
-                <strong>State / Province — <span style="color:var(--moi-text-muted);font-weight:400">${moi.state.value}</span></strong>
-                <span>Cross-checked against proof of address document</span>
-              </div>
-              ${verifiedBadge(moi.state.verified)}
-            </label>
-
-            <label class="moi-verify-item">
-              <input type="checkbox">
-              <div class="moi-verify-item-text">
                 <strong>Country — <span style="color:var(--moi-text-muted);font-weight:400">${moi.country.value}</span></strong>
-                <span>Cross-checked against proof of address document</span>
+                <span>Optional</span>
               </div>
               ${verifiedBadge(moi.country.verified)}
             </label>
@@ -840,77 +842,16 @@ function renderVerifyRequest() {
             <label class="moi-verify-item">
               <input type="checkbox">
               <div class="moi-verify-item-text">
-                <strong>Postal Code — <span style="color:var(--moi-text-muted);font-weight:400">${moi.postalCode.value}</span></strong>
-                <span>Cross-checked against proof of address document</span>
-              </div>
-              ${verifiedBadge(moi.postalCode.verified)}
-            </label>
-
-            <label class="moi-verify-item">
-              <input type="checkbox">
-              <div class="moi-verify-item-text">
                 <strong>Occupation — <span style="color:var(--moi-text-muted);font-weight:400">${moi.occupation.value}</span></strong>
-                <span>Optional — included if relevant to your use case</span>
+                <span>Optional</span>
               </div>
               ${verifiedBadge(moi.occupation.verified)}
             </label>
-
-            <label class="moi-verify-item">
-              <input type="checkbox">
-              <div class="moi-verify-item-text">
-                <strong>Bio</strong>
-                <span>Optional — self-authored description</span>
-              </div>
-              ${verifiedBadge(false)}
-            </label>
           </div>
 
-          <!-- Supporting documents section -->
-          <div style="margin-top:20px">
-            <div style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--moi-text-muted);margin-bottom:10px">Supporting Documents <span style="color:var(--moi-accent);font-size:9px;font-weight:600;background:rgba(0,180,216,.1);padding:2px 6px;border-radius:4px;margin-left:4px">Optional</span></div>
-
-            ${MOCK.currentUserDocuments.map(doc => `
-              <div class="moi-doc-item">
-                <div class="moi-doc-thumb" onclick="previewDoc('${doc.svgKey}','${doc.label}')">
-                  <div class="moi-doc-thumb-inner">${MOCK.svgAssets[doc.svgKey]}</div>
-                  <div class="moi-doc-thumb-overlay">Preview</div>
-                </div>
-                <div class="moi-doc-info">
-                  <strong>${doc.label}</strong>
-                  <span>${doc.description}</span>
-                  <span style="color:var(--moi-success);font-size:11px;font-weight:600">✓ Uploaded ${timeAgo(doc.uploadedDate)}</span>
-                  ${doc.trustSwiftlyRef ? `<span style="font-size:10.5px;color:var(--moi-text-muted);font-family:monospace">${doc.trustSwiftlyRef}</span>` : ''}
-                </div>
-                <span class="badge badge-verified" style="flex-shrink:0">Ready</span>
-              </div>`).join('')}
-
-            <label class="moi-doc-upload-btn">
-              <input type="file" style="display:none" accept="image/*,.pdf" onchange="handleDocUpload(this)">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-              Upload additional document
-            </label>
-          </div>
-
-          <!-- Document preview modal -->
-          <div id="doc-modal" class="moi-doc-modal hidden" onclick="closeDocModal(event)">
-            <div class="moi-doc-modal-inner">
-              <div class="moi-doc-modal-header">
-                <span id="doc-modal-title"></span>
-                <button onclick="document.getElementById('doc-modal').classList.add('hidden')" style="color:var(--moi-text-muted);font-size:20px;line-height:1">×</button>
-              </div>
-              <div id="doc-modal-body" class="moi-doc-modal-body"></div>
-            </div>
-          </div>
-
-          <div class="moi-privacy-note" style="flex-direction:column;gap:10px;align-items:flex-start">
-            <div style="display:flex;align-items:flex-start;gap:8px">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="flex-shrink:0;margin-top:1px"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-              <span><strong style="color:var(--moi-text)">Officer-only custody.</strong> Your documents are transmitted securely and held exclusively by your assigned Attestation Officer — a commissioned US Notary Public. Your supervisor and all other OSMIO staff have no access. Documents may only be disclosed under a valid court order and are otherwise legally protected under US notarial privilege law.</span>
-            </div>
-            <div style="display:flex;align-items:flex-start;gap:8px">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="flex-shrink:0;margin-top:1px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-              <span><strong style="color:var(--moi-text)">Session recording.</strong> Your video attestation session will be recorded and retained in the secure custody of your Attestation Officer under the same notarial privilege protections. The recording cannot be shared with any third party without a court order.</span>
-            </div>
+          <div class="moi-privacy-note">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="flex-shrink:0;margin-top:1px"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <span><strong style="color:var(--moi-text)">Privacy notice.</strong> Your name, date of birth, and photo will be shared with your assigned Attestation Officer to facilitate your idenfy session. No documents or liveness data are collected by OSMIO.</span>
           </div>
 
           <div style="display:flex;gap:10px">
@@ -927,7 +868,7 @@ function renderVerifyRequest() {
 function submitVerification() {
   const btn = document.querySelector('.btn-moi');
   if (!btn) return;
-  btn.innerHTML = `${SPINNER_SVG} Saving documents…`;
+  btn.innerHTML = `${SPINNER_SVG} Submitting…`;
   btn.disabled = true;
   setTimeout(() => {
     router.go('schedule-slot');
@@ -1004,12 +945,12 @@ function renderScheduleSlot() {
         <div class="moi-schedule-card">
           <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
             <button class="btn-moi-outline" onclick="router.go('verify-request')" style="font-size:13px;padding:7px 14px">← Back</button>
-            <h2 style="margin:0">Schedule Your Attestation Call</h2>
+            <h2 style="margin:0">Schedule Your Attestation Session</h2>
           </div>
-          <p style="color:var(--moi-text-muted);font-size:13.5px;margin:0 0 12px;line-height:1.55">Select an available 30-minute slot for a video call with your Attestation Officer. Once confirmed, the supervisor will assign you an officer and you'll receive a calendar invite by email.</p>
-          <div style="display:flex;align-items:flex-start;gap:8px;padding:10px 14px;background:rgba(255,209,102,.06);border:1px solid rgba(255,209,102,.18);border-radius:9px;margin-bottom:20px;font-size:12.5px;color:var(--moi-warning);line-height:1.55">
+          <p style="color:var(--moi-text-muted);font-size:13.5px;margin:0 0 12px;line-height:1.55">Select an available slot for your in-person identity session with your Attestation Officer via idenfy. Once confirmed, the supervisor will assign you an officer and you'll receive session details by email.</p>
+          <div style="display:flex;align-items:flex-start;gap:8px;padding:10px 14px;background:rgba(59,130,246,.05);border:1px solid rgba(59,130,246,.18);border-radius:9px;margin-bottom:20px;font-size:12.5px;color:#1e40af;line-height:1.55">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="flex-shrink:0;margin-top:1px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-            <span>This video session will be <strong>recorded</strong> and held in the exclusive secure custody of your Attestation Officer (a commissioned US Notary Public). The recording is protected under notarial privilege — it cannot be shared with any third party, including OSMIO supervisory staff, without a court order.</span>
+            <span>Your identity session will be conducted via <strong>idenfy</strong>. All verification, liveness checks, and recordings are handled securely by idenfy — no session data is collected or stored by OSMIO.</span>
           </div>
 
           <div class="moi-slot-week-nav">
@@ -1030,7 +971,7 @@ function renderScheduleSlot() {
           <div id="slot-confirm-bar" class="moi-slot-confirm ${selectedSlot ? '' : 'hidden'}">
             <div>
               <div style="font-size:13px;font-weight:700;color:var(--moi-text)">Selected: <span id="slot-confirm-label">${selectedSlot ? selectedSlot.label : ''}</span></div>
-              <div style="font-size:11.5px;color:var(--moi-text-muted);margin-top:2px">30-minute video call · Officer assigned by supervisor</div>
+              <div style="font-size:11.5px;color:var(--moi-text-muted);margin-top:2px">30-minute session via idenfy · Officer assigned by supervisor</div>
             </div>
             <button class="btn-moi" onclick="confirmSlotAndShowEmail()">
               Continue →
@@ -1186,7 +1127,7 @@ function renderCertificateDetail() {
             </div>
 
             <div style="font-size:13.5px;line-height:1.9;margin-bottom:20px;color:#222">
-              <p>I, <strong>${cert.officerName}</strong>, a Notary Public duly commissioned in the <strong>${cert.officerJurisdiction}</strong>, Commission No. <strong>${cert.notaryCommissionNo}</strong>, do hereby certify that on <strong>${formatDate(cert.issuedDate)}</strong>, the following individual appeared before me by live video call and presented satisfactory evidence of their identity:</p>
+              <p>I, <strong>${cert.officerName}</strong>, a Notary Public duly commissioned in the <strong>${cert.officerJurisdiction}</strong>, Commission No. <strong>${cert.notaryCommissionNo}</strong>, do hereby certify that on <strong>${formatDate(cert.issuedDate)}</strong>, the following individual completed an identity verification session via idenfy and presented satisfactory evidence of their identity:</p>
             </div>
 
             <div style="background:rgba(0,119,168,.05);border:1px solid rgba(0,119,168,.15);border-radius:10px;padding:18px 22px;margin-bottom:20px">
@@ -1222,7 +1163,7 @@ function renderCertificateDetail() {
           </div>
 
           <div style="margin-top:16px;padding:12px 16px;background:rgba(0,180,216,.05);border:1px solid rgba(0,180,216,.12);border-radius:9px;font-size:12px;color:var(--moi-text-muted);line-height:1.6">
-            <strong style="color:var(--moi-accent)">About this certificate.</strong> This notarial certificate was issued by a licensed US Notary Public after your live video attestation session. It is legally protected under US notarial law. The originating documents and session recording remain in the exclusive custody of the issuing officer and are accessible only under court order.
+            <strong style="color:var(--moi-accent)">About this certificate.</strong> This notarial certificate was issued by a licensed US Notary Public after your idenfy identity session. It is legally protected under US notarial law and can be independently verified at verify.osmio.id.
           </div>
         </div>
       </div>

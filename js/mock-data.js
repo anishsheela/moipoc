@@ -70,7 +70,7 @@ const MOCK = {
         issuedTo: 'Alex Johnson',
         issuedToCertId: 'OSMIO-FND-2024-00847',
         expiresDate: '2028-02-14',
-        notes: 'Identity verified by live video session. Government-issued photo ID (US Passport) presented and cross-checked.'
+        notes: 'Identity verified via idenfy session. Name, date of birth, and photo confirmed.'
       }
     ],
 
@@ -156,139 +156,6 @@ const MOCK = {
     { id:'usr_015', name:'Wei Zhang',     email:'w.zhang@example.com',   idqa:8, initials:'WZ', avatarColor:'#1e40af', enrolledDate:'2025-04-10', verificationStatus:'pending', certId:'OSMIO-FND-2025-04501' },
   ],
 
-  // ── Verification queue (admin panel) ──────────────────────
-  verificationQueue: [
-    {
-      id: 'vrf_001',
-      userId: 'usr_002',
-      userName: 'Sarah Chen',
-      email: 's.chen@example.com',
-      initials: 'SC',
-      avatarColor: '#0077a8',
-      certId: 'OSMIO-FND-2025-01203',
-      submittedDate: '2026-04-05T09:15:00',
-      resolvedDate: null,
-      status: 'pending',
-      idqaCurrent: 8,
-      idqaIfApproved: 12,
-      adminNote: '',
-      trustSwiftlyRef: 'TS-2026-00912',
-      submittedFields: {
-        firstName:  { submitted: 'Sarah',          enrolled: 'Sarah',          match: true  },
-        lastName:   { submitted: 'Chen',            enrolled: 'Chen',           match: true  },
-        dob:        { submitted: '1995-07-14',      enrolled: '1995-07-14',     match: true  },
-        photo:      { submitted: '[image on file]', enrolled: null,             match: null  }
-      }
-    },
-    {
-      id: 'vrf_002',
-      userId: 'usr_005',
-      userName: 'David Park',
-      email: 'd.park@example.com',
-      initials: 'DP',
-      avatarColor: '#b45309',
-      certId: 'OSMIO-FND-2025-02841',
-      submittedDate: '2026-04-06T14:30:00',
-      resolvedDate: null,
-      status: 'pending',
-      idqaCurrent: 8,
-      idqaIfApproved: 12,
-      adminNote: '',
-      trustSwiftlyRef: 'TS-2026-01034',
-      submittedFields: {
-        firstName:  { submitted: 'David',           enrolled: 'David',          match: true  },
-        lastName:   { submitted: 'Park',            enrolled: 'Park',           match: true  },
-        dob:        { submitted: '1988-11-03',      enrolled: '1988-11-03',     match: true  },
-        photo:      { submitted: '[image on file]', enrolled: null,             match: null  }
-      }
-    },
-    {
-      id: 'vrf_003',
-      userId: 'usr_006',
-      userName: 'Priya Sharma',
-      email: 'p.sharma@example.com',
-      initials: 'PS',
-      avatarColor: '#9d174d',
-      certId: 'OSMIO-FND-2025-03155',
-      submittedDate: '2026-04-04T11:00:00',
-      resolvedDate: null,
-      status: 'pending',
-      idqaCurrent: 8,
-      idqaIfApproved: 12,
-      adminNote: '',
-      trustSwiftlyRef: 'TS-2026-00887',
-      submittedFields: {
-        firstName:  { submitted: 'Priya',           enrolled: 'Priya',          match: true  },
-        lastName:   { submitted: 'Sharma',          enrolled: 'Sharma',         match: true  },
-        dob:        { submitted: '1997-02-28',      enrolled: '1997-02-28',     match: true  },
-        photo:      { submitted: '[image on file]', enrolled: null,             match: null  }
-      }
-    },
-    {
-      id: 'vrf_004',
-      userId: 'usr_007',
-      userName: "James O'Brien",
-      email: 'j.obrien@example.com',
-      initials: 'JO',
-      avatarColor: '#1e40af',
-      certId: 'OSMIO-FND-2025-02103',
-      submittedDate: '2026-04-03T16:45:00',
-      resolvedDate: '2026-04-03T18:20:00',
-      status: 'approved',
-      idqaCurrent: 12,
-      adminNote: 'All documents verified successfully. Liveness check passed.',
-      trustSwiftlyRef: 'TS-2026-00801',
-      submittedFields: {
-        firstName:  { submitted: 'James',           enrolled: 'James',          match: true  },
-        lastName:   { submitted: "O'Brien",         enrolled: "O'Brien",        match: true  },
-        dob:        { submitted: '1990-05-17',      enrolled: '1990-05-17',     match: true  },
-        photo:      { submitted: '[image on file]', enrolled: null,             match: null  }
-      }
-    },
-    {
-      id: 'vrf_005',
-      userId: 'usr_008',
-      userName: 'Yuki Tanaka',
-      email: 'y.tanaka@example.com',
-      initials: 'YT',
-      avatarColor: '#065f46',
-      certId: 'OSMIO-FND-2024-01899',
-      submittedDate: '2026-04-02T10:00:00',
-      resolvedDate: '2026-04-02T11:30:00',
-      status: 'approved',
-      idqaCurrent: 12,
-      adminNote: 'Identity confirmed. Liveliness check and document clear.',
-      trustSwiftlyRef: 'TS-2026-00755',
-      submittedFields: {
-        firstName:  { submitted: 'Yuki',            enrolled: 'Yuki',           match: true  },
-        lastName:   { submitted: 'Tanaka',          enrolled: 'Tanaka',         match: true  },
-        dob:        { submitted: '1993-09-08',      enrolled: '1993-09-08',     match: true  },
-        photo:      { submitted: '[image on file]', enrolled: null,             match: null  }
-      }
-    },
-    {
-      id: 'vrf_006',
-      userId: 'usr_009',
-      userName: 'Robert Garcia',
-      email: 'r.garcia@example.com',
-      initials: 'RG',
-      avatarColor: '#7c3aed',
-      certId: 'OSMIO-FND-2025-01654',
-      submittedDate: '2026-04-01T09:00:00',
-      resolvedDate: '2026-04-01T14:15:00',
-      status: 'rejected',
-      idqaCurrent: 8,
-      adminNote: 'Photo quality insufficient. ID document partially obscured. Please resubmit with clearer images.',
-      trustSwiftlyRef: 'TS-2026-00701',
-      submittedFields: {
-        firstName:  { submitted: 'Robert',          enrolled: 'Robert',         match: true  },
-        lastName:   { submitted: 'Garcia',          enrolled: 'Garcia',         match: true  },
-        dob:        { submitted: '1985-12-30',      enrolled: '1985-12-30',     match: true  },
-        photo:      { submitted: '[image on file]', enrolled: null,             match: null  }
-      }
-    }
-  ],
-
   // ── TNT profile data (what TNT sees after MOI share) ──────
   tntProfile: {
     userId: 'usr_001',
@@ -299,15 +166,6 @@ const MOCK = {
     interests: ['Hiking', 'Photography', 'Coffee', 'Travel', 'Music'],
     location: 'Austin, TX',
     lastActive: '2026-04-07T10:23:00'
-  },
-
-  // ── Admin credentials (demo) ───────────────────────────────
-  admin: {
-    username: 'admin@osmio.id',
-    password: 'osmio2026',
-    name: 'Admin Portal',
-    role: 'Attestation Officer',
-    certId: 'OSMIO-ADM-2024-00012'
   },
 
   // ── SVG Assets — generated illustrations ──────────────────
@@ -485,44 +343,44 @@ const MOCK = {
   officerAvailability: {
     'off_001': {
       blockedSlots: ['2026-04-28T13:00','2026-04-28T13:30','2026-04-28T14:00','2026-04-28T14:30','2026-04-28T15:00','2026-04-28T15:30','2026-04-28T16:00','2026-04-28T16:30','2026-05-06T13:00','2026-05-06T13:30','2026-05-06T14:00','2026-05-06T14:30','2026-05-06T15:00'],
-      daysOff: []
+      daysOff: [], openedDays: []
     },
     'off_002': {
       blockedSlots: ['2026-04-29T09:00','2026-04-29T09:30','2026-04-29T10:00','2026-04-29T10:30','2026-04-29T11:00','2026-04-29T11:30'],
-      daysOff: ['2026-05-05']
+      daysOff: ['2026-05-05'], openedDays: []
     },
     'off_003': {
       blockedSlots: ['2026-04-30T09:00','2026-04-30T09:30','2026-04-30T10:00','2026-04-30T10:30','2026-04-30T11:00','2026-04-30T11:30','2026-04-30T12:00','2026-05-05T09:00','2026-05-05T09:30','2026-05-05T10:00','2026-05-05T10:30'],
-      daysOff: []
+      daysOff: [], openedDays: []
     },
     'off_004': {
       blockedSlots: ['2026-04-28T09:00','2026-04-28T09:30','2026-04-28T10:00','2026-04-28T10:30','2026-04-28T11:00','2026-04-28T11:30','2026-05-07T13:00','2026-05-07T13:30','2026-05-07T14:00','2026-05-07T14:30','2026-05-07T15:00'],
-      daysOff: []
+      daysOff: [], openedDays: []
     },
     'off_005': {
       blockedSlots: ['2026-05-06T09:00','2026-05-06T09:30','2026-05-06T10:00','2026-05-06T10:30','2026-05-06T11:00','2026-05-06T11:30'],
-      daysOff: ['2026-05-04']
+      daysOff: ['2026-05-04'], openedDays: []
     }
   },
 
   // ── Attestation scheduling requests ───────────────────────
-  // status: docs-uploaded | slot-chosen | officer-assigned | completed
+  // status: slot-chosen | pending-acceptance | officer-assigned | needs-new-slot | completed
   attestationRequests: [
-    { id:'attreq_001', userId:'usr_001', userName:'Alex Johnson',    userEmail:'alex.johnson@example.com', userInitials:'AJ', userAvatarColor:'#aa1945', certId:'OSMIO-FND-2024-00847', submittedDate:'2026-04-24T09:00:00', status:'officer-assigned', slotDate:'2026-04-28', slotTime:'10:00', assignedOfficerId:'off_001', assignedOfficerName:'Divya Rajan',     assignedAt:'2026-04-24T14:30:00', meetingLink:'https://meet.osmio.id/att-001', docTypes:['Government ID','Liveness Check','Proof of Address'], refId:'ATT-2026-01024' },
-    { id:'attreq_002', userId:'usr_002', userName:'Sarah Chen',      userEmail:'s.chen@example.com',       userInitials:'SC', userAvatarColor:'#0077a8', certId:'OSMIO-FND-2025-01203', submittedDate:'2026-04-23T10:30:00', status:'officer-assigned', slotDate:'2026-04-29', slotTime:'14:00', assignedOfficerId:'off_002', assignedOfficerName:'Connor Walsh',    assignedAt:'2026-04-24T11:00:00', meetingLink:'https://meet.osmio.id/att-002', docTypes:['Government ID','Liveness Check'], refId:'ATT-2026-01019' },
-    { id:'attreq_003', userId:'usr_005', userName:'David Park',      userEmail:'d.park@example.com',       userInitials:'DP', userAvatarColor:'#b45309', certId:'OSMIO-FND-2025-02841', submittedDate:'2026-04-23T14:00:00', status:'officer-assigned', slotDate:'2026-04-30', slotTime:'09:30', assignedOfficerId:'off_005', assignedOfficerName:'Leila Nasser',    assignedAt:'2026-04-24T15:00:00', meetingLink:'https://meet.osmio.id/att-003', docTypes:['Government ID','Liveness Check','Proof of Address'], refId:'ATT-2026-01021' },
-    { id:'attreq_004', userId:'usr_006', userName:'Priya Sharma',    userEmail:'p.sharma@example.com',     userInitials:'PS', userAvatarColor:'#9d174d', certId:'OSMIO-FND-2025-03155', submittedDate:'2026-04-22T11:00:00', status:'officer-assigned', slotDate:'2026-05-05', slotTime:'11:00', assignedOfficerId:'off_004', assignedOfficerName:'Marcus Webb',     assignedAt:'2026-04-23T09:00:00', meetingLink:'https://meet.osmio.id/att-004', docTypes:['Government ID','Liveness Check'], refId:'ATT-2026-01015' },
-    { id:'attreq_005', userId:'usr_015', userName:'Wei Zhang',       userEmail:'w.zhang@example.com',      userInitials:'WZ', userAvatarColor:'#1e40af', certId:'OSMIO-FND-2025-04501', submittedDate:'2026-04-24T08:00:00', status:'officer-assigned', slotDate:'2026-05-05', slotTime:'14:30', assignedOfficerId:'off_003', assignedOfficerName:'Fatima Al-Rashid', assignedAt:'2026-04-24T16:00:00', meetingLink:'https://meet.osmio.id/att-005', docTypes:['Government ID','Liveness Check','Proof of Address'], refId:'ATT-2026-01026' },
-    { id:'attreq_006', userId:'usr_011', userName:'Thomas Mbeki',    userEmail:'t.mbeki@example.com',      userInitials:'TM', userAvatarColor:'#065f46', certId:'OSMIO-FND-2025-04102', submittedDate:'2026-04-23T16:00:00', status:'officer-assigned', slotDate:'2026-05-06', slotTime:'10:00', assignedOfficerId:'off_001', assignedOfficerName:'Divya Rajan',     assignedAt:'2026-04-24T10:00:00', meetingLink:'https://meet.osmio.id/att-006', docTypes:['Government ID','Liveness Check'], refId:'ATT-2026-01020' },
-    { id:'attreq_007', userId:'usr_013', userName:'Carlos Mendez',   userEmail:'c.mendez@example.com',     userInitials:'CM', userAvatarColor:'#7c3aed', certId:'OSMIO-FND-2025-04210', submittedDate:'2026-04-24T07:30:00', status:'slot-chosen',      slotDate:'2026-05-07', slotTime:'09:30', assignedOfficerId:null, assignedOfficerName:null, docTypes:['Government ID','Liveness Check','Proof of Address'], refId:'ATT-2026-01027' },
-    { id:'attreq_008', userId:'usr_014', userName:'Nadia Popescu',   userEmail:'n.popescu@example.com',    userInitials:'NP', userAvatarColor:'#854d0e', certId:'OSMIO-FND-2025-04315', submittedDate:'2026-04-23T13:00:00', status:'slot-chosen',      slotDate:'2026-05-07', slotTime:'14:00', assignedOfficerId:null, assignedOfficerName:null, docTypes:['Government ID','Liveness Check'], refId:'ATT-2026-01022' },
-    { id:'attreq_009', userId:'usr_012', userName:'Ingrid Larsson',  userEmail:'i.larsson@example.com',    userInitials:'IL', userAvatarColor:'#0077a8', certId:'OSMIO-FND-2025-04088', submittedDate:'2026-04-22T09:00:00', status:'slot-chosen',      slotDate:'2026-05-08', slotTime:'10:30', assignedOfficerId:null, assignedOfficerName:null, docTypes:['Government ID','Liveness Check','Proof of Address'], refId:'ATT-2026-01014' },
-    { id:'attreq_010', userId:'usr_010', userName:'Amara Osei',      userEmail:'a.osei@example.com',       userInitials:'AO', userAvatarColor:'#854d0e', certId:'OSMIO-FND-2025-04002', submittedDate:'2026-04-24T11:00:00', status:'slot-chosen',      slotDate:'2026-05-11', slotTime:'09:00', assignedOfficerId:null, assignedOfficerName:null, docTypes:['Government ID','Liveness Check'], refId:'ATT-2026-01025' },
-    { id:'attreq_011', userId:'usr_009', userName:'Robert Garcia',   userEmail:'r.garcia@example.com',     userInitials:'RG', userAvatarColor:'#7c3aed', certId:'OSMIO-FND-2025-01654', submittedDate:'2026-04-23T15:00:00', status:'slot-chosen',      slotDate:'2026-05-11', slotTime:'11:00', assignedOfficerId:null, assignedOfficerName:null, docTypes:['Government ID','Liveness Check','Proof of Address'], refId:'ATT-2026-01018' },
-    { id:'attreq_012', userId:'usr_003', userName:'Marcus Rivera',   userEmail:'m.rivera@example.com',     userInitials:'MR', userAvatarColor:'#6b21a8', certId:'OSMIO-FND-2025-02490', submittedDate:'2026-04-23T08:30:00', status:'docs-uploaded',    slotDate:null, slotTime:null, assignedOfficerId:null, assignedOfficerName:null, docTypes:['Government ID','Liveness Check'], refId:'ATT-2026-01017' },
-    { id:'attreq_013', userId:'usr_004', userName:'Emma Williams',   userEmail:'e.williams@example.com',   userInitials:'EW', userAvatarColor:'#065f46', certId:'OSMIO-FND-2024-01150', submittedDate:'2026-04-24T10:00:00', status:'docs-uploaded',    slotDate:null, slotTime:null, assignedOfficerId:null, assignedOfficerName:null, docTypes:['Government ID','Liveness Check','Proof of Address'], refId:'ATT-2026-01023' },
-    { id:'attreq_014', userId:'usr_007', userName:"James O'Brien",   userEmail:'j.obrien@example.com',     userInitials:'JO', userAvatarColor:'#1e40af', certId:'OSMIO-FND-2025-02103', submittedDate:'2026-04-20T10:00:00', status:'completed',        slotDate:'2026-04-22', slotTime:'10:00', assignedOfficerId:'off_001', assignedOfficerName:'Divya Rajan',     completedAt:'2026-04-22T10:35:00', meetingLink:'https://meet.osmio.id/att-014', docTypes:['Government ID','Liveness Check'], refId:'ATT-2026-01001' },
-    { id:'attreq_015', userId:'usr_008', userName:'Yuki Tanaka',     userEmail:'y.tanaka@example.com',     userInitials:'YT', userAvatarColor:'#065f46', certId:'OSMIO-FND-2024-01899', submittedDate:'2026-04-21T09:00:00', status:'completed',        slotDate:'2026-04-23', slotTime:'14:00', assignedOfficerId:'off_003', assignedOfficerName:'Fatima Al-Rashid', completedAt:'2026-04-23T14:42:00', meetingLink:'https://meet.osmio.id/att-015', docTypes:['Government ID','Liveness Check','Proof of Address'], refId:'ATT-2026-01008' },
+    { id:'attreq_001', userId:'usr_001', userName:'Alex Johnson',    userEmail:'alex.johnson@example.com', userInitials:'AJ', userAvatarColor:'#aa1945', certId:'OSMIO-FND-2024-00847', submittedDate:'2026-04-24T09:00:00', status:'officer-assigned', slotDate:'2026-04-28', slotTime:'10:00', assignedOfficerId:'off_001', assignedOfficerName:'Divya Rajan',     assignedAt:'2026-04-24T14:30:00', refId:'ATT-2026-01024' },
+    { id:'attreq_002', userId:'usr_002', userName:'Sarah Chen',      userEmail:'s.chen@example.com',       userInitials:'SC', userAvatarColor:'#0077a8', certId:'OSMIO-FND-2025-01203', submittedDate:'2026-04-23T10:30:00', status:'pending-acceptance', slotDate:'2026-04-29', slotTime:'14:00', assignedOfficerId:'off_002', assignedOfficerName:'Connor Walsh',    assignedAt:'2026-04-24T11:00:00', refId:'ATT-2026-01019' },
+    { id:'attreq_003', userId:'usr_005', userName:'David Park',      userEmail:'d.park@example.com',       userInitials:'DP', userAvatarColor:'#b45309', certId:'OSMIO-FND-2025-02841', submittedDate:'2026-04-23T14:00:00', status:'officer-assigned', slotDate:'2026-04-30', slotTime:'09:30', assignedOfficerId:'off_005', assignedOfficerName:'Leila Nasser',    assignedAt:'2026-04-24T15:00:00', refId:'ATT-2026-01021' },
+    { id:'attreq_004', userId:'usr_006', userName:'Priya Sharma',    userEmail:'p.sharma@example.com',     userInitials:'PS', userAvatarColor:'#9d174d', certId:'OSMIO-FND-2025-03155', submittedDate:'2026-04-22T11:00:00', status:'officer-assigned', slotDate:'2026-05-05', slotTime:'11:00', assignedOfficerId:'off_004', assignedOfficerName:'Marcus Webb',     assignedAt:'2026-04-23T09:00:00', refId:'ATT-2026-01015' },
+    { id:'attreq_005', userId:'usr_015', userName:'Wei Zhang',       userEmail:'w.zhang@example.com',      userInitials:'WZ', userAvatarColor:'#1e40af', certId:'OSMIO-FND-2025-04501', submittedDate:'2026-04-24T08:00:00', status:'officer-assigned', slotDate:'2026-05-05', slotTime:'14:30', assignedOfficerId:'off_003', assignedOfficerName:'Fatima Al-Rashid', assignedAt:'2026-04-24T16:00:00', refId:'ATT-2026-01026' },
+    { id:'attreq_006', userId:'usr_011', userName:'Thomas Mbeki',    userEmail:'t.mbeki@example.com',      userInitials:'TM', userAvatarColor:'#065f46', certId:'OSMIO-FND-2025-04102', submittedDate:'2026-04-23T16:00:00', status:'pending-acceptance', slotDate:'2026-05-06', slotTime:'10:00', assignedOfficerId:'off_001', assignedOfficerName:'Divya Rajan',     assignedAt:'2026-04-24T10:00:00', refId:'ATT-2026-01020' },
+    { id:'attreq_007', userId:'usr_013', userName:'Carlos Mendez',   userEmail:'c.mendez@example.com',     userInitials:'CM', userAvatarColor:'#7c3aed', certId:'OSMIO-FND-2025-04210', submittedDate:'2026-04-24T07:30:00', status:'slot-chosen',      slotDate:'2026-05-07', slotTime:'09:30', assignedOfficerId:null, assignedOfficerName:null, refId:'ATT-2026-01027' },
+    { id:'attreq_008', userId:'usr_014', userName:'Nadia Popescu',   userEmail:'n.popescu@example.com',    userInitials:'NP', userAvatarColor:'#854d0e', certId:'OSMIO-FND-2025-04315', submittedDate:'2026-04-23T13:00:00', status:'slot-chosen',      slotDate:'2026-05-07', slotTime:'14:00', assignedOfficerId:null, assignedOfficerName:null, refId:'ATT-2026-01022' },
+    { id:'attreq_009', userId:'usr_012', userName:'Ingrid Larsson',  userEmail:'i.larsson@example.com',    userInitials:'IL', userAvatarColor:'#0077a8', certId:'OSMIO-FND-2025-04088', submittedDate:'2026-04-22T09:00:00', status:'slot-chosen',      slotDate:'2026-05-08', slotTime:'10:30', assignedOfficerId:null, assignedOfficerName:null, refId:'ATT-2026-01014' },
+    { id:'attreq_010', userId:'usr_010', userName:'Amara Osei',      userEmail:'a.osei@example.com',       userInitials:'AO', userAvatarColor:'#854d0e', certId:'OSMIO-FND-2025-04002', submittedDate:'2026-04-24T11:00:00', status:'slot-chosen',      slotDate:'2026-05-11', slotTime:'09:00', assignedOfficerId:null, assignedOfficerName:null, refId:'ATT-2026-01025' },
+    { id:'attreq_011', userId:'usr_009', userName:'Robert Garcia',   userEmail:'r.garcia@example.com',     userInitials:'RG', userAvatarColor:'#7c3aed', certId:'OSMIO-FND-2025-01654', submittedDate:'2026-04-23T15:00:00', status:'slot-chosen',      slotDate:'2026-05-11', slotTime:'11:00', assignedOfficerId:null, assignedOfficerName:null, refId:'ATT-2026-01018' },
+    { id:'attreq_012', userId:'usr_003', userName:'Marcus Rivera',   userEmail:'m.rivera@example.com',     userInitials:'MR', userAvatarColor:'#6b21a8', certId:'OSMIO-FND-2025-02490', submittedDate:'2026-04-23T08:30:00', status:'slot-chosen',      slotDate:'2026-05-12', slotTime:'10:00', assignedOfficerId:null, assignedOfficerName:null, refId:'ATT-2026-01017' },
+    { id:'attreq_013', userId:'usr_004', userName:'Emma Williams',   userEmail:'e.williams@example.com',   userInitials:'EW', userAvatarColor:'#065f46', certId:'OSMIO-FND-2024-01150', submittedDate:'2026-04-24T10:00:00', status:'slot-chosen',      slotDate:'2026-05-13', slotTime:'14:00', assignedOfficerId:null, assignedOfficerName:null, refId:'ATT-2026-01023' },
+    { id:'attreq_014', userId:'usr_007', userName:"James O'Brien",   userEmail:'j.obrien@example.com',     userInitials:'JO', userAvatarColor:'#1e40af', certId:'OSMIO-FND-2025-02103', submittedDate:'2026-04-20T10:00:00', status:'completed',        slotDate:'2026-04-22', slotTime:'10:00', assignedOfficerId:'off_001', assignedOfficerName:'Divya Rajan',     completedAt:'2026-04-22T10:35:00', refId:'ATT-2026-01001' },
+    { id:'attreq_015', userId:'usr_008', userName:'Yuki Tanaka',     userEmail:'y.tanaka@example.com',     userInitials:'YT', userAvatarColor:'#065f46', certId:'OSMIO-FND-2024-01899', submittedDate:'2026-04-21T09:00:00', status:'completed',        slotDate:'2026-04-23', slotTime:'14:00', assignedOfficerId:'off_003', assignedOfficerName:'Fatima Al-Rashid', completedAt:'2026-04-23T14:42:00', refId:'ATT-2026-01008' },
   ],
 
   // ── Email client personas ──────────────────────────────────
@@ -556,22 +414,23 @@ const MOCK = {
       <tr><td style="color:#6b7280;padding:4px 0;width:140px">Date &amp; Time</td><td style="color:#111827;font-weight:600">Monday, 28 April 2026 · 10:00 AM</td></tr>
       <tr><td style="color:#6b7280;padding:4px 0">Officer</td><td style="color:#111827;font-weight:600">Divya Rajan</td></tr>
       <tr><td style="color:#6b7280;padding:4px 0">Duration</td><td style="color:#111827;font-weight:600">30 minutes</td></tr>
-      <tr><td style="color:#6b7280;padding:4px 0">Meeting Link</td><td><a href="#" style="color:#0077a8;font-weight:600">meet.osmio.id/att-001</a></td></tr>
+      <tr><td style="color:#6b7280;padding:4px 0">Session</td><td style="color:#111827;font-weight:600">Via idenfy — details in separate email</td></tr>
       <tr><td style="color:#6b7280;padding:4px 0">Reference</td><td style="color:#111827;font-family:monospace;font-size:13px">ATT-2026-01024</td></tr>
     </table>
   </div>
-  <div style="background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:16px;margin:0 0 20px">
+  <div style="background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:16px;margin:0 0 16px">
     <div style="font-size:13px;font-weight:700;color:#92400e;margin-bottom:8px">Checklist for tomorrow</div>
     <ul style="margin:0;padding-left:20px;color:#374151;font-size:13px;line-height:2">
-      <li>Have your original Government-issued ID ready to show on camera</li>
+      <li>Have your Government-issued ID ready</li>
       <li>Ensure good lighting — face clearly visible</li>
       <li>Use a quiet, private environment</li>
-      <li>Test your camera and microphone before the call</li>
+      <li>Test your camera and microphone beforehand</li>
       <li>Join 2 minutes before your scheduled time</li>
     </ul>
   </div>
-  <div style="text-align:center;margin:24px 0">
-    <a href="#" style="background:#00b4d8;color:#fff;padding:12px 28px;border-radius:8px;font-weight:700;font-size:14px;text-decoration:none;display:inline-block">Join Session Tomorrow</a>
+  <div style="background:#f0f9ff;border:1px solid #bae6fd;border-radius:8px;padding:14px 16px;margin:0 0 8px">
+    <div style="font-size:13px;font-weight:700;color:#0369a1;margin-bottom:4px">Your session link</div>
+    <p style="color:#374151;font-size:13px;line-height:1.6;margin:0">Use the <strong>idenfy invitation email</strong> sent to you separately to join the session. If you haven't received it, check your spam folder or contact <a href="mailto:support@osmio.id" style="color:#0369a1;font-weight:600">support@osmio.id</a> with your reference number.</p>
   </div>
 </div>
 <div style="background:#f0f2f7;padding:14px 28px;border-radius:0 0 10px 10px;text-align:center">
@@ -598,14 +457,20 @@ const MOCK = {
     <table style="width:100%;border-collapse:collapse;font-size:14px">
       <tr><td style="color:#6b7280;padding:5px 0;width:140px">Attestation Officer</td><td style="color:#111827;font-weight:700">Divya Rajan</td></tr>
       <tr><td style="color:#6b7280;padding:5px 0">Date &amp; Time</td><td style="color:#111827;font-weight:600">Monday, 28 April 2026 · 10:00 AM</td></tr>
-      <tr><td style="color:#6b7280;padding:5px 0">Duration</td><td style="color:#111827;font-weight:600">30 minutes (video call)</td></tr>
-      <tr><td style="color:#6b7280;padding:5px 0">Meeting Link</td><td><a href="#" style="color:#0077a8;font-weight:600;font-size:13px">meet.osmio.id/att-001</a></td></tr>
+      <tr><td style="color:#6b7280;padding:5px 0">Duration</td><td style="color:#111827;font-weight:600">30 minutes (via idenfy)</td></tr>
+      <tr><td style="color:#6b7280;padding:5px 0">Session</td><td style="color:#111827;font-weight:600">idenfy link provided separately</td></tr>
       <tr><td style="color:#6b7280;padding:5px 0">Reference</td><td style="color:#111827;font-family:monospace;font-size:13px">ATT-2026-01024</td></tr>
     </table>
   </div>
-  <p style="color:#374151;font-size:13.5px;line-height:1.6">Please join the video call at the scheduled time with your original ID document visible and ready. Ensure you are in a well-lit, quiet space.</p>
-  <div style="text-align:center;margin:24px 0;display:flex;gap:12px;justify-content:center">
-    <a href="#" style="background:#00b4d8;color:#fff;padding:11px 24px;border-radius:8px;font-weight:700;font-size:13px;text-decoration:none;display:inline-block">Join Video Call</a>
+  <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:16px 18px;margin:0 0 16px">
+    <div style="font-size:13px;font-weight:700;color:#15803d;margin-bottom:6px">What happens next</div>
+    <p style="color:#374151;font-size:13.5px;line-height:1.6;margin:0">You will receive a <strong>separate invitation email directly from idenfy</strong> with your session link. Please follow the instructions in that email to join at the scheduled time.</p>
+  </div>
+  <div style="background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:14px 18px;margin:0 0 20px">
+    <div style="font-size:13px;font-weight:700;color:#92400e;margin-bottom:4px">Didn't receive the idenfy invitation?</div>
+    <p style="color:#78350f;font-size:13px;line-height:1.6;margin:0">Check your spam folder first. If it's still missing closer to your session time, reply to this email or contact <a href="mailto:support@osmio.id" style="color:#92400e;font-weight:600">support@osmio.id</a> with your reference number and we'll resend it.</p>
+  </div>
+  <div style="text-align:center;margin:20px 0">
     <a href="#" style="background:#f0f2f7;color:#374151;padding:11px 24px;border-radius:8px;font-weight:700;font-size:13px;text-decoration:none;display:inline-block;border:1px solid #e2e6ef">Add to Calendar</a>
   </div>
 </div>
@@ -693,7 +558,7 @@ const MOCK = {
 <div style="padding:28px;background:#fff;border:1px solid #e2e6ef;border-top:none">
   <div style="display:inline-block;background:#dbeafe;color:#1d4ed8;font-size:12px;font-weight:700;padding:4px 12px;border-radius:20px;margin-bottom:16px">New Request</div>
   <h2 style="color:#111827;font-size:20px;margin:0 0 8px">Alex Johnson has submitted an attestation request</h2>
-  <p style="color:#374151;font-size:14px;line-height:1.6;margin:0 0 20px">Hi Juanita, a new attestation request has been submitted with a video call slot selected. Please assign an available officer at your earliest convenience.</p>
+  <p style="color:#374151;font-size:14px;line-height:1.6;margin:0 0 20px">Hi Juanita, a new attestation request has been submitted with a slot selected. Please assign an available officer at your earliest convenience.</p>
   <div style="background:#f8f9fc;border:1px solid #e2e6ef;border-radius:8px;padding:20px;margin:0 0 20px">
     <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#6b7280;margin-bottom:12px">Request Details</div>
     <table style="width:100%;border-collapse:collapse;font-size:14px">
@@ -727,7 +592,7 @@ const MOCK = {
 <div style="padding:28px;background:#fff;border:1px solid #e2e6ef;border-top:none">
   <div style="display:inline-block;background:#dbeafe;color:#1d4ed8;font-size:12px;font-weight:700;padding:4px 12px;border-radius:20px;margin-bottom:16px">New Request</div>
   <h2 style="color:#111827;font-size:20px;margin:0 0 8px">Sarah Chen has submitted an attestation request</h2>
-  <p style="color:#374151;font-size:14px;line-height:1.6;margin:0 0 20px">Hi Juanita, a new attestation request has been submitted with a video call slot selected. Please assign an available officer.</p>
+  <p style="color:#374151;font-size:14px;line-height:1.6;margin:0 0 20px">Hi Juanita, a new attestation request has been submitted with a slot selected. Please assign an available officer.</p>
   <div style="background:#f8f9fc;border:1px solid #e2e6ef;border-radius:8px;padding:20px;margin:0 0 20px">
     <table style="width:100%;border-collapse:collapse;font-size:14px">
       <tr><td style="color:#6b7280;padding:5px 0;width:160px">User</td><td style="color:#111827;font-weight:700">Sarah Chen</td></tr>
@@ -817,8 +682,7 @@ const MOCK = {
       <tr><td style="color:#6b7280;padding:5px 0">User Email</td><td style="color:#111827">alex.johnson@example.com</td></tr>
       <tr><td style="color:#6b7280;padding:5px 0">Osmio ID Pair</td><td style="color:#111827;font-family:monospace;font-size:12px">OSMIO-FND-2024-00847</td></tr>
       <tr><td style="color:#6b7280;padding:5px 0">Date &amp; Time</td><td style="color:#111827;font-weight:600">Monday, 28 April 2026 · 10:00 AM</td></tr>
-      <tr><td style="color:#6b7280;padding:5px 0">Documents Submitted</td><td style="color:#111827;font-size:13px">Government ID · Liveness Check · Proof of Address</td></tr>
-      <tr><td style="color:#6b7280;padding:5px 0">Meeting Link</td><td><a href="#" style="color:#0077a8;font-weight:600">meet.osmio.id/att-001</a></td></tr>
+      <tr><td style="color:#6b7280;padding:5px 0">Session</td><td style="color:#111827;font-weight:600">idenfy link provided separately</td></tr>
       <tr><td style="color:#6b7280;padding:5px 0">Reference</td><td style="color:#111827;font-family:monospace;font-size:13px">ATT-2026-01024</td></tr>
     </table>
   </div>
@@ -833,8 +697,8 @@ const MOCK = {
       },
       {
         id:'email_o002', from:'no-reply@osmio.id', fromName:'OSMIO Scheduling', to:'d.rajan@osmio.id',
-        subject:'New Assignment: Thomas Mbeki · Wed 6 May, 10:00 AM',
-        date:'2026-04-24T10:00:00', read:true, tag:'new-assignment',
+        subject:'Action Required: Accept Session — Thomas Mbeki · Wed 6 May, 10:00 AM',
+        date:'2026-04-24T10:00:00', read:false, tag:'pending-acceptance',
         body:`<div style="font-family:Inter,Arial,sans-serif;max-width:580px;margin:0 auto">
 <div style="background:#12121e;padding:20px 28px;border-radius:10px 10px 0 0;display:flex;align-items:center;gap:10px">
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#00b4d8" stroke-width="2.5" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
@@ -842,19 +706,25 @@ const MOCK = {
   <span style="color:#6a8a99;font-size:12px;margin-left:4px">Officer Portal</span>
 </div>
 <div style="padding:28px;background:#fff;border:1px solid #e2e6ef;border-top:none">
-  <div style="display:inline-block;background:#ede9fe;color:#7c3aed;font-size:12px;font-weight:700;padding:4px 12px;border-radius:20px;margin-bottom:16px">New Assignment</div>
-  <h2 style="color:#111827;font-size:20px;margin:0 0 8px">You have been assigned a new attestation session</h2>
-  <p style="color:#374151;font-size:14px;line-height:1.6;margin:0 0 20px">Hi Divya, you have a new attestation session assigned for early May.</p>
+  <div style="display:inline-block;background:#fef3c7;color:#92400e;font-size:12px;font-weight:700;padding:4px 12px;border-radius:20px;margin-bottom:16px">Action Required</div>
+  <h2 style="color:#111827;font-size:20px;margin:0 0 8px">A session has been assigned to you — please accept</h2>
+  <p style="color:#374151;font-size:14px;line-height:1.6;margin:0 0 20px">Hi Divya, a supervisor has assigned you an attestation session. Please review the details below and accept or decline it in your officer portal. The user will be notified once you accept.</p>
   <div style="background:#f8f9fc;border:1px solid #e2e6ef;border-radius:8px;padding:20px;margin:0 0 16px">
+    <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#6b7280;margin-bottom:12px">Session Details</div>
     <table style="width:100%;border-collapse:collapse;font-size:14px">
       <tr><td style="color:#6b7280;padding:5px 0;width:160px">User</td><td style="color:#111827;font-weight:700">Thomas Mbeki</td></tr>
       <tr><td style="color:#6b7280;padding:5px 0">User Email</td><td style="color:#111827">t.mbeki@example.com</td></tr>
       <tr><td style="color:#6b7280;padding:5px 0">Osmio ID Pair</td><td style="color:#111827;font-family:monospace;font-size:12px">OSMIO-FND-2025-04102</td></tr>
       <tr><td style="color:#6b7280;padding:5px 0">Date &amp; Time</td><td style="color:#111827;font-weight:600">Wednesday, 6 May 2026 · 10:00 AM</td></tr>
-      <tr><td style="color:#6b7280;padding:5px 0">Documents</td><td style="color:#111827;font-size:13px">Government ID · Liveness Check</td></tr>
-      <tr><td style="color:#6b7280;padding:5px 0">Meeting Link</td><td><a href="#" style="color:#0077a8;font-weight:600">meet.osmio.id/att-006</a></td></tr>
+      <tr><td style="color:#6b7280;padding:5px 0">Session</td><td style="color:#111827;font-weight:600">idenfy link provided separately</td></tr>
       <tr><td style="color:#6b7280;padding:5px 0">Reference</td><td style="color:#111827;font-family:monospace;font-size:13px">ATT-2026-01020</td></tr>
     </table>
+  </div>
+  <div style="background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:14px 16px;margin:0 0 20px;font-size:13px;color:#92400e">
+    <strong>Note:</strong> The user has not yet been notified. They will receive a confirmation email only after you accept this session.
+  </div>
+  <div style="text-align:center;margin:24px 0">
+    <a href="admin.html#off-dashboard" style="background:#7c3aed;color:#fff;padding:12px 28px;border-radius:8px;font-weight:700;font-size:14px;text-decoration:none;display:inline-block">Accept Session in Portal →</a>
   </div>
 </div>
 <div style="background:#f0f2f7;padding:14px 28px;border-radius:0 0 10px 10px;text-align:center">
@@ -891,8 +761,8 @@ const MOCK = {
     'c.walsh@osmio.id': [
       {
         id:'email_c001', from:'no-reply@osmio.id', fromName:'OSMIO Scheduling', to:'c.walsh@osmio.id',
-        subject:'New Assignment: Sarah Chen · Tue 29 Apr, 2:00 PM',
-        date:'2026-04-24T11:00:00', read:false, tag:'new-assignment',
+        subject:'Action Required: Accept Session — Sarah Chen · Tue 29 Apr, 2:00 PM',
+        date:'2026-04-24T11:00:00', read:false, tag:'pending-acceptance',
         body:`<div style="font-family:Inter,Arial,sans-serif;max-width:580px;margin:0 auto">
 <div style="background:#12121e;padding:20px 28px;border-radius:10px 10px 0 0;display:flex;align-items:center;gap:10px">
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#00b4d8" stroke-width="2.5" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
@@ -900,22 +770,25 @@ const MOCK = {
   <span style="color:#6a8a99;font-size:12px;margin-left:4px">Officer Portal</span>
 </div>
 <div style="padding:28px;background:#fff;border:1px solid #e2e6ef;border-top:none">
-  <div style="display:inline-block;background:#dbeafe;color:#1d4ed8;font-size:12px;font-weight:700;padding:4px 12px;border-radius:20px;margin-bottom:16px">New Assignment</div>
-  <h2 style="color:#111827;font-size:20px;margin:0 0 8px">You have been assigned a new attestation session</h2>
-  <p style="color:#374151;font-size:14px;line-height:1.6;margin:0 0 20px">Hi Connor, you have a new attestation session scheduled for this week.</p>
+  <div style="display:inline-block;background:#fef3c7;color:#92400e;font-size:12px;font-weight:700;padding:4px 12px;border-radius:20px;margin-bottom:16px">Action Required</div>
+  <h2 style="color:#111827;font-size:20px;margin:0 0 8px">A session has been assigned to you — please accept</h2>
+  <p style="color:#374151;font-size:14px;line-height:1.6;margin:0 0 20px">Hi Connor, a supervisor has assigned you an attestation session. Please review the details below and accept or decline it in your officer portal. The user will be notified once you accept.</p>
   <div style="background:#f8f9fc;border:1px solid #e2e6ef;border-radius:8px;padding:20px;margin:0 0 16px">
+    <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#6b7280;margin-bottom:12px">Session Details</div>
     <table style="width:100%;border-collapse:collapse;font-size:14px">
       <tr><td style="color:#6b7280;padding:5px 0;width:160px">User</td><td style="color:#111827;font-weight:700">Sarah Chen</td></tr>
       <tr><td style="color:#6b7280;padding:5px 0">User Email</td><td style="color:#111827">s.chen@example.com</td></tr>
       <tr><td style="color:#6b7280;padding:5px 0">Osmio ID Pair</td><td style="color:#111827;font-family:monospace;font-size:12px">OSMIO-FND-2025-01203</td></tr>
       <tr><td style="color:#6b7280;padding:5px 0">Date &amp; Time</td><td style="color:#111827;font-weight:600">Tuesday, 29 April 2026 · 2:00 PM</td></tr>
-      <tr><td style="color:#6b7280;padding:5px 0">Documents</td><td style="color:#111827;font-size:13px">Government ID · Liveness Check</td></tr>
-      <tr><td style="color:#6b7280;padding:5px 0">Meeting Link</td><td><a href="#" style="color:#0077a8;font-weight:600">meet.osmio.id/att-002</a></td></tr>
+      <tr><td style="color:#6b7280;padding:5px 0">Session</td><td style="color:#111827;font-weight:600">idenfy link provided separately</td></tr>
       <tr><td style="color:#6b7280;padding:5px 0">Reference</td><td style="color:#111827;font-family:monospace;font-size:13px">ATT-2026-01019</td></tr>
     </table>
   </div>
+  <div style="background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:14px 16px;margin:0 0 20px;font-size:13px;color:#92400e">
+    <strong>Note:</strong> The user has not yet been notified. They will receive a confirmation email only after you accept this session.
+  </div>
   <div style="text-align:center;margin:24px 0">
-    <a href="admin.html#off-schedule" style="background:#0077a8;color:#fff;padding:12px 28px;border-radius:8px;font-weight:700;font-size:14px;text-decoration:none;display:inline-block">View in My Schedule</a>
+    <a href="admin.html#off-dashboard" style="background:#0077a8;color:#fff;padding:12px 28px;border-radius:8px;font-weight:700;font-size:14px;text-decoration:none;display:inline-block">Accept Session in Portal →</a>
   </div>
 </div>
 <div style="background:#f0f2f7;padding:14px 28px;border-radius:0 0 10px 10px;text-align:center">
@@ -966,8 +839,7 @@ const MOCK = {
       <tr><td style="color:#6b7280;padding:5px 0">User Email</td><td style="color:#111827">p.sharma@example.com</td></tr>
       <tr><td style="color:#6b7280;padding:5px 0">Osmio ID Pair</td><td style="color:#111827;font-family:monospace;font-size:12px">OSMIO-FND-2025-03155</td></tr>
       <tr><td style="color:#6b7280;padding:5px 0">Date &amp; Time</td><td style="color:#111827;font-weight:600">Tuesday, 5 May 2026 · 11:00 AM</td></tr>
-      <tr><td style="color:#6b7280;padding:5px 0">Documents</td><td style="color:#111827;font-size:13px">Government ID · Liveness Check</td></tr>
-      <tr><td style="color:#6b7280;padding:5px 0">Meeting Link</td><td><a href="#" style="color:#0077a8;font-weight:600">meet.osmio.id/att-004</a></td></tr>
+      <tr><td style="color:#6b7280;padding:5px 0">Session</td><td style="color:#111827;font-weight:600">idenfy link provided separately</td></tr>
       <tr><td style="color:#6b7280;padding:5px 0">Reference</td><td style="color:#111827;font-family:monospace;font-size:13px">ATT-2026-01015</td></tr>
     </table>
   </div>
@@ -1005,35 +877,4 @@ const MOCK = {
     ]
   },
 
-  // ── Documents submitted by current user ───────────────────
-  currentUserDocuments: [
-    {
-      id: 'doc_001',
-      type: 'govId',
-      label: 'Government Issued ID',
-      description: 'US National ID Card',
-      uploadedDate: '2026-04-05T09:10:00',
-      svgKey: 'govId',
-      status: 'submitted'
-    },
-    {
-      id: 'doc_002',
-      type: 'selfie',
-      label: 'Liveliness Check',
-      description: 'Automated liveliness check',
-      uploadedDate: '2026-04-05T09:12:00',
-      svgKey: 'trustSwiftly',
-      status: 'submitted',
-      trustSwiftlyRef: 'TS-2026-00912'
-    },
-    {
-      id: 'doc_003',
-      type: 'proofOfAddress',
-      label: 'Proof of Address',
-      description: 'Utility bill (optional)',
-      uploadedDate: '2026-04-05T09:14:00',
-      svgKey: 'proofOfAddress',
-      status: 'submitted'
-    }
-  ]
 };

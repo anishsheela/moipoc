@@ -47,3 +47,40 @@ Every app page follows the same SPA pattern:
 ### Admin portal roles
 
 `admin.js` has two personas switched at login (`adminRole`: `'supervisor'` | `'officer'`). Supervisor screens are prefixed `sup-`, officer screens prefixed `off-` in the router hash.
+
+**Supervisor routes:**
+
+| Hash | Screen |
+|---|---|
+| `sup-dashboard` | Overview stats, upcoming sessions, officer roster |
+| `sup-assign` | Assign officers to unassigned slot-chosen requests |
+| `sup-reassign` | Reassign officer for a specific request |
+| `sup-all-requests` | Full table of all attestation requests |
+| `sup-officer-schedules` | View any officer's session schedule (list or calendar) |
+
+**Officer routes:**
+
+| Hash | Screen |
+|---|---|
+| `off-dashboard` | Personal stats, pending-acceptance queue, today's sessions |
+| `off-schedule` | Full session list / calendar view |
+| `off-availability` | Weekly availability grid (block slots, mark days off) |
+| `off-session` | Complete a live session (approve / reject) |
+| `off-cert-issued` | Notarial certificate preview after approval |
+
+The legacy verification-queue screens (`dashboard`, `review`, `users`) and their supporting functions have been fully removed, including `MOCK.verificationQueue` and `MOCK.admin` from `mock-data.js`.
+
+## Minimal POC (`moi_minimal_poc/`)
+
+A self-contained, simpler prototype living in its own subdirectory. No shared code with the main demo. Has its own `CLAUDE.md` with full details.
+
+| File | Purpose |
+|---|---|
+| `index.html` | MOI vault — login, verification animation, dashboard, consent screen |
+| `moi.html` | Alternate MOI vault entry point |
+| `about.html` | About / explainer page |
+| `gambling.html` | Gambling app age-gate demo (relying party) |
+| `medical.html` | Medical app demo (relying party) |
+| `ypo.html` | YPO (Young Presidents' Organization) demo (relying party) |
+
+Cross-page consent uses `sessionStorage` + URL hash — no server, no OAuth. All state is in-memory JS; no persistence or real cryptography.
