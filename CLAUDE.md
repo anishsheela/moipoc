@@ -84,3 +84,16 @@ A self-contained, simpler prototype living in its own subdirectory. No shared co
 | `ypo.html` | YPO (Young Presidents' Organization) demo (relying party) |
 
 Cross-page consent uses `sessionStorage` + URL hash — no server, no OAuth. All state is in-memory JS; no persistence or real cryptography.
+
+## Deployment
+
+The site is hosted at `moidemo.authentiverse.net` on a NixOS VPS at `77.90.40.64`. It deploys automatically via GitHub Actions on every push to `main` — see `.github/workflows/deploy.yml`.
+
+Files are rsynced to `/var/www/moidemo.authentiverse.net/` on the server as user `anish`. The workflow uses a dedicated SSH deploy key stored as the `DEPLOY_SSH_KEY` GitHub Actions secret.
+
+### Adding the deploy key to the server
+
+1. Generate a keypair (no passphrase): `ssh-keygen -t ed25519 -C "moidemo-deploy" -f moidemo_deploy_key`
+2. Add the **public key** to `users.users.anish.openssh.authorizedKeys.keys` in the NixOS config and redeploy (or append to `~/.ssh/authorized_keys`).
+3. Add the **private key** as the `DEPLOY_SSH_KEY` secret in **Settings → Secrets and variables → Actions**.
+4. Delete both key files locally.
