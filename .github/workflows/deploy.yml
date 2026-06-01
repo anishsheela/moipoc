@@ -10,12 +10,18 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Deploy to server
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: 77.90.40.64
-          username: anish
-          key: ${{ secrets.DEPLOY_SSH_KEY }}
-          source: "."
-          target: /var/www/moidemo.authentiverse.net
-          rm: true
+      - name: Setup SSH key
+        run: |
+          install -m 600 /dev/null /tmp/deploy_key
+          echo "${{ secrets.DEPLOY_SSH_KEY }}" > /tmp/deploy_key
+
+      - name: Deploy via rsync
+        run: |
+          rsync -az --delete \
+            -e "ssh -i /tmp/deploy_key -o StrictHostKeyChecking=no" \
+            --exclude='.git' \
+            . anish@77.90.40.64:/var/www/moidemo.authentiverse.net/
+
+      - name: Remove SSH key
+        if: always()
+        run: rm -f /tmp/deploy_key
