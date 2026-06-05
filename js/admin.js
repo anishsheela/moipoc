@@ -902,17 +902,17 @@ function acceptSession(requestId) {
     <table style="width:100%;border-collapse:collapse;font-size:14px">
       <tr><td style="color:#6b7280;padding:5px 0;width:140px">Attestation Officer</td><td style="color:#111827;font-weight:700">${req.assignedOfficerName}</td></tr>
       <tr><td style="color:#6b7280;padding:5px 0">Date &amp; Time</td><td style="color:#111827;font-weight:600">${slotLong}</td></tr>
-      <tr><td style="color:#6b7280;padding:5px 0">Duration</td><td style="color:#111827;font-weight:600">30 minutes (via idenfy)</td></tr>
-      <tr><td style="color:#6b7280;padding:5px 0">Session</td><td style="color:#111827;font-weight:600">idenfy link provided separately</td></tr>
+      <tr><td style="color:#6b7280;padding:5px 0">Duration</td><td style="color:#111827;font-weight:600">30 minutes (via SIGNiX)</td></tr>
+      <tr><td style="color:#6b7280;padding:5px 0">Session</td><td style="color:#111827;font-weight:600">SIGNiX link provided separately</td></tr>
       <tr><td style="color:#6b7280;padding:5px 0">Reference</td><td style="color:#111827;font-family:monospace;font-size:13px">${req.refId}</td></tr>
     </table>
   </div>
   <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:16px 18px;margin:0 0 16px">
     <div style="font-size:13px;font-weight:700;color:#15803d;margin-bottom:6px">What happens next</div>
-    <p style="color:#374151;font-size:13.5px;line-height:1.6;margin:0">You will receive a <strong>separate invitation email directly from idenfy</strong> with your session link. Please follow the instructions in that email to join at the scheduled time.</p>
+    <p style="color:#374151;font-size:13.5px;line-height:1.6;margin:0">You will receive a <strong>separate invitation email directly from SIGNiX</strong> with your session link. Please follow the instructions in that email to join at the scheduled time.</p>
   </div>
   <div style="background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:14px 18px;margin:0 0 16px">
-    <div style="font-size:13px;font-weight:700;color:#92400e;margin-bottom:4px">Didn't receive the idenfy invitation?</div>
+    <div style="font-size:13px;font-weight:700;color:#92400e;margin-bottom:4px">Didn't receive the SIGNiX invitation?</div>
     <p style="color:#78350f;font-size:13px;line-height:1.6;margin:0">Check your spam folder first. If it's still missing closer to your session time, reply to this email or contact <a href="mailto:support@osmio.id" style="color:#92400e;font-weight:600">support@osmio.id</a> with your reference number and we'll resend it.</p>
   </div>
 </div>
@@ -1169,7 +1169,7 @@ function saveAvailability() {
   }, 700);
 }
 
-// ── Officer: Case Documents (removed — documents handled by idenfy) ─────────
+// ── Officer: Case Documents (removed — documents handled by SIGNiX) ─────────
 function renderOffDocuments() {
   router.go('off-schedule');
 }
@@ -1246,7 +1246,7 @@ function renderPublicVerify() {
       </div>
 
       <h1 style="font-size:32px;font-weight:900;letter-spacing:-.6px;color:#111827;margin-bottom:12px;line-height:1.1">Get your identity<br>notarially attested</h1>
-      <p style="font-size:16px;color:#6b7280;line-height:1.7;max-width:480px;margin:0 auto 40px">Enter your details, schedule a 30-minute in-person session with a commissioned US Notary Public via idenfy, and receive an official notarial certificate — without needing an OSMIO account.</p>
+      <p style="font-size:16px;color:#6b7280;line-height:1.7;max-width:480px;margin:0 auto 40px">Enter your details, schedule a 30-minute in-person session with a commissioned US Notary Public via SIGNiX, and receive an official notarial certificate — without needing an OSMIO account.</p>
 
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:40px;text-align:left">
         <div style="background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:20px">
@@ -1261,7 +1261,7 @@ function renderPublicVerify() {
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2.5" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
           </div>
           <div style="font-size:13.5px;font-weight:700;color:#111827;margin-bottom:4px">Schedule a session</div>
-          <div style="font-size:12px;color:#6b7280;line-height:1.55">Pick a slot — your session will be conducted via idenfy</div>
+          <div style="font-size:12px;color:#6b7280;line-height:1.55">Pick a slot — your session will be conducted via SIGNiX</div>
         </div>
         <div style="background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:20px">
           <div style="width:36px;height:36px;background:rgba(124,58,237,.1);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:12px">
@@ -1282,7 +1282,7 @@ function renderPublicVerify() {
           Privacy &amp; Legal
         </div>
         <div style="font-size:12px;color:#6b7280;line-height:1.65">
-          Your identity session is conducted exclusively via idenfy. No documents or session data are collected or stored by OSMIO. Your assigned Notary Public will issue a certificate after a successful session.
+          Your identity session is conducted exclusively via SIGNiX. No documents or session data are collected or stored by OSMIO. Your assigned Notary Public will issue a certificate after a successful session.
         </div>
       </div>
 
@@ -1406,11 +1406,11 @@ function renderPublicSchedule() {
     ${pubHeader(1)}
     <main style="flex:1;max-width:700px;margin:0 auto;padding:40px 24px;width:100%">
       <h2 style="font-size:22px;font-weight:900;letter-spacing:-.4px;color:#111827;margin-bottom:4px">Choose a time slot</h2>
-      <p style="font-size:14px;color:#6b7280;margin-bottom:8px">Select a 30-minute slot for your in-person session with a commissioned US Notary Public via idenfy.</p>
+      <p style="font-size:14px;color:#6b7280;margin-bottom:8px">Select a 30-minute slot for your in-person session with a commissioned US Notary Public via SIGNiX.</p>
 
       <div style="display:flex;align-items:flex-start;gap:8px;padding:10px 14px;background:rgba(59,130,246,.06);border:1px solid rgba(59,130,246,.2);border-radius:9px;margin-bottom:24px;font-size:12.5px;color:#1e40af;line-height:1.55">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="flex-shrink:0;margin-top:1px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-        Your session will be conducted via <strong>idenfy</strong>. All verification, recordings, and liveness checks are handled securely by idenfy — no data is sent to or stored by OSMIO.
+        Your session will be conducted via <strong>SIGNiX</strong>. All verification, recordings, and liveness checks are handled securely by SIGNiX — no data is sent to or stored by OSMIO.
       </div>
 
       <div style="background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:20px 24px;margin-bottom:20px">
@@ -1429,7 +1429,7 @@ function renderPublicSchedule() {
       <div id="pub-slot-bar" style="background:#fff;border:1px solid ${pubSelectedSlot?'#7c3aed':'#e2e8f0'};border-radius:12px;padding:14px 18px;margin-bottom:24px;display:${pubSelectedSlot?'flex':'none'};align-items:center;justify-content:space-between;gap:12px">
         <div>
           <div style="font-size:13.5px;font-weight:700;color:#111827" id="pub-slot-label">${pubSelectedSlot ? pubSelectedSlot.label : ''}</div>
-          <div style="font-size:12px;color:#6b7280;margin-top:1px">30-minute session via idenfy · Notary assigned on confirmation</div>
+          <div style="font-size:12px;color:#6b7280;margin-top:1px">30-minute session via SIGNiX · Notary assigned on confirmation</div>
         </div>
         <span style="font-size:12px;font-weight:700;color:#7c3aed;white-space:nowrap">✓ Selected</span>
       </div>
@@ -1490,12 +1490,12 @@ function renderPublicConfirm() {
         <div style="padding:18px 24px">
           <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#9ca3af;margin-bottom:10px">Scheduled Slot</div>
           <div style="font-size:15px;font-weight:700;color:#111827">${pubSelectedSlot.label}</div>
-          <div style="font-size:13px;color:#6b7280;margin-top:2px">30-minute session via idenfy · Notary assigned within 1 business day</div>
+          <div style="font-size:13px;color:#6b7280;margin-top:2px">30-minute session via SIGNiX · Notary assigned within 1 business day</div>
         </div>
       </div>
 
       <div style="padding:14px 18px;background:rgba(124,58,237,.05);border:1px solid rgba(124,58,237,.15);border-radius:12px;margin-bottom:24px;font-size:12.5px;color:#4c1d95;line-height:1.65">
-        <strong>By confirming</strong> you agree to complete an identity session via idenfy with your assigned US Notary Public. You will receive a notarial certificate at <strong>${pubData.email}</strong> after a successful session.
+        <strong>By confirming</strong> you agree to complete an identity session via SIGNiX with your assigned US Notary Public. You will receive a notarial certificate at <strong>${pubData.email}</strong> after a successful session.
       </div>
 
       <div style="display:flex;justify-content:space-between;align-items:center">
@@ -1521,7 +1521,7 @@ function pubSubmit(refId) {
         </div>
         <h2 style="font-size:24px;font-weight:900;letter-spacing:-.4px;color:#111827;margin-bottom:10px">Request submitted</h2>
         <p style="font-size:15px;color:#6b7280;line-height:1.65;margin-bottom:28px">
-          Your chosen time slot has been received. A supervisor will assign a Notary Public to your session within 1 business day — you'll receive a confirmation email at <strong style="color:#374151">${pubData.email}</strong> with idenfy session details.
+          Your chosen time slot has been received. A supervisor will assign a Notary Public to your session within 1 business day — you'll receive a confirmation email at <strong style="color:#374151">${pubData.email}</strong> with SIGNiX session details.
         </p>
         <div style="background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:20px 24px;margin-bottom:28px;text-align:left;font-size:13.5px;color:#374151;line-height:1.7">
           <div>Reference: <strong style="color:#7c3aed;font-family:monospace">${refId}</strong></div>
@@ -1529,7 +1529,7 @@ function pubSubmit(refId) {
           <div>Confirmation sent to: <strong>${pubData.email}</strong></div>
         </div>
         <div style="padding:14px 18px;background:rgba(124,58,237,.05);border:1px solid rgba(124,58,237,.12);border-radius:12px;font-size:12.5px;color:#4c1d95;line-height:1.65;margin-bottom:28px;text-align:left">
-          After a successful session via idenfy your Notary Public will issue a notarial certificate. This will be sent to you by email and is also verifiable at <strong>verify.osmio.id</strong> using your reference number.
+          After a successful session via SIGNiX your Notary Public will issue a notarial certificate. This will be sent to you by email and is also verifiable at <strong>verify.osmio.id</strong> using your reference number.
         </div>
         <button onclick="router.go('public-verify')" style="background:none;border:1px solid #7c3aed;border-radius:10px;padding:10px 24px;font-size:13.5px;font-weight:700;color:#7c3aed;cursor:pointer">Start another request</button>
       </main>
@@ -1558,7 +1558,7 @@ function approveSession() {
   const req = MOCK.attestationRequests.find(r => r.id === currentSessionReqId);
   if (!req) return;
   const notes = (document.getElementById('session-decision-notes').value || '').trim()
-    || 'Identity verified via idenfy session. Name, date of birth, and photo confirmed.';
+    || 'Identity verified via SIGNiX session. Name, date of birth, and photo confirmed.';
   req.status = 'completed';
   req.decision = 'approved';
   req.sessionNotes = notes;
@@ -1597,7 +1597,7 @@ function renderOffSession() {
 
       <div style="background:rgba(59,130,246,.04);border:1px solid rgba(59,130,246,.2);border-radius:12px;padding:14px 18px;margin-bottom:20px;font-size:13px;color:#1e40af;line-height:1.6;display:flex;align-items:center;gap:10px">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="flex-shrink:0"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-        The identity session for this applicant was conducted via <strong>idenfy</strong>. Record your decision below.
+        The identity session for this applicant was conducted via <strong>SIGNiX</strong>. Record your decision below.
       </div>
 
       <div class="admin-card" style="max-width:600px">
@@ -1611,7 +1611,7 @@ function renderOffSession() {
         </div>
         <div style="padding:20px 24px">
           <label style="display:block;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#6b7280;margin-bottom:8px">Officer Notes</label>
-          <textarea id="session-decision-notes" style="width:100%;height:110px;border:1.5px solid #e2e8f0;border-radius:10px;padding:10px 14px;font-size:13.5px;color:#374151;resize:none;outline:none;font-family:inherit;line-height:1.55;transition:border-color .15s;box-sizing:border-box" onfocus="this.style.borderColor='#7c3aed'" onblur="this.style.borderColor='#e2e8f0'" placeholder="Identity verified via idenfy session. Name, date of birth, and photo confirmed."></textarea>
+          <textarea id="session-decision-notes" style="width:100%;height:110px;border:1.5px solid #e2e8f0;border-radius:10px;padding:10px 14px;font-size:13.5px;color:#374151;resize:none;outline:none;font-family:inherit;line-height:1.55;transition:border-color .15s;box-sizing:border-box" onfocus="this.style.borderColor='#7c3aed'" onblur="this.style.borderColor='#e2e8f0'" placeholder="Identity verified via SIGNiX session. Name, date of birth, and photo confirmed."></textarea>
         </div>
         <div style="padding:0 24px 20px;display:grid;grid-template-columns:1fr 1fr;gap:10px">
           <button onclick="rejectSession()" style="padding:12px;border:1.5px solid #dc2626;border-radius:10px;background:#fff;color:#dc2626;font-size:14px;font-weight:700;cursor:pointer;transition:all .15s" onmouseover="this.style.background='#fef2f2'" onmouseout="this.style.background='#fff'">✗ Reject</button>
@@ -1637,7 +1637,7 @@ function renderOffCertIssued() {
   const userName   = req ? req.userName   : 'Alex Johnson';
   const certId     = req ? req.certId     : 'OSMIO-FND-2024-00847';
   const sessionRef = req ? req.refId      : 'ATT-2026-01024';
-  const notes      = req ? (req.sessionNotes || 'Identity verified via idenfy session. Name, date of birth, and photo confirmed.') : 'Identity verified.';
+  const notes      = req ? (req.sessionNotes || 'Identity verified via SIGNiX session. Name, date of birth, and photo confirmed.') : 'Identity verified.';
 
   const QR_SVG = `<svg width="80" height="80" viewBox="0 0 80 80" fill="none">
     <rect width="80" height="80" fill="white"/>
@@ -1726,7 +1726,7 @@ function renderOffCertIssued() {
           <div style="font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#9ca3af;text-align:center;margin-bottom:20px">Notarial Certificate of Identity Attestation</div>
 
           <p style="font-size:14px;color:#374151;line-height:1.75;margin-bottom:20px">
-            I, <strong style="color:#111827">${officerName}</strong>, a Notary Public duly commissioned in the <strong style="color:#111827">State of Texas, USA</strong>, Commission No. <strong style="color:#111827">TX-2024-NP-00891</strong>, do hereby certify that on <strong style="color:#111827">${today}</strong>, the following individual completed an identity verification session via idenfy and presented satisfactory evidence of their identity:
+            I, <strong style="color:#111827">${officerName}</strong>, a Notary Public duly commissioned in the <strong style="color:#111827">State of Texas, USA</strong>, Commission No. <strong style="color:#111827">TX-2024-NP-00891</strong>, do hereby certify that on <strong style="color:#111827">${today}</strong>, the following individual completed an identity verification session via SIGNiX and presented satisfactory evidence of their identity:
           </p>
 
           <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:20px;margin-bottom:20px">
@@ -1735,7 +1735,7 @@ function renderOffCertIssued() {
                 ['Full Name', userName],
                 ['OSMIO Certificate ID', certId],
                 ['Fields Attested', 'First Name, Last Name, Date of Birth'],
-                ['Verification Method', 'idenfy identity session'],
+                ['Verification Method', 'SIGNiX identity session'],
               ].map(([label, val]) => `
               <div style="padding:8px 12px;border-bottom:1px solid #e2e8f0">
                 <div style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#9ca3af;margin-bottom:3px">${label}</div>
@@ -1817,7 +1817,7 @@ function renderVerifyCert() {
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2.5" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
           About OSMIO Certificate Verification
         </div>
-        OSMIO notarial certificates are issued by commissioned US Notary Publics after an identity session via idenfy. Each certificate is cryptographically signed and can be independently verified here. Certificate data is never shared with third parties.
+        OSMIO notarial certificates are issued by commissioned US Notary Publics after an identity session via SIGNiX. Each certificate is cryptographically signed and can be independently verified here. Certificate data is never shared with third parties.
       </div>
     </main>
   </div>`;

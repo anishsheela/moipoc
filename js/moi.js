@@ -733,7 +733,7 @@ function renderVerifyRequest() {
             <button class="btn-moi-outline" onclick="router.go('dashboard')" style="font-size:13px;padding:7px 14px">← Back</button>
             <h2 style="margin-bottom:0">Request Identity Attestation</h2>
           </div>
-          <p>Submit your stored information for attestation review. An Attestation Officer will verify your identity via an idenfy session.</p>
+          <p>Submit your stored information for attestation review. An Attestation Officer will verify your identity via an SIGNiX session.</p>
 
           <div style="margin-bottom:14px">
             <div style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--moi-text-muted);margin-bottom:6px">Required — shared with your Attestation Officer</div>
@@ -851,7 +851,7 @@ function renderVerifyRequest() {
 
           <div class="moi-privacy-note">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="flex-shrink:0;margin-top:1px"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-            <span><strong style="color:var(--moi-text)">Privacy notice.</strong> Your name, date of birth, and photo will be shared with your assigned Attestation Officer to facilitate your idenfy session. No documents or liveness data are collected by OSMIO.</span>
+            <span><strong style="color:var(--moi-text)">Privacy notice.</strong> Your name, date of birth, and photo will be shared with your assigned Attestation Officer to facilitate your SIGNiX session. No documents or liveness data are collected by OSMIO.</span>
           </div>
 
           <div style="display:flex;gap:10px">
@@ -947,10 +947,10 @@ function renderScheduleSlot() {
             <button class="btn-moi-outline" onclick="router.go('verify-request')" style="font-size:13px;padding:7px 14px">← Back</button>
             <h2 style="margin:0">Schedule Your Attestation Session</h2>
           </div>
-          <p style="color:var(--moi-text-muted);font-size:13.5px;margin:0 0 12px;line-height:1.55">Select an available slot for your in-person identity session with your Attestation Officer via idenfy. Once confirmed, the supervisor will assign you an officer and you'll receive session details by email.</p>
+          <p style="color:var(--moi-text-muted);font-size:13.5px;margin:0 0 12px;line-height:1.55">Select an available slot for your in-person identity session with your Attestation Officer via SIGNiX. Once confirmed, the supervisor will assign you an officer and you'll receive session details by email.</p>
           <div style="display:flex;align-items:flex-start;gap:8px;padding:10px 14px;background:rgba(59,130,246,.05);border:1px solid rgba(59,130,246,.18);border-radius:9px;margin-bottom:20px;font-size:12.5px;color:#1e40af;line-height:1.55">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="flex-shrink:0;margin-top:1px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-            <span>Your identity session will be conducted via <strong>idenfy</strong>. All verification, liveness checks, and recordings are handled securely by idenfy — no session data is collected or stored by OSMIO.</span>
+            <span>Your identity session will be conducted via <strong>SIGNiX</strong>. All verification, liveness checks, and recordings are handled securely by SIGNiX — no session data is collected or stored by OSMIO.</span>
           </div>
 
           <div class="moi-slot-week-nav">
@@ -971,7 +971,7 @@ function renderScheduleSlot() {
           <div id="slot-confirm-bar" class="moi-slot-confirm ${selectedSlot ? '' : 'hidden'}">
             <div>
               <div style="font-size:13px;font-weight:700;color:var(--moi-text)">Selected: <span id="slot-confirm-label">${selectedSlot ? selectedSlot.label : ''}</span></div>
-              <div style="font-size:11.5px;color:var(--moi-text-muted);margin-top:2px">30-minute session via idenfy · Officer assigned by supervisor</div>
+              <div style="font-size:11.5px;color:var(--moi-text-muted);margin-top:2px">30-minute session via SIGNiX · Officer assigned by supervisor</div>
             </div>
             <button class="btn-moi" onclick="confirmSlotAndShowEmail()">
               Continue →
@@ -1127,7 +1127,7 @@ function renderCertificateDetail() {
             </div>
 
             <div style="font-size:13.5px;line-height:1.9;margin-bottom:20px;color:#222">
-              <p>I, <strong>${cert.officerName}</strong>, a Notary Public duly commissioned in the <strong>${cert.officerJurisdiction}</strong>, Commission No. <strong>${cert.notaryCommissionNo}</strong>, do hereby certify that on <strong>${formatDate(cert.issuedDate)}</strong>, the following individual completed an identity verification session via idenfy and presented satisfactory evidence of their identity:</p>
+              <p>I, <strong>${cert.officerName}</strong>, a Notary Public duly commissioned in the <strong>${cert.officerJurisdiction}</strong>, Commission No. <strong>${cert.notaryCommissionNo}</strong>, do hereby certify that on <strong>${formatDate(cert.issuedDate)}</strong>, the following individual completed an identity verification session via SIGNiX and presented satisfactory evidence of their identity:</p>
             </div>
 
             <div style="background:rgba(0,119,168,.05);border:1px solid rgba(0,119,168,.15);border-radius:10px;padding:18px 22px;margin-bottom:20px">
@@ -1163,7 +1163,7 @@ function renderCertificateDetail() {
           </div>
 
           <div style="margin-top:16px;padding:12px 16px;background:rgba(0,180,216,.05);border:1px solid rgba(0,180,216,.12);border-radius:9px;font-size:12px;color:var(--moi-text-muted);line-height:1.6">
-            <strong style="color:var(--moi-accent)">About this certificate.</strong> This notarial certificate was issued by a licensed US Notary Public after your idenfy identity session. It is legally protected under US notarial law and can be independently verified at verify.osmio.id.
+            <strong style="color:var(--moi-accent)">About this certificate.</strong> This notarial certificate was issued by a licensed US Notary Public after your SIGNiX identity session. It is legally protected under US notarial law and can be independently verified at verify.osmio.id.
           </div>
         </div>
       </div>

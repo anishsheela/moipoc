@@ -70,7 +70,7 @@ const MOCK = {
         issuedTo: 'Alex Johnson',
         issuedToCertId: 'OSMIO-FND-2024-00847',
         expiresDate: '2028-02-14',
-        notes: 'Identity verified via idenfy session. Name, date of birth, and photo confirmed.'
+        notes: 'Identity verified via SIGNiX session. Name, date of birth, and photo confirmed.'
       }
     ],
 
@@ -414,7 +414,7 @@ const MOCK = {
       <tr><td style="color:#6b7280;padding:4px 0;width:140px">Date &amp; Time</td><td style="color:#111827;font-weight:600">Monday, 28 April 2026 · 10:00 AM</td></tr>
       <tr><td style="color:#6b7280;padding:4px 0">Officer</td><td style="color:#111827;font-weight:600">Divya Rajan</td></tr>
       <tr><td style="color:#6b7280;padding:4px 0">Duration</td><td style="color:#111827;font-weight:600">30 minutes</td></tr>
-      <tr><td style="color:#6b7280;padding:4px 0">Session</td><td style="color:#111827;font-weight:600">Via idenfy — details in separate email</td></tr>
+      <tr><td style="color:#6b7280;padding:4px 0">Session</td><td style="color:#111827;font-weight:600">Via SIGNiX — details in separate email</td></tr>
       <tr><td style="color:#6b7280;padding:4px 0">Reference</td><td style="color:#111827;font-family:monospace;font-size:13px">ATT-2026-01024</td></tr>
     </table>
   </div>
@@ -430,7 +430,7 @@ const MOCK = {
   </div>
   <div style="background:#f0f9ff;border:1px solid #bae6fd;border-radius:8px;padding:14px 16px;margin:0 0 8px">
     <div style="font-size:13px;font-weight:700;color:#0369a1;margin-bottom:4px">Your session link</div>
-    <p style="color:#374151;font-size:13px;line-height:1.6;margin:0">Use the <strong>idenfy invitation email</strong> sent to you separately to join the session. If you haven't received it, check your spam folder or contact <a href="mailto:support@osmio.id" style="color:#0369a1;font-weight:600">support@osmio.id</a> with your reference number.</p>
+    <p style="color:#374151;font-size:13px;line-height:1.6;margin:0">Use the <strong>SIGNiX invitation email</strong> sent to you separately to join the session. If you haven't received it, check your spam folder or contact <a href="mailto:support@osmio.id" style="color:#0369a1;font-weight:600">support@osmio.id</a> with your reference number.</p>
   </div>
 </div>
 <div style="background:#f0f2f7;padding:14px 28px;border-radius:0 0 10px 10px;text-align:center">
@@ -457,17 +457,17 @@ const MOCK = {
     <table style="width:100%;border-collapse:collapse;font-size:14px">
       <tr><td style="color:#6b7280;padding:5px 0;width:140px">Attestation Officer</td><td style="color:#111827;font-weight:700">Divya Rajan</td></tr>
       <tr><td style="color:#6b7280;padding:5px 0">Date &amp; Time</td><td style="color:#111827;font-weight:600">Monday, 28 April 2026 · 10:00 AM</td></tr>
-      <tr><td style="color:#6b7280;padding:5px 0">Duration</td><td style="color:#111827;font-weight:600">30 minutes (via idenfy)</td></tr>
-      <tr><td style="color:#6b7280;padding:5px 0">Session</td><td style="color:#111827;font-weight:600">idenfy link provided separately</td></tr>
+      <tr><td style="color:#6b7280;padding:5px 0">Duration</td><td style="color:#111827;font-weight:600">30 minutes (via SIGNiX)</td></tr>
+      <tr><td style="color:#6b7280;padding:5px 0">Session</td><td style="color:#111827;font-weight:600">SIGNiX link provided separately</td></tr>
       <tr><td style="color:#6b7280;padding:5px 0">Reference</td><td style="color:#111827;font-family:monospace;font-size:13px">ATT-2026-01024</td></tr>
     </table>
   </div>
   <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:16px 18px;margin:0 0 16px">
     <div style="font-size:13px;font-weight:700;color:#15803d;margin-bottom:6px">What happens next</div>
-    <p style="color:#374151;font-size:13.5px;line-height:1.6;margin:0">You will receive a <strong>separate invitation email directly from idenfy</strong> with your session link. Please follow the instructions in that email to join at the scheduled time.</p>
+    <p style="color:#374151;font-size:13.5px;line-height:1.6;margin:0">You will receive a <strong>separate invitation email directly from SIGNiX</strong> with your session link. Please follow the instructions in that email to join at the scheduled time.</p>
   </div>
   <div style="background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:14px 18px;margin:0 0 20px">
-    <div style="font-size:13px;font-weight:700;color:#92400e;margin-bottom:4px">Didn't receive the idenfy invitation?</div>
+    <div style="font-size:13px;font-weight:700;color:#92400e;margin-bottom:4px">Didn't receive the SIGNiX invitation?</div>
     <p style="color:#78350f;font-size:13px;line-height:1.6;margin:0">Check your spam folder first. If it's still missing closer to your session time, reply to this email or contact <a href="mailto:support@osmio.id" style="color:#92400e;font-weight:600">support@osmio.id</a> with your reference number and we'll resend it.</p>
   </div>
   <div style="text-align:center;margin:20px 0">
@@ -682,7 +682,7 @@ const MOCK = {
       <tr><td style="color:#6b7280;padding:5px 0">User Email</td><td style="color:#111827">alex.johnson@example.com</td></tr>
       <tr><td style="color:#6b7280;padding:5px 0">Osmio ID Pair</td><td style="color:#111827;font-family:monospace;font-size:12px">OSMIO-FND-2024-00847</td></tr>
       <tr><td style="color:#6b7280;padding:5px 0">Date &amp; Time</td><td style="color:#111827;font-weight:600">Monday, 28 April 2026 · 10:00 AM</td></tr>
-      <tr><td style="color:#6b7280;padding:5px 0">Session</td><td style="color:#111827;font-weight:600">idenfy link provided separately</td></tr>
+      <tr><td style="color:#6b7280;padding:5px 0">Session</td><td style="color:#111827;font-weight:600">SIGNiX link provided separately</td></tr>
       <tr><td style="color:#6b7280;padding:5px 0">Reference</td><td style="color:#111827;font-family:monospace;font-size:13px">ATT-2026-01024</td></tr>
     </table>
   </div>
@@ -716,7 +716,7 @@ const MOCK = {
       <tr><td style="color:#6b7280;padding:5px 0">User Email</td><td style="color:#111827">t.mbeki@example.com</td></tr>
       <tr><td style="color:#6b7280;padding:5px 0">Osmio ID Pair</td><td style="color:#111827;font-family:monospace;font-size:12px">OSMIO-FND-2025-04102</td></tr>
       <tr><td style="color:#6b7280;padding:5px 0">Date &amp; Time</td><td style="color:#111827;font-weight:600">Wednesday, 6 May 2026 · 10:00 AM</td></tr>
-      <tr><td style="color:#6b7280;padding:5px 0">Session</td><td style="color:#111827;font-weight:600">idenfy link provided separately</td></tr>
+      <tr><td style="color:#6b7280;padding:5px 0">Session</td><td style="color:#111827;font-weight:600">SIGNiX link provided separately</td></tr>
       <tr><td style="color:#6b7280;padding:5px 0">Reference</td><td style="color:#111827;font-family:monospace;font-size:13px">ATT-2026-01020</td></tr>
     </table>
   </div>
@@ -780,7 +780,7 @@ const MOCK = {
       <tr><td style="color:#6b7280;padding:5px 0">User Email</td><td style="color:#111827">s.chen@example.com</td></tr>
       <tr><td style="color:#6b7280;padding:5px 0">Osmio ID Pair</td><td style="color:#111827;font-family:monospace;font-size:12px">OSMIO-FND-2025-01203</td></tr>
       <tr><td style="color:#6b7280;padding:5px 0">Date &amp; Time</td><td style="color:#111827;font-weight:600">Tuesday, 29 April 2026 · 2:00 PM</td></tr>
-      <tr><td style="color:#6b7280;padding:5px 0">Session</td><td style="color:#111827;font-weight:600">idenfy link provided separately</td></tr>
+      <tr><td style="color:#6b7280;padding:5px 0">Session</td><td style="color:#111827;font-weight:600">SIGNiX link provided separately</td></tr>
       <tr><td style="color:#6b7280;padding:5px 0">Reference</td><td style="color:#111827;font-family:monospace;font-size:13px">ATT-2026-01019</td></tr>
     </table>
   </div>
@@ -839,7 +839,7 @@ const MOCK = {
       <tr><td style="color:#6b7280;padding:5px 0">User Email</td><td style="color:#111827">p.sharma@example.com</td></tr>
       <tr><td style="color:#6b7280;padding:5px 0">Osmio ID Pair</td><td style="color:#111827;font-family:monospace;font-size:12px">OSMIO-FND-2025-03155</td></tr>
       <tr><td style="color:#6b7280;padding:5px 0">Date &amp; Time</td><td style="color:#111827;font-weight:600">Tuesday, 5 May 2026 · 11:00 AM</td></tr>
-      <tr><td style="color:#6b7280;padding:5px 0">Session</td><td style="color:#111827;font-weight:600">idenfy link provided separately</td></tr>
+      <tr><td style="color:#6b7280;padding:5px 0">Session</td><td style="color:#111827;font-weight:600">SIGNiX link provided separately</td></tr>
       <tr><td style="color:#6b7280;padding:5px 0">Reference</td><td style="color:#111827;font-family:monospace;font-size:13px">ATT-2026-01015</td></tr>
     </table>
   </div>
