@@ -20,7 +20,7 @@ jobs:
           rsync -az --delete \
             -e "ssh -i /tmp/deploy_key -o StrictHostKeyChecking=no" \
             --exclude='.git' \
-            . anish@77.90.40.64:/var/www/moidemo.authentiverse.net/
+            . anish@64.227.29.251:/var/www/moidemo.authentiverse.net/
 
       - name: Remove SSH key
         if: always()
